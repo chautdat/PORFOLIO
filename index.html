@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Web Designer & Frontend Developer</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress-wrap">
+      <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+      <div class="loader-inner">
+        <span class="loader-text">Loading</span>
+        <div class="loader-bar"><div class="loader-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- Side Scroll Dots -->
+    <nav id="scroll-dots" aria-label="Section navigation">
+      <button
+        class="scroll-dot active"
+        data-target="home"
+        data-label="Home"
+        title="Home"
+      ></button>
+      <button
+        class="scroll-dot"
+        data-target="about"
+        data-label="About"
+        title="About"
+      ></button>
+      <button
+        class="scroll-dot"
+        data-target="skills"
+        data-label="Skills"
+        title="Skills"
+      ></button>
+      <button
+        class="scroll-dot"
+        data-target="projects"
+        data-label="Projects"
+        title="Projects"
+      ></button>
+      <button
+        class="scroll-dot"
+        data-target="contact"
+        data-label="Contact"
+        title="Contact"
+      ></button>
+    </nav>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-logo">
+        <span class="logo-dot"></span>
+        <span>Chau Tan Dat</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-btn">Hire Me</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home">
+      <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="grid-lines"></div>
+        <div class="hero-noise"></div>
+      </div>
+
+      <div class="hero">
+        <!-- ── LEFT: Typography ── -->
+        <div class="hero-content">
+          <div class="hero-tag reveal">
+            <span class="tag-dot"></span>
+            Available for work
+          </div>
+
+          <h1 class="hero-title">
+            <span class="hero-line reveal" style="--i: 0">Crafting</span>
+            <span class="hero-line hero-line--accent reveal" style="--i: 1">
+              <span class="outline-text">Digi</span
+              ><span class="filled-text">tal</span>
+              <svg
+                class="underline-svg"
+                viewBox="0 0 300 18"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,12 C50,0 100,18 150,8 C200,-2 250,16 300,6"
+                  stroke="url(#uGrad)"
+                  stroke-width="3"
+                  fill="none"
+                  stroke-linecap="round"
+                />
+                <defs>
+                  <linearGradient id="uGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#caaa98" />
+                    <stop offset="100%" stop-color="#9a8678" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            <span class="hero-line reveal" style="--i: 2">Experiences.</span>
+          </h1>
+
+          <div class="hero-meta reveal">
+            <div class="hero-divider">
+              <span class="hero-divider-line"></span>
+              <span class="hero-divider-dot"></span>
+            </div>
+            <p class="hero-desc">
+              I'm a <strong>Web Designer & Frontend Developer</strong> — turning
+              ideas into beautiful, smooth, and emotional interfaces.
+            </p>
+          </div>
+
+          <div class="hero-actions reveal">
+            <a href="#projects" class="btn-primary">
+              View Projects
+              <i class="bx bx-arrow-back bx-rotate-180"></i>
+            </a>
+            <a href="#about" class="btn-ghost">About Me</a>
+          </div>
+
+          <div class="hero-stats reveal">
+            <div class="hero-stat">
+              <span class="hero-stat-num" data-count="10">0</span
+              ><span class="hero-stat-plus">+</span>
+              <span class="hero-stat-label">Projects</span>
+            </div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat">
+              <span class="hero-stat-num" data-count="2">0</span
+              ><span class="hero-stat-plus">+</span>
+              <span class="hero-stat-label">Years Exp</span>
+            </div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat">
+              <span class="hero-stat-num" data-count="5">0</span
+              ><span class="hero-stat-plus">+</span>
+              <span class="hero-stat-label">Tech Stack</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── RIGHT: Avatar ── -->
+        <div class="hero-visual reveal">
+          <div class="hero-orb-scene">
+            <!-- glow layers -->
+            <div class="orb-glow orb-glow--1"></div>
+            <div class="orb-glow orb-glow--2"></div>
+
+            <!-- dashed spinning rings -->
+            <div class="spin-ring spin-ring--1"></div>
+            <div class="spin-ring spin-ring--2"></div>
+
+            <!-- avatar -->
+            <div class="orb-avatar">
+              <div class="orb-avatar-inner">
+                <img src="images/avatar.jpg" alt="Chau Tan Dat" />
+              </div>
+            </div>
+
+            <!-- name plate -->
+            <div class="orb-nameplate">
+              <span class="orb-name">Chau Tan Dat</span>
+              <span class="orb-role">Web Designer · FE Dev</span>
+              <span class="orb-status"
+                ><span class="orb-dot"></span>Open to work</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- marquee strip -->
+      <div class="hero-marquee" aria-hidden="true">
+        <div class="marquee-inner">
+          <span>UI/UX Design</span><span class="mx">✦</span>
+          <span>Frontend Dev</span><span class="mx">✦</span>
+          <span>Web Animation</span><span class="mx">✦</span> <span>Figma</span
+          ><span class="mx">✦</span> <span>React</span><span class="mx">✦</span>
+          <span>Creative Code</span><span class="mx">✦</span>
+          <span>UI/UX Design</span><span class="mx">✦</span>
+          <span>Frontend Dev</span><span class="mx">✦</span>
+          <span>Web Animation</span><span class="mx">✦</span> <span>Figma</span
+          ><span class="mx">✦</span> <span>React</span><span class="mx">✦</span>
+          <span>Creative Code</span><span class="mx">✦</span>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-scroll="fade-left">Who I Am</span>
+          <h2
+            class="section-title section-line-reveal"
+            data-scroll="char-split"
+          >
+            About <span class="gradient-text">Me</span>
+          </h2>
+        </div>
+
+        <!-- ── BLOCK 1: Intro hero row ── -->
+        <div class="about-intro-row">
+          <!-- Main photo with floating cards -->
+          <div class="about-visual" data-scroll="fade-right" data-delay="100">
+            <div class="about-img-wrap">
+              <div class="about-img-inner">
+                <img src="images/avatar.jpg" alt="Chau Tan Dat" />
+              </div>
+              <div class="about-img-deco"></div>
+              <div class="about-float-card about-float--top">
+                <i class="bx bx-code-alt"></i>
+                <div>
+                  <span class="afc-num"
+                    ><span class="float-num">10</span>+</span
+                  >
+                  <span class="afc-label">Projects Done</span>
+                </div>
+              </div>
+              <div class="about-float-card about-float--bottom">
+                <i class="bx bx-star"></i>
+                <div>
+                  <span class="afc-num"><span class="float-num">2</span>+</span>
+                  <span class="afc-label">Years of Exp</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Intro text -->
+          <div
+            class="about-intro-text"
+            data-scroll="fade-left"
+            data-delay="200"
+          >
+            <div class="about-eyebrow" data-scroll="fade-left" data-delay="100">
+              <span class="about-eyebrow-dot"></span>
+              <span>Based in Ho Chi Minh City, Vietnam 🇻🇳</span>
+            </div>
+
+            <h3 class="about-heading">
+              I'm <span class="gradient-text">Chau Tan Dat</span> —<br />
+              Web Designer &amp;<br />Frontend Developer
+            </h3>
+
+            <!-- Personal quote callout -->
+            <blockquote
+              class="about-quote"
+              data-scroll="fade-up"
+              data-delay="250"
+            >
+              <span class="aq-mark">"</span>
+              Great design is invisible — it just <em>feels right.</em>
+            </blockquote>
+
+            <div class="about-bio">
+              <p data-scroll="fade-up" data-delay="300">
+                A <strong>23-year-old</strong> developer &amp; designer
+                passionate about crafting interfaces that are not just visually
+                beautiful but also smooth and meaningful. I love combining
+                <strong>creative thinking with solid engineering</strong>
+                to turn ideas into real, polished digital products.
+              </p>
+              <p data-scroll="fade-up" data-delay="400">
+                Whether it's a mobile app or a web platform, I care deeply about
+                every pixel and every interaction — because
+                <strong>details are what separate good from great.</strong>
+              </p>
+            </div>
+
+            <!-- Stat strip -->
+            <div
+              class="about-stat-strip"
+              data-scroll="fade-up"
+              data-delay="450"
+            >
+              <div class="ass-item">
+                <span class="ass-num gradient-text">10+</span>
+                <span class="ass-label">Projects</span>
+              </div>
+              <div class="ass-divider"></div>
+              <div class="ass-item">
+                <span class="ass-num gradient-text">2+</span>
+                <span class="ass-label">Years Exp</span>
+              </div>
+              <div class="ass-divider"></div>
+              <div class="ass-item">
+                <span class="ass-num gradient-text">5+</span>
+                <span class="ass-label">Tech Stack</span>
+              </div>
+            </div>
+
+            <!-- Quick-fact pills -->
+            <div class="about-pills" data-scroll="fade-up" data-delay="500">
+              <span class="about-pill"
+                ><span>⚽</span> Football &amp; Basketball</span
+              >
+              <span class="about-pill"><span>📸</span> Photography</span>
+              <span class="about-pill"><span>🎧</span> Music</span>
+              <span class="about-pill"><span>🚀</span> Open to Work</span>
+            </div>
+
+            <div class="about-cta-row" data-scroll="fade-up" data-delay="550">
+              <a href="#" class="btn-primary" download>
+                Download CV <i class="bx bx-download"></i>
+              </a>
+              <a href="#contact" class="btn-ghost">
+                Let's Talk <i class="bx bx-send"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BLOCK 2: Photo Gallery ── -->
+        <div class="about-gallery" data-scroll="fade-up" data-delay="100">
+          <div class="about-gallery-item ag-tall">
+            <img src="images/avatar.jpg" alt="Dat at work" />
+            <div class="ag-overlay"><span>Daily coding ☕</span></div>
+          </div>
+          <div class="about-gallery-col">
+            <div
+              class="about-gallery-item ag-placeholder-item"
+              data-label="photo-2"
+            >
+              <img
+                src="images/photo-2.jpg"
+                alt="Outdoor"
+                onerror="this.style.display = 'none'"
+              />
+              <div class="ag-overlay"><span>Outdoor vibes 🌿</span></div>
+            </div>
+            <div
+              class="about-gallery-item ag-placeholder-item"
+              data-label="photo-3"
+            >
+              <img
+                src="images/photo-3.jpg"
+                alt="Sport"
+                onerror="this.style.display = 'none'"
+              />
+              <div class="ag-overlay"><span>Football lover ⚽</span></div>
+            </div>
+          </div>
+          <div
+            class="about-gallery-item ag-wide ag-placeholder-item"
+            data-label="photo-4"
+          >
+            <img
+              src="images/photo-4.jpg"
+              alt="Photography"
+              onerror="this.style.display = 'none'"
+            />
+            <div class="ag-overlay"><span>Through the lens 📸</span></div>
+          </div>
+        </div>
+
+        <!-- ── BLOCK 3: My Journey Timeline ── -->
+        <div class="about-journey">
+          <h3 class="about-journey-title" data-scroll="fade-up">
+            <span class="gradient-text">My Journey</span>
+          </h3>
+          <div class="about-timeline">
+            <div class="at-item" data-scroll="fade-right" data-delay="0">
+              <div class="at-dot"></div>
+              <div class="at-year">2021</div>
+              <div class="at-card">
+                <div class="at-icon"><i class="bx bx-laptop"></i></div>
+                <h4>The Beginning</h4>
+                <p>
+                  Wrote my first lines of HTML &amp; CSS, built my first static
+                  website and immediately fell in love with the idea of turning
+                  code into visual experiences.
+                </p>
+              </div>
+            </div>
+
+            <div class="at-item" data-scroll="fade-left" data-delay="100">
+              <div class="at-dot"></div>
+              <div class="at-year">2022</div>
+              <div class="at-card">
+                <div class="at-icon"><i class="bx bx-palette"></i></div>
+                <h4>Design Meets Code</h4>
+                <p>
+                  Discovered UI/UX design and Figma. Started combining design
+                  thinking with frontend skills — realizing the best products
+                  live at the intersection of both.
+                </p>
+              </div>
+            </div>
+
+            <div class="at-item" data-scroll="fade-right" data-delay="200">
+              <div class="at-dot"></div>
+              <div class="at-year">2023</div>
+              <div class="at-card">
+                <div class="at-icon"><i class="bx bxl-react"></i></div>
+                <h4>Going Deeper</h4>
+                <p>
+                  Dived into React, Next.js and mobile development with Flutter.
+                  Built real-world projects — BookaCut, MovieTicketBooking — and
+                  grew a complete full-product mindset.
+                </p>
+              </div>
+            </div>
+
+            <div class="at-item" data-scroll="fade-left" data-delay="300">
+              <div class="at-dot"></div>
+              <div class="at-year">Now</div>
+              <div class="at-card at-card--active">
+                <div class="at-icon"><i class="bx bx-rocket"></i></div>
+                <h4>Building &amp; Growing</h4>
+                <p>
+                  Looking for opportunities to join a creative team, ship
+                  meaningful products and keep levelling up.
+                  <strong>Open to internship &amp; full-time roles.</strong>
+                </p>
+                <span class="at-badge">Available Now ✦</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BLOCK 4: Personality / Fun facts ── -->
+        <div class="about-personality">
+          <h3 class="about-journey-title" data-scroll="fade-up">
+            Beyond the <span class="gradient-text">Screen</span>
+          </h3>
+          <div class="about-traits-grid">
+            <div class="about-trait" data-scroll="scale-in" data-delay="0">
+              <div class="trait-emoji">⚽</div>
+              <h4>Football &amp; Bball</h4>
+              <p>
+                I play football &amp; basketball regularly — teamwork on the
+                field shapes how I collaborate at work.
+              </p>
+            </div>
+            <div class="about-trait" data-scroll="scale-in" data-delay="100">
+              <div class="trait-emoji">📸</div>
+              <h4>Photography</h4>
+              <p>
+                I capture moments and perspectives through my camera lens. It
+                trains my eye for composition and detail.
+              </p>
+            </div>
+            <div class="about-trait" data-scroll="scale-in" data-delay="200">
+              <div class="trait-emoji">🎧</div>
+              <h4>Music &amp; Vibes</h4>
+              <p>
+                Lo-fi and chill beats are my coding fuel. Music keeps me in the
+                zone during long build sessions.
+              </p>
+            </div>
+            <div class="about-trait" data-scroll="scale-in" data-delay="300">
+              <div class="trait-emoji">🌱</div>
+              <h4>Always Learning</h4>
+              <p>
+                Tech evolves fast and I love keeping up. New frameworks, tools,
+                design trends — I'm always exploring.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills section" id="skills">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-scroll="fade-left">What I Do</span>
+          <h2
+            class="section-title section-line-reveal"
+            data-scroll="char-split"
+          >
+            My <span class="gradient-text">Skills</span>
+          </h2>
+          <p class="section-sub" data-scroll="fade-up" data-delay="200">
+            A blend of design sensibility and engineering rigour — here's what I
+            bring to the table.
+          </p>
+        </div>
+
+        <!-- ── BLOCK 1: Skill Category Cards ── -->
+        <div class="skills-grid">
+          <div class="skill-card" data-scroll="scale-in" data-delay="0">
+            <div class="skill-card-top">
+              <div class="skill-icon"><i class="bx bx-palette"></i></div>
+              <span class="skill-level skill-level--expert">Expert</span>
+            </div>
+            <h3>UI/UX Design</h3>
+            <p>
+              Crafting interfaces that are beautiful, intuitive and user-centred
+              — from wireframe to final pixel.
+            </p>
+            <div class="skill-tools">
+              <span>Figma</span><span>Adobe XD</span><span>Photoshop</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-scroll="scale-in" data-delay="100">
+            <div class="skill-card-top">
+              <div class="skill-icon"><i class="bx bxl-html5"></i></div>
+              <span class="skill-level skill-level--expert">Expert</span>
+            </div>
+            <h3>HTML &amp; CSS</h3>
+            <p>
+              Building clean, semantic, fully responsive layouts with a strong
+              grip on modern CSS techniques.
+            </p>
+            <div class="skill-tools">
+              <span>HTML5</span><span>CSS3</span><span>SASS</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-scroll="scale-in" data-delay="200">
+            <div class="skill-card-top">
+              <div class="skill-icon"><i class="bx bxl-javascript"></i></div>
+              <span class="skill-level skill-level--advanced">Advanced</span>
+            </div>
+            <h3>JavaScript</h3>
+            <p>
+              Creating dynamic interactions, smooth animations and complex
+              frontend logic with modern ES6+.
+            </p>
+            <div class="skill-tools">
+              <span>ES6+</span><span>DOM</span><span>Canvas</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-scroll="scale-in" data-delay="300">
+            <div class="skill-card-top">
+              <div class="skill-icon"><i class="bx bxl-react"></i></div>
+              <span class="skill-level skill-level--advanced">Advanced</span>
+            </div>
+            <h3>React / Next.js</h3>
+            <p>
+              Building high-performance Single Page Applications and
+              server-rendered web apps at scale.
+            </p>
+            <div class="skill-tools">
+              <span>React</span><span>Next.js</span><span>Redux</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-scroll="scale-in" data-delay="400">
+            <div class="skill-card-top">
+              <div class="skill-icon"><i class="bx bxl-flutter"></i></div>
+              <span class="skill-level skill-level--intermediate"
+                >Intermediate</span
+              >
+            </div>
+            <h3>Flutter / Dart</h3>
+            <p>
+              Developing cross-platform mobile applications with a native feel
+              and smooth performance.
+            </p>
+            <div class="skill-tools">
+              <span>Flutter</span><span>Dart</span><span>Firebase</span>
+            </div>
+          </div>
+
+          <div class="skill-card" data-scroll="scale-in" data-delay="500">
+            <div class="skill-card-top">
+              <div class="skill-icon"><i class="bx bxl-git"></i></div>
+              <span class="skill-level skill-level--expert">Expert</span>
+            </div>
+            <h3>Tools &amp; Workflow</h3>
+            <p>
+              Working professionally with modern dev tools, version control and
+              build pipelines.
+            </p>
+            <div class="skill-tools">
+              <span>Git</span><span>VS Code</span><span>Tailwind</span
+              ><span>Vite</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BLOCK 2: Tech Stack Visual ── -->
+        <div class="skills-stack-block" data-scroll="fade-up" data-delay="100">
+          <h3 class="about-journey-title">
+            My <span class="gradient-text">Tech Stack</span>
+          </h3>
+          <div class="skills-stack-row">
+            <div class="stack-category">
+              <span class="stack-cat-label">Design</span>
+              <div class="stack-icons">
+                <div class="stack-icon" data-tip="Figma">
+                  <i class="bx bxl-figma"></i>
+                </div>
+                <div class="stack-icon" data-tip="Photoshop">
+                  <i class="bx bxl-adobe"></i>
+                </div>
+              </div>
+            </div>
+            <div class="stack-divider"></div>
+            <div class="stack-category">
+              <span class="stack-cat-label">Frontend</span>
+              <div class="stack-icons">
+                <div class="stack-icon" data-tip="HTML5">
+                  <i class="bx bxl-html5"></i>
+                </div>
+                <div class="stack-icon" data-tip="CSS3">
+                  <i class="bx bxl-css3"></i>
+                </div>
+                <div class="stack-icon" data-tip="JavaScript">
+                  <i class="bx bxl-javascript"></i>
+                </div>
+                <div class="stack-icon" data-tip="React">
+                  <i class="bx bxl-react"></i>
+                </div>
+                <div class="stack-icon" data-tip="Vue">
+                  <i class="bx bxl-vuejs"></i>
+                </div>
+              </div>
+            </div>
+            <div class="stack-divider"></div>
+            <div class="stack-category">
+              <span class="stack-cat-label">Mobile</span>
+              <div class="stack-icons">
+                <div class="stack-icon" data-tip="Flutter">
+                  <i class="bx bxl-flutter"></i>
+                </div>
+              </div>
+            </div>
+            <div class="stack-divider"></div>
+            <div class="stack-category">
+              <span class="stack-cat-label">Tools</span>
+              <div class="stack-icons">
+                <div class="stack-icon" data-tip="Git">
+                  <i class="bx bxl-git"></i>
+                </div>
+                <div class="stack-icon" data-tip="GitHub">
+                  <i class="bx bxl-github"></i>
+                </div>
+                <div class="stack-icon" data-tip="VS Code">
+                  <i class="bx bxl-visual-studio"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── BLOCK 3: Currently learning ── -->
+        <div class="skills-learning" data-scroll="fade-up" data-delay="100">
+          <div class="skills-learning-inner">
+            <div class="sl-icon"><i class="bx bx-book-open"></i></div>
+            <div class="sl-text">
+              <h4>Currently Learning</h4>
+              <p>
+                Always pushing the boundary — right now I'm diving deeper into
+                <strong>TypeScript</strong>, <strong>Node.js</strong> backend,
+                and exploring <strong>Three.js</strong> for 3D web experiences.
+              </p>
+            </div>
+            <div class="sl-tags">
+              <span>TypeScript</span>
+              <span>Node.js</span>
+              <span>Three.js</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects section" id="projects">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-scroll="fade-left">My Work</span>
+          <h2
+            class="section-title section-line-reveal"
+            data-scroll="char-split"
+          >
+            Work Samples / <span class="gradient-text">Projects</span>
+          </h2>
+          <p class="section-sub" data-scroll="fade-up" data-delay="200">
+            Real products I've designed and built — from mobile apps to full web
+            experiences.
+          </p>
+        </div>
+
+        <!-- ── NOTION-STYLE TOOLBAR ── -->
+        <div class="pg-toolbar" data-scroll="fade-up" data-delay="100">
+          <div class="pg-toolbar-left">
+            <button class="pg-view-btn active">
+              <i class="bx bx-grid-alt"></i> Gallery view
+            </button>
+          </div>
+          <div class="pg-toolbar-right">
+            <button class="pg-tool-btn" title="Filter">
+              <i class="bx bx-filter-alt"></i>
+            </button>
+            <button class="pg-tool-btn" title="Sort">
+              <i class="bx bx-sort-alt-2"></i>
+            </button>
+            <button class="pg-tool-btn" title="Search">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── GALLERY GRID ── -->
+        <div class="pg-grid">
+          <!-- Card 01: BookaCut -->
+          <div class="pg-card" data-scroll="fade-up" data-delay="0">
+            <a
+              href="https://github.com/chautdat/BookaCut"
+              target="_blank"
+              rel="noopener"
+              class="pg-card-link"
+            >
+              <div class="pg-cover pg-c1">
+                <div class="pg-glow"></div>
+                <!-- Phone mockup -->
+                <div class="pgm-phone">
+                  <div class="pgm-phone-top">
+                    <div class="pgm-notch"></div>
+                  </div>
+                  <div class="pgm-phone-screen">
+                    <div class="pgm-app-bar">
+                      <i class="bx bx-cut"></i>
+                      <span>BookaCut</span>
+                    </div>
+                    <div class="pgm-app-sub">Book your barber ✂️</div>
+                    <div class="pgm-app-slots">
+                      <div class="pgm-slot pgm-slot-taken"></div>
+                      <div class="pgm-slot pgm-slot-taken"></div>
+                      <div class="pgm-slot pgm-slot-open"></div>
+                      <div class="pgm-slot pgm-slot-open"></div>
+                    </div>
+                    <div class="pgm-app-cta">Book Now</div>
+                  </div>
+                  <div class="pgm-phone-home"></div>
+                </div>
+                <div class="pg-badge-row">
+                  <span class="pg-badge"><i class="bx bx-star"></i> 4.9</span>
+                  <span class="pg-badge">10k+ Downloads</span>
+                </div>
+              </div>
+              <div class="pg-footer">
+                <i class="bx bx-file-blank"></i>
+                <div class="pg-meta">
+                  <span class="pg-name">BookaCut</span>
+                  <span class="pg-type">Mobile App · Flutter · 2024</span>
+                </div>
+                <i class="bx bx-link-external pg-ext"></i>
+              </div>
+            </a>
+          </div>
+
+          <!-- Card 02: MovieTicketBooking -->
+          <div class="pg-card" data-scroll="fade-up" data-delay="100">
+            <a
+              href="https://github.com/chautdat/MovieTicketBooking"
+              target="_blank"
+              rel="noopener"
+              class="pg-card-link"
+            >
+              <div class="pg-cover pg-c2">
+                <div class="pg-glow"></div>
+                <!-- Browser mockup -->
+                <div class="pgm-browser">
+                  <div class="pgm-browser-bar">
+                    <div class="pgm-dots">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="pgm-url">movieticket.app</div>
+                  </div>
+                  <div class="pgm-browser-body">
+                    <div class="pgm-screen-arc"></div>
+                    <div class="pgm-seats">
+                      <div class="pgm-seat-row">
+                        <div class="pgm-seat s-taken"></div>
+                        <div class="pgm-seat s-taken"></div>
+                        <div class="pgm-seat"></div>
+                        <div class="pgm-seat"></div>
+                        <div class="pgm-seat s-sel"></div>
+                      </div>
+                      <div class="pgm-seat-row">
+                        <div class="pgm-seat"></div>
+                        <div class="pgm-seat s-taken"></div>
+                        <div class="pgm-seat s-sel"></div>
+                        <div class="pgm-seat"></div>
+                        <div class="pgm-seat"></div>
+                      </div>
+                      <div class="pgm-seat-row">
+                        <div class="pgm-seat s-taken"></div>
+                        <div class="pgm-seat s-taken"></div>
+                        <div class="pgm-seat s-taken"></div>
+                        <div class="pgm-seat"></div>
+                        <div class="pgm-seat"></div>
+                      </div>
+                    </div>
+                    <div class="pgm-screen-label">SCREEN</div>
+                  </div>
+                </div>
+              </div>
+              <div class="pg-footer">
+                <i class="bx bx-file-blank"></i>
+                <div class="pg-meta">
+                  <span class="pg-name">MovieTicketBooking</span>
+                  <span class="pg-type">Web App · HTML/SCSS/JS · 2024</span>
+                </div>
+                <i class="bx bx-link-external pg-ext"></i>
+              </div>
+            </a>
+          </div>
+
+          <!-- Card 03: PDQ Restaurant -->
+          <div class="pg-card" data-scroll="fade-up" data-delay="200">
+            <a
+              href="https://github.com/chautdat/pdq-restaurant"
+              target="_blank"
+              rel="noopener"
+              class="pg-card-link"
+            >
+              <div class="pg-cover pg-c3">
+                <div class="pg-glow"></div>
+                <!-- Browser + menu mockup -->
+                <div class="pgm-browser">
+                  <div class="pgm-browser-bar">
+                    <div class="pgm-dots">
+                      <span></span><span></span><span></span>
+                    </div>
+                    <div class="pgm-url">pdq-restaurant.app</div>
+                  </div>
+                  <div class="pgm-browser-body pgm-menu-body">
+                    <div class="pgm-menu-row">
+                      <span class="pgm-menu-icon">🍜</span>
+                      <div class="pgm-menu-text">
+                        <b>Pho Bo</b><small>$12.99</small>
+                      </div>
+                      <span class="pgm-add-btn">+</span>
+                    </div>
+                    <div class="pgm-menu-row">
+                      <span class="pgm-menu-icon">🍚</span>
+                      <div class="pgm-menu-text">
+                        <b>Com Tam</b><small>$10.99</small>
+                      </div>
+                      <span class="pgm-add-btn">+</span>
+                    </div>
+                    <div class="pgm-menu-row pgm-menu-active">
+                      <span class="pgm-menu-icon">🍲</span>
+                      <div class="pgm-menu-text">
+                        <b>Bun Bo</b><small>$11.99</small>
+                      </div>
+                      <span class="pgm-add-btn pgm-added">✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="pg-footer">
+                <i class="bx bx-file-blank"></i>
+                <div class="pg-meta">
+                  <span class="pg-name">PDQ Restaurant</span>
+                  <span class="pg-type">Food Ordering · Vue.js · 2025</span>
+                </div>
+                <i class="bx bx-link-external pg-ext"></i>
+              </div>
+            </a>
+          </div>
+
+          <!-- Card 04: Coming Soon -->
+          <div
+            class="pg-card pg-card-soon"
+            data-scroll="fade-up"
+            data-delay="300"
+          >
+            <div class="pg-cover pg-cover-soon">
+              <div class="pg-soon-ring"></div>
+              <i class="bx bx-plus-circle pg-soon-icon"></i>
+              <span class="pg-soon-label">New project coming soon</span>
+            </div>
+            <div class="pg-footer">
+              <i class="bx bx-file-blank"></i>
+              <div class="pg-meta">
+                <span class="pg-name">Next Project</span>
+                <span class="pg-type">In progress · 2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end .pg-grid -->
+      </div>
+    </section>
+
+    <section class="contact section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag" data-scroll="fade-left">Get In Touch</span>
+          <h2
+            class="section-title section-line-reveal"
+            data-scroll="char-split"
+          >
+            Let's <span class="gradient-text">Work Together</span>
+          </h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info" data-scroll="fade-right" data-delay="100">
+            <p class="contact-desc">
+              Tôi luôn sẵn sàng nhận dự án mới và thử thách sáng tạo. Hãy liên
+              hệ với tôi!
+            </p>
+            <div class="contact-items">
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bx-envelope"></i></div>
+                <div>
+                  <span>Email</span>
+                  <a href="mailto:chautandat@email.com"
+                    >chautdat1109@gmail.com</a
+                  >
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bx-phone"></i></div>
+                <div>
+                  <span>Phone</span>
+                  <a href="tel:+84000000000">+84 984 905 718</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bx-map"></i></div>
+                <div>
+                  <span>Location</span>
+                  <p>Ho Chi Minh City, Vietnam</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon"><i class="bx bxl-github"></i></div>
+                <div>
+                  <span>GitHub</span>
+                  <a
+                    href="https://github.com/chautdat"
+                    target="_blank"
+                    rel="noopener"
+                    >github.com/chautdat</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <form
+            class="contact-form"
+            data-scroll="fade-left"
+            data-delay="200"
+            id="contactForm"
+            action="https://formspree.io/f/mjgjnqpo"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              name="_subject"
+              value="New message from portfolio!"
+            />
+            <input type="hidden" name="_next" value="" />
+            <div class="form-row">
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  id="fname"
+                  placeholder=" "
+                  required
+                />
+                <label for="fname">Your Name</label>
+              </div>
+              <div class="form-group">
+                <input
+                  type="email"
+                  name="email"
+                  id="femail"
+                  placeholder=" "
+                  required
+                />
+                <label for="femail">Your Email</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <textarea
+                name="message"
+                id="fmessage"
+                placeholder=" "
+                rows="5"
+                required
+              ></textarea>
+              <label for="fmessage">Your Message</label>
+            </div>
+            <button type="submit" class="btn-primary btn-full">
+              Send Message <i class="bx bx-send"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-logo">
+            <span class="logo-dot"></span>
+            <span>Chau Tan Dat</span>
+          </div>
+          <p>© 2026 Chau Tan Dat</p>
+          <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="mm-close" id="mmClose" aria-label="Close menu">
+        <i class="bx bx-x"></i>
+      </button>
+      <nav class="mm-nav">
+        <a href="#home" class="mm-link">Home</a>
+        <a href="#about" class="mm-link">About</a>
+        <a href="#skills" class="mm-link">Skills</a>
+        <a href="#projects" class="mm-link">Projects</a>
+        <a href="#contact" class="mm-link">Contact</a>
+      </nav>
+      <a href="#contact" class="btn-primary mm-cta">Hire Me</a>
+    </div>
+    <div class="mm-backdrop" id="mmBackdrop"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
