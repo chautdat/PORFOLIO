@@ -565,6 +565,26 @@
         font-size: 0.9rem !important;
         white-space: nowrap !important;
       }
+
+      /* ── Kill fly-label & fix footer ── */
+      .section-fly-label { display: none !important; }
+      .footer-inner {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 16px !important;
+      }
+      @media (max-width: 480px) {
+        .footer-inner {
+          flex-direction: column !important;
+          align-items: center !important;
+          justify-content: center !important;
+          text-align: center !important;
+        }
+        .footer-links { justify-content: center !important; }
+      }
     </style>
   </head>
   <body>
@@ -1149,16 +1169,33 @@
     <section class="photo-section section" id="photography">
       <div class="container">
         <div class="section-header" data-scroll="fade-up">
-          <h2 class="section-title">Through My Lens <span class="gradient-text">📸</span></h2>
-          <p class="section-subtitle">Moments I captured — from streets to sunsets, football to friends.</p>
+          <h2 class="section-title">
+            Through My Lens <span class="gradient-text">📸</span>
+          </h2>
+          <p class="section-subtitle">
+            Moments I captured — from streets to sunsets, football to friends.
+          </p>
         </div>
 
         <div class="ph-grid" data-scroll="fade-up" data-delay="100">
-
           <!-- Photo 1 -->
-          <div class="ph-item" data-src="images/photo-1.jpg" data-title="Daily Vibes" data-loc="Ho Chi Minh City" data-date="2024">
-            <img src="images/photo-1.jpg" alt="Photo 1" onerror="this.parentElement.querySelector('.ph-fallback').style.display='flex'; this.style.display='none'" />
-            <div class="ph-fallback" style="display:none">📷</div>
+          <div
+            class="ph-item"
+            data-src="images/photo-1.jpg"
+            data-title="Daily Vibes"
+            data-loc="Ho Chi Minh City"
+            data-date="2024"
+          >
+            <img
+              src="images/photo-1.jpg"
+              alt="Photo 1"
+              onerror="
+                this.parentElement.querySelector('.ph-fallback').style.display =
+                  'flex';
+                this.style.display = 'none';
+              "
+            />
+            <div class="ph-fallback" style="display: none">📷</div>
             <div class="ph-overlay">
               <div class="ph-overlay-title">Daily Vibes</div>
               <div class="ph-overlay-meta">
@@ -1169,9 +1206,23 @@
           </div>
 
           <!-- Photo 2 -->
-          <div class="ph-item" data-src="images/photo-2.jpg" data-title="Outdoor Escape" data-loc="Somewhere Green" data-date="2024">
-            <img src="images/photo-2.jpg" alt="Photo 2" onerror="this.parentElement.querySelector('.ph-fallback').style.display='flex'; this.style.display='none'" />
-            <div class="ph-fallback" style="display:none">🌿</div>
+          <div
+            class="ph-item"
+            data-src="images/photo-2.jpg"
+            data-title="Outdoor Escape"
+            data-loc="Somewhere Green"
+            data-date="2024"
+          >
+            <img
+              src="images/photo-2.jpg"
+              alt="Photo 2"
+              onerror="
+                this.parentElement.querySelector('.ph-fallback').style.display =
+                  'flex';
+                this.style.display = 'none';
+              "
+            />
+            <div class="ph-fallback" style="display: none">🌿</div>
             <div class="ph-overlay">
               <div class="ph-overlay-title">Outdoor Escape</div>
               <div class="ph-overlay-meta">
@@ -1182,9 +1233,23 @@
           </div>
 
           <!-- Photo 3 -->
-          <div class="ph-item" data-src="images/photo-3.jpg" data-title="Football Nights" data-loc="Local Field" data-date="2023">
-            <img src="images/photo-3.jpg" alt="Photo 3" onerror="this.parentElement.querySelector('.ph-fallback').style.display='flex'; this.style.display='none'" />
-            <div class="ph-fallback" style="display:none">⚽</div>
+          <div
+            class="ph-item"
+            data-src="images/photo-3.jpg"
+            data-title="Football Nights"
+            data-loc="Local Field"
+            data-date="2023"
+          >
+            <img
+              src="images/photo-3.jpg"
+              alt="Photo 3"
+              onerror="
+                this.parentElement.querySelector('.ph-fallback').style.display =
+                  'flex';
+                this.style.display = 'none';
+              "
+            />
+            <div class="ph-fallback" style="display: none">⚽</div>
             <div class="ph-overlay">
               <div class="ph-overlay-title">Football Nights</div>
               <div class="ph-overlay-meta">
@@ -1195,9 +1260,23 @@
           </div>
 
           <!-- Photo 4 -->
-          <div class="ph-item" data-src="images/photo-4.jpg" data-title="City at Night" data-loc="District 1" data-date="2024">
-            <img src="images/photo-4.jpg" alt="Photo 4" onerror="this.parentElement.querySelector('.ph-fallback').style.display='flex'; this.style.display='none'" />
-            <div class="ph-fallback" style="display:none">🌆</div>
+          <div
+            class="ph-item"
+            data-src="images/photo-4.jpg"
+            data-title="City at Night"
+            data-loc="District 1"
+            data-date="2024"
+          >
+            <img
+              src="images/photo-4.jpg"
+              alt="Photo 4"
+              onerror="
+                this.parentElement.querySelector('.ph-fallback').style.display =
+                  'flex';
+                this.style.display = 'none';
+              "
+            />
+            <div class="ph-fallback" style="display: none">🌆</div>
             <div class="ph-overlay">
               <div class="ph-overlay-title">City at Night</div>
               <div class="ph-overlay-meta">
@@ -1208,9 +1287,23 @@
           </div>
 
           <!-- Photo 5 -->
-          <div class="ph-item" data-src="images/photo-5.jpg" data-title="Golden Hour" data-loc="Rooftop" data-date="2023">
-            <img src="images/photo-5.jpg" alt="Photo 5" onerror="this.parentElement.querySelector('.ph-fallback').style.display='flex'; this.style.display='none'" />
-            <div class="ph-fallback" style="display:none">🌅</div>
+          <div
+            class="ph-item"
+            data-src="images/photo-5.jpg"
+            data-title="Golden Hour"
+            data-loc="Rooftop"
+            data-date="2023"
+          >
+            <img
+              src="images/photo-5.jpg"
+              alt="Photo 5"
+              onerror="
+                this.parentElement.querySelector('.ph-fallback').style.display =
+                  'flex';
+                this.style.display = 'none';
+              "
+            />
+            <div class="ph-fallback" style="display: none">🌅</div>
             <div class="ph-overlay">
               <div class="ph-overlay-title">Golden Hour</div>
               <div class="ph-overlay-meta">
@@ -1221,9 +1314,23 @@
           </div>
 
           <!-- Photo 6 -->
-          <div class="ph-item" data-src="images/photo-6.jpg" data-title="Street Stories" data-loc="Old Quarter" data-date="2024">
-            <img src="images/photo-6.jpg" alt="Photo 6" onerror="this.parentElement.querySelector('.ph-fallback').style.display='flex'; this.style.display='none'" />
-            <div class="ph-fallback" style="display:none">🛵</div>
+          <div
+            class="ph-item"
+            data-src="images/photo-6.jpg"
+            data-title="Street Stories"
+            data-loc="Old Quarter"
+            data-date="2024"
+          >
+            <img
+              src="images/photo-6.jpg"
+              alt="Photo 6"
+              onerror="
+                this.parentElement.querySelector('.ph-fallback').style.display =
+                  'flex';
+                this.style.display = 'none';
+              "
+            />
+            <div class="ph-fallback" style="display: none">🛵</div>
             <div class="ph-overlay">
               <div class="ph-overlay-title">Street Stories</div>
               <div class="ph-overlay-meta">
@@ -1232,8 +1339,8 @@
               </div>
             </div>
           </div>
-
-        </div><!-- /.ph-grid -->
+        </div>
+        <!-- /.ph-grid -->
       </div>
     </section>
 
@@ -1815,26 +1922,34 @@
     <script src="script.js?v=204"></script>
     <script>
       // Photography lightbox
-      (function(){
-        const lb = document.getElementById('phLightbox');
-        const lbImg = document.getElementById('phLbImg');
-        const lbCap = document.getElementById('phLbCaption');
-        const lbClose = document.getElementById('phLbClose');
-        document.querySelectorAll('.ph-item').forEach(function(item){
-          item.addEventListener('click', function(){
+      (function () {
+        const lb = document.getElementById("phLightbox");
+        const lbImg = document.getElementById("phLbImg");
+        const lbCap = document.getElementById("phLbCaption");
+        const lbClose = document.getElementById("phLbClose");
+        document.querySelectorAll(".ph-item").forEach(function (item) {
+          item.addEventListener("click", function () {
             const src = item.dataset.src;
-            const title = item.dataset.title || '';
-            const loc = item.dataset.loc || '';
-            const date = item.dataset.date || '';
+            const title = item.dataset.title || "";
+            const loc = item.dataset.loc || "";
+            const date = item.dataset.date || "";
             lbImg.src = src;
-            lbCap.textContent = title + (loc ? '  📍 ' + loc : '') + (date ? '  🗓 ' + date : '');
-            lb.classList.add('active');
+            lbCap.textContent =
+              title + (loc ? "  📍 " + loc : "") + (date ? "  🗓 " + date : "");
+            lb.classList.add("active");
           });
         });
-        function closeLb(){ lb.classList.remove('active'); lbImg.src=''; }
-        lbClose.addEventListener('click', closeLb);
-        lb.addEventListener('click', function(e){ if(e.target === lb) closeLb(); });
-        document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLb(); });
+        function closeLb() {
+          lb.classList.remove("active");
+          lbImg.src = "";
+        }
+        lbClose.addEventListener("click", closeLb);
+        lb.addEventListener("click", function (e) {
+          if (e.target === lb) closeLb();
+        });
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") closeLb();
+        });
       })();
     </script>
   </body>

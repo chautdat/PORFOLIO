@@ -4973,28 +4973,7 @@ a.ct-val:hover {
 
 /* ── 12. FLOATING SECTION LABEL ── */
 .section-fly-label {
-  position: fixed;
-  left: -200px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 90;
-  font-family: var(--font-heading);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--primary);
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  opacity: 0;
-  transition:
-    left 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.5s ease;
-  pointer-events: none;
-}
-.section-fly-label.visible {
-  left: 18px;
-  opacity: 0.5;
+  display: none !important;
 }
 
 @media (max-width: 480px) {
@@ -5194,16 +5173,6 @@ a.ct-val:hover {
     width: 100%;
     justify-content: center;
   }
-
-  /* ── Footer ── */
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-  }
-  .footer-links {
-    justify-content: center;
-  }
 }
 
 @media (max-width: 480px) {
@@ -5276,5 +5245,16 @@ a.ct-val:hover {
   }
   .section-tag {
     margin: 0 auto;
+  }
+
+  /* ── Footer ── */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+  .footer-links {
+    justify-content: center;
   }
 }
