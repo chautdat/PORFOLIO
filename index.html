@@ -24,8 +24,18 @@
     <canvas id="particleCanvas"></canvas>
 
     <!-- Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <div id="cur-dot"></div>
+    <div id="cur-ring">
+      <svg id="cur-ring-svg" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(202,170,152,0.7)" stroke-width="1"/>
+        <path id="cur-text-path" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/>
+        <text font-size="10.5" fill="rgba(202,170,152,0.85)" font-family="'DM Sans',sans-serif" font-weight="700" letter-spacing="5">
+          <textPath id="cur-textpath-el" href="#cur-text-path">VIEW PROJECT ✦ VIEW PROJECT ✦ </textPath>
+        </text>
+      </svg>
+      <span id="cur-label">→</span>
+    </div>
+    <canvas id="cur-fx-canvas"></canvas>
 
     <!-- Loader -->
     <div class="loader" id="loader">
@@ -90,14 +100,6 @@
 
     <!-- Hero Section -->
     <section id="home">
-      <div class="hero-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-        <div class="grid-lines"></div>
-        <div class="hero-noise"></div>
-      </div>
-
       <div class="hero">
         <!-- ── LEFT: Typography ── -->
         <div class="hero-content">

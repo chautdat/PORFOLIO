@@ -1,39 +1,148 @@
-// ===== CURSOR =====
-const cursor = document.querySelector(".cursor");
-const follower = document.querySelector(".cursor-follower");
-let mouseX = 0,
-  mouseY = 0,
-  followerX = 0,
-  followerY = 0;
+// ===== CURSOR — PREMIUM UPGRADE =====
+(function () {
+  if (window.matchMedia("(pointer:coarse)").matches) return;
 
-document.addEventListener("mousemove", (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + "px";
-  cursor.style.top = mouseY + "px";
-});
+  const dot      = document.getElementById("cur-dot");
+  const ring     = document.getElementById("cur-ring");
+  const fxCanvas = document.getElementById("cur-fx-canvas");
+  const fxCtx    = fxCanvas.getContext("2d");
 
-function animateFollower() {
-  followerX += (mouseX - followerX) * 0.1;
-  followerY += (mouseY - followerY) * 0.1;
-  follower.style.left = followerX + "px";
-  follower.style.top = followerY + "px";
-  requestAnimationFrame(animateFollower);
-}
-animateFollower();
+  // Resize FX canvas
+  function resizeFx() { fxCanvas.width = window.innerWidth; fxCanvas.height = window.innerHeight; }
+  resizeFx(); window.addEventListener("resize", resizeFx);
 
-document
-  .querySelectorAll("a, button, .skill-card, .project-card, .highlight")
-  .forEach((el) => {
-    el.addEventListener("mouseenter", () => {
-      cursor.classList.add("active");
-      follower.classList.add("active");
+  // ── Position ──
+  let mx = -300, my = -300;
+  let rx = -300, ry = -300;
+  let velX = 0, velY = 0;         // velocity for skew
+  let prevMx = -300, prevMy = -300;
+  let mode = "default";            // default | hover | view | click
+
+  // ── Mouse ──
+  document.addEventListener("mousemove", e => {
+    prevMx = mx; prevMy = my;
+    mx = e.clientX; my = e.clientY;
+    velX = mx - prevMx; velY = my - prevMy;
+  });
+  document.addEventListener("mouseleave", () => { dot.style.opacity = ring.style.opacity = "0"; });
+  document.addEventListener("mouseenter", () => { dot.style.opacity = ring.style.opacity = "1"; });
+
+  // ── Magnetic elements ──
+  const magnetEls = document.querySelectorAll("a.btn-primary, a.nav-btn, .pg-view-btn, button.mm-close");
+  magnetEls.forEach(el => {
+    el.addEventListener("mousemove", e => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      const dx = e.clientX - cx, dy = e.clientY - cy;
+      el.style.transform = `translate(${dx * 0.35}px, ${dy * 0.35}px)`;
     });
     el.addEventListener("mouseleave", () => {
-      cursor.classList.remove("active");
-      follower.classList.remove("active");
+      el.style.transform = "";
     });
   });
+
+  // ── Hover & View state ──
+  document.querySelectorAll("a, button, input, textarea, label, .hamburger").forEach(el => {
+    el.addEventListener("mouseenter", () => setMode("hover"));
+    el.addEventListener("mouseleave", () => setMode("default"));
+  });
+
+  const viewLabels = { "pg-card": "View →", "skill-card": "Skill", "about-gallery-item": "Photo" };
+  Object.keys(viewLabels).forEach(cls => {
+    document.querySelectorAll("." + cls).forEach(el => {
+      el.addEventListener("mouseenter", () => setMode("view", viewLabels[cls]));
+      el.addEventListener("mouseleave", () => setMode("default"));
+    });
+  });
+
+  function setMode(m, labelText = "") {
+    mode = m;
+    const label = document.getElementById("cur-label");
+    // Update textpath label
+    const tp = document.getElementById("cur-textpath-el");
+    if (tp) {
+      const txt = labelText || "VIEW PROJECT ✦ VIEW PROJECT ✦ ";
+      tp.textContent = txt + " " + txt;
+    }
+    ring.className = "";
+    if (m === "hover") ring.classList.add("is-hover");
+    if (m === "view")  ring.classList.add("is-view");
+    if (m === "click") ring.classList.add("is-click");
+    dot.className = "";
+    if (m !== "default") dot.classList.add("is-hover");
+  }
+
+  // ── Click particle burst ──
+  const particles = [];
+  document.addEventListener("mousedown", () => {
+    setMode("click");
+    // Spawn particles
+    for (let i = 0; i < 16; i++) {
+      const angle = (Math.PI * 2 / 16) * i + Math.random() * 0.3;
+      const speed = Math.random() * 3.5 + 1.5;
+      particles.push({
+        x: mx, y: my,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1, decay: Math.random() * 0.035 + 0.025,
+        r: Math.random() * 2.5 + 1,
+        hue: Math.random() < 0.5 ? "202,170,152" : "232,207,192"
+      });
+    }
+  });
+  document.addEventListener("mouseup", () => setMode("default"));
+
+  // ── Skew ring on fast movement ──
+  let ringSkewX = 0, ringSkewY = 0;
+
+  // ── RAF loop ──
+  function tick() {
+    // Lerp ring
+    rx += (mx - rx) * 0.1;
+    ry += (my - ry) * 0.1;
+
+    // Dot: snap
+    dot.style.left = mx + "px";
+    dot.style.top  = my + "px";
+
+    // Ring: lerped + velocity skew
+    const speed = Math.sqrt(velX * velX + velY * velY);
+    const maxSkew = 0.18;
+    ringSkewX += (-velX * 0.004 - ringSkewX) * 0.18;
+    ringSkewY += (-velY * 0.004 - ringSkewY) * 0.18;
+    const skewClamp = (v) => Math.max(-maxSkew, Math.min(maxSkew, v));
+
+    ring.style.left = rx + "px";
+    ring.style.top  = ry + "px";
+    ring.style.transform = `translate(-50%,-50%) skew(${skewClamp(ringSkewX)}rad, ${skewClamp(ringSkewY)}rad)`;
+
+    // Velocity reset
+    velX *= 0.75; velY *= 0.75;
+
+    // ── FX canvas: particle burst ──
+    fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vx *= 0.92; p.vy *= 0.92;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+
+      fxCtx.beginPath();
+      fxCtx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+      fxCtx.fillStyle = `rgba(${p.hue},${p.life.toFixed(3)})`;
+      fxCtx.fill();
+    }
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+
+
+
+
 
 // ===== LOADER =====
 window.addEventListener("load", () => {
@@ -447,7 +556,7 @@ window.addEventListener("load", () => {
   });
 });
 
-// ===== PARTICLE CANVAS — STARFIELD =====
+// ===== PARTICLE CANVAS — STARFIELD (full-page, scroll-aware, synced with cursor) =====
 const canvas = document.getElementById("particleCanvas");
 if (canvas) {
   const ctx = canvas.getContext("2d");
@@ -460,51 +569,51 @@ if (canvas) {
     initStars();
   });
 
-  let mx = -999,
-    my = -999;
-  document.addEventListener("mousemove", (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-  });
-  document.addEventListener("mouseleave", () => {
-    mx = -999;
-    my = -999;
+  // ── Shared mouse state (synced with cursor JS) ──
+  let mx = -999, my = -999;
+  let smx = -999, smy = -999; // smoothed for aurora pull
+  document.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
+  document.addEventListener("mouseleave", () => { mx = -999; my = -999; });
+
+  // ── Scroll state for section-aware aurora ──
+  let scrollRatio = 0; // 0 = top, 1 = bottom
+  let targetScrollRatio = 0;
+  window.addEventListener("scroll", () => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    targetScrollRatio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+  }, { passive: true });
+
+  // ── Click ripple waves (synced with cursor click burst) ──
+  const bgRipples = [];
+  document.addEventListener("mousedown", () => {
+    if (mx < 0) return;
+    bgRipples.push({ x: mx, y: my, r: 0, alpha: 0.35, speed: 3.5 });
+    bgRipples.push({ x: mx, y: my, r: 0, alpha: 0.18, speed: 2.2 });
   });
 
   // ── Stars ──
-  const STAR_COUNT = 160;
+  const STAR_COUNT = 200;
   let stars = [];
 
-  function mkStar(forced) {
-    const size =
-      Math.random() < 0.15
-        ? Math.random() * 1.8 + 1.2 // big
-        : Math.random() < 0.4
-          ? Math.random() * 0.9 + 0.5 // medium
-          : Math.random() * 0.45 + 0.15; // tiny
+  function mkStar() {
+    const size = Math.random() < 0.12 ? Math.random() * 2 + 1.2
+               : Math.random() < 0.38 ? Math.random() * 0.9 + 0.5
+               : Math.random() * 0.45 + 0.15;
     return {
-      x: forced ? Math.random() * W : Math.random() * W,
-      y: forced ? Math.random() * H : Math.random() * H,
+      x: Math.random() * W, y: Math.random() * H,
       size,
       baseAlpha: Math.random() * 0.5 + 0.25,
       alpha: 0,
       twinkleSpeed: Math.random() * 0.012 + 0.004,
       twinklePhase: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.08,
-      vy: (Math.random() - 0.5) * 0.06,
-      // colour: mostly white, some warm, some blue
-      hue:
-        Math.random() < 0.3
-          ? `rgba(232,207,192,`
-          : Math.random() < 0.5
-            ? `rgba(180,195,255,`
-            : `rgba(255,255,255,`,
+      vx: (Math.random() - 0.5) * 0.07,
+      vy: (Math.random() - 0.5) * 0.055,
+      hue: Math.random() < 0.3 ? "232,207,192"
+         : Math.random() < 0.5 ? "180,195,255"
+         : "255,255,255",
     };
   }
-
-  function initStars() {
-    stars = Array.from({ length: STAR_COUNT }, () => mkStar(true));
-  }
+  function initStars() { stars = Array.from({ length: STAR_COUNT }, mkStar); }
   initStars();
 
   // ── Shooting stars ──
@@ -514,191 +623,181 @@ if (canvas) {
     meteors.push({
       x: fromTop ? Math.random() * W : -50,
       y: fromTop ? -10 : Math.random() * H * 0.4,
-      len: Math.random() * 120 + 80,
+      len: Math.random() * 130 + 80,
       speed: Math.random() * 6 + 5,
       alpha: 1,
-      angle: fromTop
-        ? Math.PI / 4 + (Math.random() - 0.5) * 0.3
-        : Math.PI / 6 + (Math.random() - 0.5) * 0.2,
+      angle: fromTop ? Math.PI / 4 + (Math.random() - 0.5) * 0.3
+                     : Math.PI / 6 + (Math.random() - 0.5) * 0.2,
       width: Math.random() * 1.2 + 0.4,
-      tail: [],
     });
   }
-  // Spawn meteor every 2.5–5s
-  setInterval(spawnMeteor, Math.random() * 2500 + 2500);
-  setInterval(() => {
-    if (Math.random() < 0.3) spawnMeteor();
-  }, 1000);
+  setInterval(() => spawnMeteor(), 3000 + Math.random() * 2000);
+  setInterval(() => { if (Math.random() < 0.28) spawnMeteor(); }, 1100);
 
-  // ── Aurora blobs (slow drifting colour blobs at the bottom edge) ──
+  // ── Aurora blobs — 5 blobs covering full page depth ──
+  // Each aurora "zone" corresponds to a scroll position
   const auroras = [
-    {
-      x: W * 0.15,
-      y: H * 0.88,
-      r: 320,
-      hue: "202,170,152",
-      phase: 0,
-      speed: 0.003,
-    },
-    {
-      x: W * 0.6,
-      y: H * 0.92,
-      r: 260,
-      hue: "107,130,234",
-      phase: 2.1,
-      speed: 0.004,
-    },
-    {
-      x: W * 0.85,
-      y: H * 0.85,
-      r: 200,
-      hue: "90,191,116",
-      phase: 4.3,
-      speed: 0.0025,
-    },
+    // Hero zone — warm primary
+    { bx: 0.15, by: 0.80, x: 0, y: 0, r: 360, hue: "202,170,152", phase: 0,   speed: 0.003, zone: 0.0 },
+    // Hero zone — blue accent (top right)
+    { bx: 0.85, by: 0.25, x: 0, y: 0, r: 300, hue: "107,130,234", phase: 2.1, speed: 0.0025,zone: 0.05 },
+    // About/Skills zone — warm mid
+    { bx: 0.20, by: 0.55, x: 0, y: 0, r: 290, hue: "202,170,152", phase: 1.0, speed: 0.004, zone: 0.35 },
+    // Projects zone — blue deep
+    { bx: 0.75, by: 0.60, x: 0, y: 0, r: 260, hue: "90,120,220",  phase: 3.5, speed: 0.003, zone: 0.65 },
+    // Contact zone — warm accent
+    { bx: 0.35, by: 0.75, x: 0, y: 0, r: 240, hue: "180,130,100", phase: 4.8, speed: 0.0035,zone: 0.88 },
   ];
+  // Init positions
+  auroras.forEach(a => { a.x = a.bx * W; a.y = a.by * H; });
 
   // ── Draw loop ──
-  let tick = 0;
   function draw() {
-    tick++;
     ctx.clearRect(0, 0, W, H);
 
-    // Aurora glow
-    auroras.forEach((a) => {
+    // Smooth scroll
+    scrollRatio += (targetScrollRatio - scrollRatio) * 0.04;
+
+    // Smooth mouse for aurora
+    if (mx > 0) {
+      smx += (mx - smx) * 0.025;
+      smy += (my - smy) * 0.025;
+    }
+
+    // ── Aurora blobs ──
+    auroras.forEach((a, i) => {
       a.phase += a.speed;
-      const pulse = Math.sin(a.phase) * 0.03 + 0.07;
+
+      // Base position from viewport — shifts UP as user scrolls past this aurora's zone
+      const scrollDelta = (scrollRatio - a.zone) * H * 0.6;
+      const targetY = a.by * H - scrollDelta;
+      a.y += (targetY - a.y) * 0.012;
+      a.x = a.bx * W;
+
+      // Subtle mouse pull
+      if (mx > 0) {
+        const pullStrength = 0.00014;
+        a.x += (smx - a.x) * pullStrength * 60;
+        a.y += (smy - a.y) * pullStrength * 40;
+      }
+
+      // Proximity to current scroll zone = brighter
+      const zoneProx = Math.max(0, 1 - Math.abs(scrollRatio - a.zone) * 4);
+      const pulse = Math.sin(a.phase) * 0.022 + 0.055;
+      const extra = zoneProx * 0.045;
+
+      // Brighter near cursor
+      let cursorBoost = 0;
+      if (mx > 0) {
+        const d = Math.hypot(mx - a.x, my - a.y);
+        cursorBoost = Math.max(0, (1 - d / 600)) * 0.04;
+      }
+
+      const intensity = pulse + extra + cursorBoost;
       const grad = ctx.createRadialGradient(a.x, a.y, 0, a.x, a.y, a.r);
-      grad.addColorStop(0, `rgba(${a.hue},${(pulse * 1.6).toFixed(3)})`);
-      grad.addColorStop(0.5, `rgba(${a.hue},${(pulse * 0.5).toFixed(3)})`);
-      grad.addColorStop(1, `rgba(${a.hue},0)`);
+      grad.addColorStop(0,   `rgba(${a.hue},${(intensity * 1.8).toFixed(3)})`);
+      grad.addColorStop(0.45,`rgba(${a.hue},${(intensity * 0.5).toFixed(3)})`);
+      grad.addColorStop(1,   `rgba(${a.hue},0)`);
       ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.ellipse(
-        a.x,
-        a.y + Math.sin(a.phase * 0.7) * 20,
-        a.r * 1.6,
-        a.r * 0.55,
-        0,
-        0,
-        Math.PI * 2,
-      );
+      ctx.ellipse(a.x, a.y + Math.sin(a.phase * 0.7) * 22, a.r * 1.7, a.r * 0.5, 0, 0, Math.PI * 2);
       ctx.fill();
     });
 
-    // Stars
-    stars.forEach((s) => {
-      // Twinkle
+    // ── Stars ──
+    stars.forEach(s => {
       s.twinklePhase += s.twinkleSpeed;
-      s.alpha = s.baseAlpha * (0.55 + 0.45 * Math.sin(s.twinklePhase));
 
-      // Gentle drift
-      s.x += s.vx;
-      s.y += s.vy;
-      if (s.x < -10) s.x = W + 5;
-      if (s.x > W + 10) s.x = -5;
-      if (s.y < -10) s.y = H + 5;
-      if (s.y > H + 10) s.y = -5;
+      let boost = 1;
+      if (mx > 0) {
+        const d = Math.hypot(s.x - mx, s.y - my);
+        if (d < 160) boost = 1 + (1 - d / 160) * 1.8;
+      }
+      s.alpha = s.baseAlpha * (0.5 + 0.5 * Math.sin(s.twinklePhase)) * Math.min(boost, 2.2);
 
-      // Mouse repel (subtle)
-      const dx = s.x - mx,
-        dy = s.y - my;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 100) {
-        const force = ((100 - dist) / 100) * 0.6;
-        s.x += (dx / dist) * force;
-        s.y += (dy / dist) * force;
+      s.x += s.vx; s.y += s.vy;
+      if (s.x < -10) s.x = W + 5; if (s.x > W + 10) s.x = -5;
+      if (s.y < -10) s.y = H + 5; if (s.y > H + 10) s.y = -5;
+
+      // Repel from cursor
+      if (mx > 0) {
+        const dx = s.x - mx, dy = s.y - my;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 90) {
+          const f = (90 - dist) / 90 * 0.7;
+          s.x += dx / dist * f; s.y += dy / dist * f;
+        }
       }
 
-      // Draw star with glow for bigger ones
       if (s.size > 1) {
-        const grd = ctx.createRadialGradient(
-          s.x,
-          s.y,
-          0,
-          s.x,
-          s.y,
-          s.size * 3.5,
-        );
-        grd.addColorStop(0, `${s.hue}${s.alpha.toFixed(3)})`);
-        grd.addColorStop(0.4, `${s.hue}${(s.alpha * 0.35).toFixed(3)})`);
-        grd.addColorStop(1, `${s.hue}0)`);
-        ctx.fillStyle = grd;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size * 3.5, 0, Math.PI * 2);
-        ctx.fill();
+        const gr = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size * 3.8);
+        gr.addColorStop(0,   `rgba(${s.hue},${Math.min(s.alpha,1).toFixed(3)})`);
+        gr.addColorStop(0.4, `rgba(${s.hue},${(Math.min(s.alpha,1)*0.3).toFixed(3)})`);
+        gr.addColorStop(1,   `rgba(${s.hue},0)`);
+        ctx.fillStyle = gr;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.size * 3.8, 0, Math.PI * 2); ctx.fill();
       }
-      // Core dot
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-      ctx.fillStyle = `${s.hue}${s.alpha.toFixed(3)})`;
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${s.hue},${Math.min(s.alpha,1).toFixed(3)})`; ctx.fill();
 
-      // Cross sparkle on large stars
-      if (s.size > 1.4 && Math.sin(s.twinklePhase) > 0.6) {
-        const len = s.size * 5;
-        ctx.strokeStyle = `${s.hue}${(s.alpha * 0.35).toFixed(3)})`;
+      if (s.size > 1.4 && Math.sin(s.twinklePhase) > 0.55) {
+        const len = s.size * (5 + boost);
+        ctx.strokeStyle = `rgba(${s.hue},${(Math.min(s.alpha,1)*0.35).toFixed(3)})`;
         ctx.lineWidth = 0.5;
         ctx.beginPath();
-        ctx.moveTo(s.x - len, s.y);
-        ctx.lineTo(s.x + len, s.y);
-        ctx.moveTo(s.x, s.y - len);
-        ctx.lineTo(s.x, s.y + len);
+        ctx.moveTo(s.x - len, s.y); ctx.lineTo(s.x + len, s.y);
+        ctx.moveTo(s.x, s.y - len); ctx.lineTo(s.x, s.y + len);
         ctx.stroke();
       }
     });
 
-    // Shooting stars / meteors
-    meteors = meteors.filter((m) => m.alpha > 0.01);
-    meteors.forEach((m) => {
-      const tailX = m.x - Math.cos(m.angle) * m.len;
-      const tailY = m.y - Math.sin(m.angle) * m.len;
+    // ── Meteors ──
+    meteors = meteors.filter(m => m.alpha > 0.01);
+    meteors.forEach(m => {
+      const tx = m.x - Math.cos(m.angle)*m.len, ty = m.y - Math.sin(m.angle)*m.len;
+      const gr = ctx.createLinearGradient(tx, ty, m.x, m.y);
+      gr.addColorStop(0, `rgba(255,255,255,0)`);
+      gr.addColorStop(0.7,`rgba(232,207,192,${(m.alpha*0.4).toFixed(3)})`);
+      gr.addColorStop(1,  `rgba(255,255,255,${m.alpha.toFixed(3)})`);
+      ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(m.x, m.y);
+      ctx.strokeStyle = gr; ctx.lineWidth = m.width; ctx.lineCap = "round"; ctx.stroke();
 
-      const grad = ctx.createLinearGradient(tailX, tailY, m.x, m.y);
-      grad.addColorStop(0, `rgba(255,255,255,0)`);
-      grad.addColorStop(0.7, `rgba(232,207,192,${(m.alpha * 0.4).toFixed(3)})`);
-      grad.addColorStop(1, `rgba(255,255,255,${m.alpha.toFixed(3)})`);
+      const gg = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 5);
+      gg.addColorStop(0, `rgba(255,255,255,${m.alpha.toFixed(3)})`);
+      gg.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = gg; ctx.beginPath(); ctx.arc(m.x, m.y, 5, 0, Math.PI * 2); ctx.fill();
 
-      ctx.beginPath();
-      ctx.moveTo(tailX, tailY);
-      ctx.lineTo(m.x, m.y);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = m.width;
-      ctx.lineCap = "round";
-      ctx.stroke();
-
-      // Leading glow
-      const glowGrad = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 4);
-      glowGrad.addColorStop(0, `rgba(255,255,255,${m.alpha.toFixed(3)})`);
-      glowGrad.addColorStop(1, `rgba(255,255,255,0)`);
-      ctx.fillStyle = glowGrad;
-      ctx.beginPath();
-      ctx.arc(m.x, m.y, 4, 0, Math.PI * 2);
-      ctx.fill();
-
-      m.x += Math.cos(m.angle) * m.speed;
-      m.y += Math.sin(m.angle) * m.speed;
-      m.alpha -= 0.008;
-
-      // Remove when off screen
-      if (m.x > W + 50 || m.y > H + 50) m.alpha = 0;
+      m.x += Math.cos(m.angle)*m.speed; m.y += Math.sin(m.angle)*m.speed;
+      m.alpha -= 0.007;
+      if (m.x > W + 60 || m.y > H + 60) m.alpha = 0;
     });
 
-    // Mouse cursor glow
-    if (mx > 0 && my > 0) {
-      const cg = ctx.createRadialGradient(mx, my, 0, mx, my, 90);
-      cg.addColorStop(0, "rgba(202,170,152,0.06)");
-      cg.addColorStop(1, "rgba(202,170,152,0)");
+    // ── Click ripple waves ──
+    for (let i = bgRipples.length - 1; i >= 0; i--) {
+      const rp = bgRipples[i];
+      rp.r += rp.speed;
+      rp.alpha -= 0.005;
+      if (rp.alpha <= 0) { bgRipples.splice(i, 1); continue; }
+      ctx.beginPath(); ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(202,170,152,${rp.alpha.toFixed(3)})`;
+      ctx.lineWidth = 1; ctx.stroke();
+    }
+
+    // ── Cursor ambient glow (large soft) ──
+    if (mx > 0) {
+      const cg = ctx.createRadialGradient(mx, my, 0, mx, my, 200);
+      cg.addColorStop(0,   "rgba(202,170,152,0.07)");
+      cg.addColorStop(0.4, "rgba(202,170,152,0.03)");
+      cg.addColorStop(1,   "rgba(202,170,152,0)");
       ctx.fillStyle = cg;
-      ctx.beginPath();
-      ctx.arc(mx, my, 90, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(mx, my, 200, 0, Math.PI * 2); ctx.fill();
     }
 
     requestAnimationFrame(draw);
   }
   draw();
 }
+
 
 // ===== MAGNETIC BUTTON =====
 document

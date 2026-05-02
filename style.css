@@ -125,48 +125,126 @@ img {
 }
 
 /* ===== CURSOR ===== */
-.cursor {
-  width: 10px;
-  height: 10px;
+* { cursor: none !important; }
+
+/* ── Dot ── */
+#cur-dot {
+  position: fixed;
+  width: 6px; height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%,-50%);
+  will-change: left, top;
+  transition: transform 0.18s cubic-bezier(0.16,1,0.3,1),
+              opacity 0.2s,
+              background 0.3s,
+              width 0.3s, height 0.3s;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.12);
+}
+#cur-dot.is-hover { width: 0; height: 0; opacity: 0; }
+#cur-dot.is-click {
+  width: 10px; height: 10px;
   background: var(--primary);
-  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(202,170,152,0.8);
+}
+
+/* ── Ring ── */
+#cur-ring {
   position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition:
-    width 0.2s,
-    height 0.2s,
-    background 0.2s;
-}
-.cursor-follower {
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba(124, 92, 252, 0.5);
+  width: 48px; height: 48px;
   border-radius: 50%;
-  position: fixed;
-  top: 0;
-  left: 0;
   pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
+  z-index: 99998;
+  transform: translate(-50%,-50%);
+  will-change: left, top, width, height;
+  display: flex; align-items: center; justify-content: center;
   transition:
-    transform 0.12s ease,
-    width 0.3s,
-    height 0.3s;
+    width  0.5s cubic-bezier(0.16,1,0.3,1),
+    height 0.5s cubic-bezier(0.16,1,0.3,1),
+    opacity 0.25s;
 }
-.cursor.active {
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
+
+/* SVG ring inside */
+#cur-ring-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  transition: opacity 0.3s;
+  animation: cur-spin 8s linear infinite;
+  animation-play-state: paused;
 }
-.cursor-follower.active {
-  width: 50px;
-  height: 50px;
-  border-color: var(--accent);
+@keyframes cur-spin {
+  to { transform: rotate(360deg); }
 }
+#cur-ring.is-view #cur-ring-svg {
+  animation-play-state: running;
+}
+
+/* hide text on default, show on view */
+#cur-ring-svg text { opacity: 0; transition: opacity 0.3s; }
+#cur-ring.is-view #cur-ring-svg text { opacity: 1; }
+/* hide circle stroke on default, show as thin ring */
+#cur-ring-svg circle { opacity: 1; }
+
+/* Center arrow label */
+#cur-label {
+  font-size: 1.1rem;
+  color: rgba(202,170,152,0);
+  font-weight: 300;
+  transition: color 0.3s, transform 0.3s;
+  transform: scale(0.5);
+  position: relative; z-index: 1;
+  line-height: 1;
+}
+#cur-ring.is-view #cur-label {
+  color: rgba(202,170,152,0.9);
+  transform: scale(1);
+}
+#cur-ring.is-hover #cur-label {
+  color: rgba(255,255,255,0.5);
+  transform: scale(0.8);
+  font-size: 0.6rem;
+}
+
+/* Hover state */
+#cur-ring.is-hover {
+  width: 64px; height: 64px;
+}
+#cur-ring.is-hover #cur-ring-svg circle {
+  stroke: rgba(202,170,152,0.9);
+}
+
+/* View state — big rotating ring */
+#cur-ring.is-view {
+  width: 110px; height: 110px;
+}
+
+/* Click state */
+#cur-ring.is-click {
+  width: 34px; height: 34px;
+  transition: width 0.08s, height 0.08s;
+}
+#cur-ring.is-click #cur-ring-svg circle {
+  stroke: var(--primary);
+}
+
+/* ── FX Canvas (particle burst) ── */
+#cur-fx-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99997;
+  width: 100%; height: 100%;
+}
+
+/* ── Touch hide ── */
+@media (pointer: coarse) {
+  #cur-dot, #cur-ring, #cur-fx-canvas { display: none; }
+  * { cursor: auto !important; }
+}
+
 
 /* ===== LOADER ===== */
 .loader {
@@ -737,54 +815,112 @@ img {
   box-sizing: border-box;
 }
 
+/* ===== FULL-PAGE BACKGROUND SYSTEM =====
+   Canvas starfield (z-index:0) is the base layer.
+   All sections are transparent so starfield shows through the entire page.
+   Each section has a subtle ::before veil for readability.
+========================================== */
+
 /* Section wrapper để hero nằm full-screen */
 #home {
   position: relative;
+  z-index: 1;
   overflow: hidden;
-  background: var(--bg);
+  background: transparent;
 }
-.hero-bg {
+
+/* All sections transparent — canvas shows through */
+.about,
+.skills,
+.projects,
+.contact {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+/* Section depth veil — subtle dark overlay so text stays readable */
+.about::before,
+.skills::before,
+.projects::before,
+.contact::before {
+  content: '';
   position: absolute;
   inset: 0;
+  pointer-events: none;
   z-index: 0;
 }
-.blob {
+
+/* About: warm tint (canvas aurora warm blob is here) */
+.about::before {
+  background: linear-gradient(180deg,
+    rgba(14, 20, 32, 0.55) 0%,
+    rgba(20, 27, 40, 0.50) 50%,
+    rgba(14, 20, 32, 0.55) 100%
+  );
+}
+
+/* Skills: cooler, neutral */
+.skills::before {
+  background: linear-gradient(180deg,
+    rgba(14, 20, 32, 0.45) 0%,
+    rgba(16, 23, 36, 0.50) 50%,
+    rgba(14, 20, 32, 0.45) 100%
+  );
+}
+
+/* Projects: slightly blue tint */
+.projects::before {
+  background: linear-gradient(180deg,
+    rgba(14, 20, 38, 0.50) 0%,
+    rgba(16, 22, 42, 0.55) 50%,
+    rgba(14, 20, 38, 0.50) 100%
+  );
+}
+
+/* Contact: warm wrap */
+.contact::before {
+  background: linear-gradient(180deg,
+    rgba(14, 20, 32, 0.45) 0%,
+    rgba(24, 18, 14, 0.30) 50%,
+    rgba(14, 20, 32, 0.45) 100%
+  );
+}
+
+/* Section content must sit above the ::before veil */
+.about > *,
+.skills > *,
+.projects > *,
+.contact > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Section dividers — glowing lines between sections */
+.about::after,
+.skills::after,
+.projects::after {
+  content: '';
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
-  animation: blobMove 8s ease-in-out infinite alternate;
-}
-.blob-1 {
-  width: 600px;
-  height: 600px;
-  background: #caaa98;
-  top: -200px;
-  right: -100px;
-}
-.blob-2 {
-  width: 400px;
-  height: 400px;
-  background: #4b4038;
-  bottom: -100px;
-  left: -100px;
-  animation-delay: -4s;
-}
-@keyframes blobMove {
-  from {
-    transform: scale(1) translate(0, 0);
-  }
-  to {
-    transform: scale(1.1) translate(30px, 30px);
-  }
-}
-.grid-lines {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(202, 170, 152, 0.15) 30%,
+    rgba(202, 170, 152, 0.25) 50%,
+    rgba(202, 170, 152, 0.15) 70%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* Marquee background text */
@@ -1058,27 +1194,6 @@ img {
 }
 
 /* ===== NEW HERO — CREATIVE REDESIGN ===== */
-
-/* noise overlay */
-.hero-noise {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* extra blob */
-.blob-3 {
-  width: 350px;
-  height: 350px;
-  background: #9a8678;
-  top: 40%;
-  left: 40%;
-  animation-delay: -2s;
-  opacity: 0.08;
-}
 
 /* ── HERO TITLE NEW ── */
 .hero-line {
@@ -1663,8 +1778,6 @@ img {
 
 /* ===== ABOUT ===== */
 .about {
-  background: var(--bg-2);
-}
 
 /* ══════════════════════════════════════
    BLOCK 1 — Intro Row
@@ -2683,8 +2796,6 @@ img {
 
 /* ===== PROJECTS ===== */
 .projects {
-  background: var(--bg-2);
-}
 
 /* ══════════════════════════════════════
    NOTION GALLERY STYLE
