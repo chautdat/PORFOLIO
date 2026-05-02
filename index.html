@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio | Web Designer & Frontend Developer</title>
-    <link rel="stylesheet" href="style.css?v=204" />
+    <link rel="stylesheet" href="style.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -13,6 +13,353 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .ct-wrap {
+        display: grid !important;
+        grid-template-columns: 1fr 1.4fr !important;
+        gap: 48px !important;
+        align-items: start !important;
+      }
+      .ct-left {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 28px !important;
+      }
+      .ct-list {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+      .ct-row {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 14px !important;
+        padding: 14px 16px !important;
+        border-radius: 14px !important;
+        background: rgba(202, 170, 152, 0.05) !important;
+        border: 1px solid rgba(202, 170, 152, 0.1) !important;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.2s !important;
+      }
+      .ct-row:hover {
+        background: rgba(202, 170, 152, 0.09) !important;
+        border-color: rgba(202, 170, 152, 0.22) !important;
+        transform: translateX(4px) !important;
+      }
+      .ct-icon {
+        width: 40px !important;
+        height: 40px !important;
+        min-width: 40px !important;
+        border-radius: 10px !important;
+        background: rgba(202, 170, 152, 0.12) !important;
+        border: 1px solid rgba(202, 170, 152, 0.18) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.1rem !important;
+        color: #caaa98 !important;
+        flex-shrink: 0 !important;
+      }
+      .ct-txt {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2px !important;
+      }
+      .ct-lbl {
+        font-size: 0.67rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.09em !important;
+        text-transform: uppercase !important;
+        color: var(--text-muted) !important;
+      }
+      .ct-val {
+        font-size: 0.91rem !important;
+        font-weight: 500 !important;
+        color: var(--text) !important;
+      }
+      a.ct-val:hover {
+        color: #e8cfc0 !important;
+      }
+      .ct-form {
+        background: rgba(14, 19, 30, 0.7) !important;
+        border: 1px solid rgba(202, 170, 152, 0.12) !important;
+        border-radius: 20px !important;
+        padding: 32px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+      .ct-form-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 14px !important;
+      }
+      .ct-field {
+        position: relative !important;
+      }
+      .ct-field input,
+      .ct-field textarea {
+        width: 100% !important;
+        background: rgba(8, 12, 22, 0.9) !important;
+        border: 1px solid rgba(202, 170, 152, 0.15) !important;
+        border-radius: 12px !important;
+        padding: 20px 16px 8px !important;
+        color: #f0e8e0 !important;
+        font-size: 0.92rem !important;
+        outline: none !important;
+        resize: none !important;
+        box-sizing: border-box !important;
+      }
+      .ct-field input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px rgb(8, 12, 22) inset !important;
+        -webkit-text-fill-color: #f0e8e0 !important;
+      }
+      .ct-field input:focus,
+      .ct-field textarea:focus {
+        border-color: rgba(202, 170, 152, 0.45) !important;
+        box-shadow: 0 0 0 3px rgba(202, 170, 152, 0.08) !important;
+      }
+      .ct-field label {
+        position: absolute !important;
+        top: 50% !important;
+        left: 16px !important;
+        transform: translateY(-50%) !important;
+        font-size: 0.875rem !important;
+        color: var(--text-muted) !important;
+        pointer-events: none !important;
+        transition: all 0.2s !important;
+      }
+      .ct-field textarea ~ label {
+        top: 18px !important;
+        transform: none !important;
+      }
+      .ct-field input:focus + label,
+      .ct-field input:not(:placeholder-shown) + label,
+      .ct-field textarea:focus + label,
+      .ct-field textarea:not(:placeholder-shown) + label {
+        top: 7px !important;
+        transform: none !important;
+        font-size: 0.65rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        color: #caaa98 !important;
+      }
+      .ct-field input::placeholder,
+      .ct-field textarea::placeholder {
+        color: transparent !important;
+      }
+      @media (max-width: 860px) {
+        .ct-wrap {
+          grid-template-columns: 1fr !important;
+          gap: 32px !important;
+        }
+        .ct-form-row {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      /* ── Photo Gallery v2 ── */
+      .pg2-gallery {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        grid-template-rows: 200px 200px;
+        gap: 14px;
+        margin-bottom: 90px;
+      }
+      .pg2-card {
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
+      }
+      .pg2-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+      }
+
+      /* Card 1 — tall photo */
+      .pg2-card--tall {
+        grid-row: 1 / 3;
+        background: var(--surface);
+      }
+      .pg2-card--tall img {
+        width: 100%; height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+      }
+      .pg2-card--tall:hover img { transform: scale(1.06); }
+
+      /* Card overlay */
+      .pg2-card-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(14,19,30,0.85) 0%, transparent 50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 16px;
+      }
+      .pg2-tag {
+        align-self: flex-start;
+        background: rgba(14,19,30,0.65);
+        border: 1px solid rgba(202,170,152,0.2);
+        backdrop-filter: blur(8px);
+        border-radius: 50px;
+        padding: 4px 12px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: 0.02em;
+      }
+      .pg2-card-info { display: flex; flex-direction: column; gap: 2px; }
+      .pg2-card-title { font-size: 0.92rem; font-weight: 700; color: #fff; }
+      .pg2-card-sub { font-size: 0.72rem; color: rgba(255,255,255,0.65); }
+
+      /* Available badge */
+      .pg2-badge {
+        position: absolute;
+        top: 50%; right: -2px;
+        transform: translateY(-50%);
+        background: rgba(16,185,129,0.15);
+        border: 1px solid rgba(16,185,129,0.35);
+        border-radius: 50px 0 0 50px;
+        padding: 6px 14px 6px 10px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: #6ee7b7;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        letter-spacing: 0.04em;
+      }
+      .pg2-badge-dot {
+        width: 7px; height: 7px;
+        background: #10b981;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      /* Card 2 — Stats */
+      .pg2-card--stat {
+        background: rgba(202,170,152,0.06);
+        border: 1px solid rgba(202,170,152,0.12);
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .pg2-stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .pg2-stat {
+        display: flex; flex-direction: column; gap: 2px;
+      }
+      .pg2-stat-num {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 800;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+      }
+      .pg2-stat-lbl {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+      .pg2-stat-quote {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-style: italic;
+        line-height: 1.5;
+        border-left: 2px solid rgba(202,170,152,0.3);
+        padding-left: 10px;
+        margin: 0;
+      }
+
+      /* Card 3 & 5 — Photos */
+      .pg2-card--photo {
+        background: linear-gradient(135deg, #1e2a3d, #202940);
+      }
+      .pg2-card--photo img {
+        width: 100%; height: 100%;
+        object-fit: cover; display: block;
+        transition: transform 0.5s ease;
+      }
+      .pg2-card--photo:hover img { transform: scale(1.07); }
+      .pg2-card--photo .pg2-card-overlay {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .pg2-card--photo:hover .pg2-card-overlay { opacity: 1; }
+
+      /* Card 4 — Tech stack */
+      .pg2-card--stack {
+        background: linear-gradient(135deg, rgba(202,170,152,0.08), rgba(154,134,120,0.05));
+        border: 1px solid rgba(202,170,152,0.14);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+        overflow: hidden;
+      }
+      .pg2-stack-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+      }
+      .pg2-stack-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .pg2-stack-list span {
+        background: rgba(202,170,152,0.10);
+        border: 1px solid rgba(202,170,152,0.18);
+        border-radius: 50px;
+        padding: 4px 12px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .pg2-stack-icon {
+        position: absolute;
+        bottom: 14px; right: 16px;
+        font-size: 2.5rem;
+        color: rgba(202,170,152,0.08);
+        line-height: 1;
+      }
+
+      @media (max-width: 900px) {
+        .pg2-gallery {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 180px 180px 180px;
+        }
+        .pg2-card--tall { grid-row: 1 / 2; grid-column: 1 / 3; }
+      }
+      @media (max-width: 600px) {
+        .pg2-gallery {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto;
+        }
+        .pg2-card--tall { grid-row: auto; grid-column: auto; height: 240px; }
+        .pg2-card--stat, .pg2-card--stack { min-height: 180px; }
+      }
+    </style>
   </head>
   <body>
     <!-- Scroll Progress Bar -->
@@ -61,13 +408,25 @@
         <div class="loader-ring">
           <svg viewBox="0 0 120 120">
             <defs>
-              <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#caaa98"/>
-                <stop offset="100%" style="stop-color:#9a8678"/>
+              <linearGradient
+                id="loaderGrad"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" style="stop-color: #caaa98" />
+                <stop offset="100%" style="stop-color: #9a8678" />
               </linearGradient>
             </defs>
-            <circle class="loader-ring-track" cx="60" cy="60" r="54"/>
-            <circle class="loader-ring-fill" cx="60" cy="60" r="54" id="loaderRingFill"/>
+            <circle class="loader-ring-track" cx="60" cy="60" r="54" />
+            <circle
+              class="loader-ring-fill"
+              cx="60"
+              cy="60"
+              r="54"
+              id="loaderRingFill"
+            />
           </svg>
           <span class="loader-percent" id="loaderPercent">0</span>
         </div>
@@ -385,46 +744,76 @@
         </div>
 
         <!-- ── BLOCK 2: Photo Gallery ── -->
-        <div class="about-gallery" data-scroll="fade-up" data-delay="100">
-          <div class="about-gallery-item ag-tall">
-            <img src="images/avatar.jpg" alt="Dat at work" />
-            <div class="ag-overlay"><span>Daily coding ☕</span></div>
-          </div>
-          <div class="about-gallery-col">
-            <div
-              class="about-gallery-item ag-placeholder-item"
-              data-label="photo-2"
-            >
-              <img
-                src="images/photo-2.jpg"
-                alt="Outdoor"
-                onerror="this.style.display = 'none'"
-              />
-              <div class="ag-overlay"><span>Outdoor vibes 🌿</span></div>
+        <div class="pg2-gallery" data-scroll="fade-up" data-delay="100">
+
+          <!-- Card 1: Main photo — tall -->
+          <div class="pg2-card pg2-card--tall">
+            <img src="images/avatar.jpg" alt="Chau Tan Dat" />
+            <div class="pg2-card-overlay">
+              <span class="pg2-tag">📍 Ho Chi Minh City</span>
+              <div class="pg2-card-info">
+                <span class="pg2-card-title">Daily Coding ☕</span>
+                <span class="pg2-card-sub">Frontend Developer & Designer</span>
+              </div>
             </div>
-            <div
-              class="about-gallery-item ag-placeholder-item"
-              data-label="photo-3"
-            >
-              <img
-                src="images/photo-3.jpg"
-                alt="Sport"
-                onerror="this.style.display = 'none'"
-              />
-              <div class="ag-overlay"><span>Football lover ⚽</span></div>
+            <div class="pg2-badge pg2-badge--avail">
+              <span class="pg2-badge-dot"></span> Available for work
             </div>
           </div>
-          <div
-            class="about-gallery-item ag-wide ag-placeholder-item"
-            data-label="photo-4"
-          >
-            <img
-              src="images/photo-4.jpg"
-              alt="Photography"
-              onerror="this.style.display = 'none'"
-            />
-            <div class="ag-overlay"><span>Through the lens 📸</span></div>
+
+          <!-- Card 2: Stat card -->
+          <div class="pg2-card pg2-card--stat">
+            <div class="pg2-stat-grid">
+              <div class="pg2-stat">
+                <span class="pg2-stat-num">3+</span>
+                <span class="pg2-stat-lbl">Years exp.</span>
+              </div>
+              <div class="pg2-stat">
+                <span class="pg2-stat-num">20+</span>
+                <span class="pg2-stat-lbl">Projects</span>
+              </div>
+              <div class="pg2-stat">
+                <span class="pg2-stat-num">10+</span>
+                <span class="pg2-stat-lbl">Clients</span>
+              </div>
+              <div class="pg2-stat">
+                <span class="pg2-stat-num">∞</span>
+                <span class="pg2-stat-lbl">Passion</span>
+              </div>
+            </div>
+            <p class="pg2-stat-quote">"Design is not just what it looks like — it's how it works."</p>
           </div>
+
+          <!-- Card 3: Photo 2 -->
+          <div class="pg2-card pg2-card--photo ag-placeholder-item" data-label="photo-2">
+            <img src="images/photo-2.jpg" alt="Outdoor" onerror="this.style.display='none'" />
+            <div class="pg2-card-overlay">
+              <div class="pg2-card-info">
+                <span class="pg2-card-title">Outdoor Vibes 🌿</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Tech stack -->
+          <div class="pg2-card pg2-card--stack">
+            <span class="pg2-stack-label">Tech I love</span>
+            <div class="pg2-stack-list">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+              <span>React</span><span>Figma</span><span>Node.js</span>
+            </div>
+            <div class="pg2-stack-icon"><i class="bx bx-code-alt"></i></div>
+          </div>
+
+          <!-- Card 5: Photo 3 -->
+          <div class="pg2-card pg2-card--photo ag-placeholder-item" data-label="photo-3">
+            <img src="images/photo-3.jpg" alt="Sport" onerror="this.style.display='none'" />
+            <div class="pg2-card-overlay">
+              <div class="pg2-card-info">
+                <span class="pg2-card-title">Football ⚽</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ── BLOCK 3: My Journey Timeline ── -->
@@ -961,23 +1350,30 @@
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Get In Touch</span>
-          <h2 class="section-title section-line-reveal" data-scroll="char-split">
+          <h2
+            class="section-title section-line-reveal"
+            data-scroll="char-split"
+          >
             Let's <span class="gradient-text">Work Together</span>
           </h2>
         </div>
 
         <div class="ct-wrap">
-
           <!-- LEFT: Info -->
           <div class="ct-left">
-            <p class="ct-desc">Tôi luôn sẵn sàng nhận dự án mới và thử thách sáng tạo. Hãy liên hệ với tôi!</p>
+            <p class="ct-desc">
+              Tôi luôn sẵn sàng nhận dự án mới và thử thách sáng tạo. Hãy liên
+              hệ với tôi!
+            </p>
 
             <div class="ct-list">
               <div class="ct-row">
                 <span class="ct-icon"><i class="bx bx-envelope"></i></span>
                 <div class="ct-txt">
                   <span class="ct-lbl">Email</span>
-                  <a href="mailto:chautdat1109@gmail.com" class="ct-val">chautdat1109@gmail.com</a>
+                  <a href="mailto:chautdat1109@gmail.com" class="ct-val"
+                    >chautdat1109@gmail.com</a
+                  >
                 </div>
               </div>
               <div class="ct-row">
@@ -998,34 +1394,66 @@
                 <span class="ct-icon"><i class="bx bxl-github"></i></span>
                 <div class="ct-txt">
                   <span class="ct-lbl">GitHub</span>
-                  <a href="https://github.com/chautdat" target="_blank" rel="noopener" class="ct-val">github.com/chautdat</a>
+                  <a
+                    href="https://github.com/chautdat"
+                    target="_blank"
+                    rel="noopener"
+                    class="ct-val"
+                    >github.com/chautdat</a
+                  >
                 </div>
               </div>
             </div>
           </div>
 
           <!-- RIGHT: Form -->
-          <form class="ct-form" id="contactForm" action="https://formspree.io/f/mjgjnqpo" method="POST">
-            <input type="hidden" name="_subject" value="New message from portfolio!" />
+          <form
+            class="ct-form"
+            id="contactForm"
+            action="https://formspree.io/f/mjgjnqpo"
+            method="POST"
+          >
+            <input
+              type="hidden"
+              name="_subject"
+              value="New message from portfolio!"
+            />
             <div class="ct-form-row">
               <div class="ct-field">
-                <input type="text" name="name" id="fname" placeholder=" " required />
+                <input
+                  type="text"
+                  name="name"
+                  id="fname"
+                  placeholder=" "
+                  required
+                />
                 <label for="fname">Your Name</label>
               </div>
               <div class="ct-field">
-                <input type="email" name="email" id="femail" placeholder=" " required />
+                <input
+                  type="email"
+                  name="email"
+                  id="femail"
+                  placeholder=" "
+                  required
+                />
                 <label for="femail">Your Email</label>
               </div>
             </div>
             <div class="ct-field">
-              <textarea name="message" id="fmessage" placeholder=" " rows="6" required></textarea>
+              <textarea
+                name="message"
+                id="fmessage"
+                placeholder=" "
+                rows="6"
+                required
+              ></textarea>
               <label for="fmessage">Your Message</label>
             </div>
             <button type="submit" class="btn-primary btn-full">
               Send Message <i class="bx bx-send"></i>
             </button>
           </form>
-
         </div>
       </div>
     </section>
