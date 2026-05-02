@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio | Web Designer & Frontend Developer</title>
-    <link rel="stylesheet" href="style.css?v=203" />
+    <link rel="stylesheet" href="style.css?v=204" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -58,8 +58,21 @@
     <!-- Loader -->
     <div class="loader" id="loader">
       <div class="loader-inner">
-        <span class="loader-text">Loading</span>
-        <div class="loader-bar"><div class="loader-fill"></div></div>
+        <div class="loader-ring">
+          <svg viewBox="0 0 120 120">
+            <defs>
+              <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#caaa98"/>
+                <stop offset="100%" style="stop-color:#9a8678"/>
+              </linearGradient>
+            </defs>
+            <circle class="loader-ring-track" cx="60" cy="60" r="54"/>
+            <circle class="loader-ring-fill" cx="60" cy="60" r="54" id="loaderRingFill"/>
+          </svg>
+          <span class="loader-percent" id="loaderPercent">0</span>
+        </div>
+        <div class="loader-name">Chau Tan Dat</div>
+        <div class="loader-sub">Portfolio</div>
       </div>
     </div>
 
@@ -1093,6 +1106,6 @@
     </div>
     <div class="mm-backdrop" id="mmBackdrop"></div>
 
-    <script src="script.js?v=203"></script>
+    <script src="script.js?v=204"></script>
   </body>
 </html>

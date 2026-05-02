@@ -174,13 +174,40 @@
 })();
 
 // ===== LOADER =====
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("loader").classList.add("hidden");
-    document.body.classList.remove("no-scroll");
-    animateStats();
-  }, 2000);
-});
+(function () {
+  const ring = document.getElementById("loaderRingFill");
+  const percentEl = document.getElementById("loaderPercent");
+  const circumference = 2 * Math.PI * 54; // 339.3
+  let current = 0;
+  const duration = 1800; // ms
+  const start = performance.now();
+
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // easeOutCubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    current = Math.round(eased * 100);
+    if (percentEl) percentEl.textContent = current;
+    if (ring) ring.style.strokeDashoffset = circumference * (1 - eased);
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    }
+  }
+  requestAnimationFrame(tick);
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      if (percentEl) percentEl.textContent = "100";
+      if (ring) ring.style.strokeDashoffset = 0;
+      setTimeout(() => {
+        document.getElementById("loader").classList.add("hidden");
+        document.body.classList.remove("no-scroll");
+        animateStats();
+      }, 400);
+    }, 300);
+  });
+})();
 document.body.classList.add("no-scroll");
 
 // ===== NAVBAR =====
