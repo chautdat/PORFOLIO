@@ -4781,10 +4781,6 @@ a.ct-val:hover {
   .project-card.featured {
     grid-column: auto;
   }
-  .footer-inner {
-    flex-direction: column;
-    text-align: center;
-  }
 }
 
 /* ================================================================

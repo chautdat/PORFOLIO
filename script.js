@@ -1228,17 +1228,16 @@ const labelObserver = new IntersectionObserver(
           flyLabel.textContent = sectionLabels[id];
           flyLabel.classList.add("visible");
         }
+      } else {
+        // Hide label when this section leaves view
+        const id = entry.target.id;
+        if (sectionLabels[id] && flyLabel.textContent === sectionLabels[id]) {
+          flyLabel.classList.remove("visible");
+        }
       }
     });
-    // Hide when none intersecting
-    const anyVisible = entries.some(
-      (e) => e.isIntersecting && sectionLabels[e.target.id],
-    );
-    if (!anyVisible && !entries.some((e) => e.isIntersecting)) {
-      flyLabel.classList.remove("visible");
-    }
   },
-  { threshold: 0.4 },
+  { threshold: 0.3 },
 );
 document
   .querySelectorAll("#about, #skills, #projects, #contact")
