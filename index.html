@@ -960,114 +960,72 @@
     <section class="contact section" id="contact">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag" data-scroll="fade-left">Get In Touch</span>
-          <h2
-            class="section-title section-line-reveal"
-            data-scroll="char-split"
-          >
+          <span class="section-tag">Get In Touch</span>
+          <h2 class="section-title section-line-reveal" data-scroll="char-split">
             Let's <span class="gradient-text">Work Together</span>
           </h2>
         </div>
-        <div class="contact-grid">
-          <div class="contact-info">
-            <p class="contact-desc">
-              Tôi luôn sẵn sàng nhận dự án mới và thử thách sáng tạo. Hãy liên
-              hệ với tôi!
-            </p>
-            <div class="contact-items">
-              <div class="contact-item">
-                <div class="contact-icon"><i class="bx bx-envelope"></i></div>
-                <div class="contact-item-body">
-                  <span class="contact-item-label">Email</span>
-                  <div class="contact-item-value">
-                    <a href="mailto:chautdat1109@gmail.com"
-                      >chautdat1109@gmail.com</a
-                    >
-                  </div>
+
+        <div class="ct-wrap">
+
+          <!-- LEFT: Info -->
+          <div class="ct-left">
+            <p class="ct-desc">Tôi luôn sẵn sàng nhận dự án mới và thử thách sáng tạo. Hãy liên hệ với tôi!</p>
+
+            <div class="ct-list">
+              <div class="ct-row">
+                <span class="ct-icon"><i class="bx bx-envelope"></i></span>
+                <div class="ct-txt">
+                  <span class="ct-lbl">Email</span>
+                  <a href="mailto:chautdat1109@gmail.com" class="ct-val">chautdat1109@gmail.com</a>
                 </div>
               </div>
-              <div class="contact-item">
-                <div class="contact-icon"><i class="bx bx-phone"></i></div>
-                <div class="contact-item-body">
-                  <span class="contact-item-label">Phone</span>
-                  <div class="contact-item-value">
-                    <a href="tel:+84984905718">+84 984 905 718</a>
-                  </div>
+              <div class="ct-row">
+                <span class="ct-icon"><i class="bx bx-phone"></i></span>
+                <div class="ct-txt">
+                  <span class="ct-lbl">Phone</span>
+                  <a href="tel:+84984905718" class="ct-val">+84 984 905 718</a>
                 </div>
               </div>
-              <div class="contact-item">
-                <div class="contact-icon"><i class="bx bx-map"></i></div>
-                <div class="contact-item-body">
-                  <span class="contact-item-label">Location</span>
-                  <div class="contact-item-value">
-                    Ho Chi Minh City, Vietnam
-                  </div>
+              <div class="ct-row">
+                <span class="ct-icon"><i class="bx bx-map"></i></span>
+                <div class="ct-txt">
+                  <span class="ct-lbl">Location</span>
+                  <span class="ct-val">Ho Chi Minh City, Vietnam</span>
                 </div>
               </div>
-              <div class="contact-item">
-                <div class="contact-icon"><i class="bx bxl-github"></i></div>
-                <div class="contact-item-body">
-                  <span class="contact-item-label">GitHub</span>
-                  <div class="contact-item-value">
-                    <a
-                      href="https://github.com/chautdat"
-                      target="_blank"
-                      rel="noopener"
-                      >github.com/chautdat</a
-                    >
-                  </div>
+              <div class="ct-row">
+                <span class="ct-icon"><i class="bx bxl-github"></i></span>
+                <div class="ct-txt">
+                  <span class="ct-lbl">GitHub</span>
+                  <a href="https://github.com/chautdat" target="_blank" rel="noopener" class="ct-val">github.com/chautdat</a>
                 </div>
               </div>
             </div>
           </div>
-          <form
-            class="contact-form"
-            id="contactForm"
-            action="https://formspree.io/f/mjgjnqpo"
-            method="POST"
-          >
-            <input
-              type="hidden"
-              name="_subject"
-              value="New message from portfolio!"
-            />
-            <input type="hidden" name="_next" value="" />
-            <div class="form-row">
-              <div class="form-group">
-                <input
-                  type="text"
-                  name="name"
-                  id="fname"
-                  placeholder=" "
-                  required
-                />
+
+          <!-- RIGHT: Form -->
+          <form class="ct-form" id="contactForm" action="https://formspree.io/f/mjgjnqpo" method="POST">
+            <input type="hidden" name="_subject" value="New message from portfolio!" />
+            <div class="ct-form-row">
+              <div class="ct-field">
+                <input type="text" name="name" id="fname" placeholder=" " required />
                 <label for="fname">Your Name</label>
               </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  name="email"
-                  id="femail"
-                  placeholder=" "
-                  required
-                />
+              <div class="ct-field">
+                <input type="email" name="email" id="femail" placeholder=" " required />
                 <label for="femail">Your Email</label>
               </div>
             </div>
-            <div class="form-group">
-              <textarea
-                name="message"
-                id="fmessage"
-                placeholder=" "
-                rows="5"
-                required
-              ></textarea>
+            <div class="ct-field">
+              <textarea name="message" id="fmessage" placeholder=" " rows="6" required></textarea>
               <label for="fmessage">Your Message</label>
             </div>
             <button type="submit" class="btn-primary btn-full">
               Send Message <i class="bx bx-send"></i>
             </button>
           </form>
+
         </div>
       </div>
     </section>
