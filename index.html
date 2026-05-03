@@ -406,122 +406,368 @@
         }
       }
 
-      /* ── Photography Section ── */
+      /* ══════════════════════════════
+         PHOTOGRAPHY — Immersive v6
+      ══════════════════════════════ */
+
+      @keyframes galFadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px) scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes lbScaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.86);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
       .photo-section {
-        padding: 100px 0 !important;
-        position: relative !important;
+        padding: 100px 0 80px !important;
+        overflow: hidden !important;
       }
       .photo-section .section-header {
         text-align: center !important;
-        margin-bottom: 60px !important;
+        margin-bottom: 40px !important;
       }
       .photo-section .section-title {
         font-size: clamp(2rem, 4vw, 3rem) !important;
         font-family: "Bricolage Grotesque", sans-serif !important;
         color: #fff !important;
-        margin-bottom: 12px !important;
+        margin-bottom: 10px !important;
       }
-      .photo-section .section-subtitle {
-        color: rgba(255, 255, 255, 0.5) !important;
-        font-size: 1rem !important;
-        max-width: 500px !important;
+      .photo-section .section-sub {
+        color: rgba(255, 255, 255, 0.45) !important;
+        font-size: 0.95rem !important;
+        max-width: 480px !important;
         margin: 0 auto !important;
       }
 
-      /* Masonry grid */
-      .ph-grid {
-        columns: 3 !important;
-        column-gap: 16px !important;
-        break-inside: avoid !important;
+      /* ── HUD ── */
+      .gal-hud {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 0 max(40px, 6vw) !important;
+        margin-bottom: 20px !important;
       }
-      @media (max-width: 900px) {
-        .ph-grid {
-          columns: 2 !important;
-        }
+      .gal-hud-tag {
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 2.5px !important;
+        text-transform: uppercase !important;
+        color: rgba(202, 170, 152, 0.5) !important;
+        font-family: "Courier New", monospace !important;
       }
-      @media (max-width: 540px) {
-        .ph-grid {
-          columns: 1 !important;
-        }
+      .gal-hud-counter {
+        font-family: "Courier New", monospace !important;
+        font-size: 0.75rem !important;
+        color: rgba(255, 255, 255, 0.32) !important;
+        letter-spacing: 4px !important;
+      }
+      .gal-hud-hint {
+        font-size: 0.65rem !important;
+        color: rgba(255, 255, 255, 0.18) !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        font-family: "Courier New", monospace !important;
       }
 
-      .ph-item {
-        break-inside: avoid !important;
-        position: relative !important;
-        margin-bottom: 16px !important;
+      /* ── Viewport ── */
+      .gal-viewport {
+        overflow: hidden !important;
+        padding: 16px 0 24px !important;
+        -webkit-mask-image: linear-gradient(
+          90deg,
+          transparent 0%,
+          #000 7%,
+          #000 93%,
+          transparent 100%
+        ) !important;
+        mask-image: linear-gradient(
+          90deg,
+          transparent 0%,
+          #000 7%,
+          #000 93%,
+          transparent 100%
+        ) !important;
+        cursor: grab !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+      }
+      .gal-viewport.is-dragging {
+        cursor: grabbing !important;
+      }
+
+      /* ── Track ── */
+      .gal-track {
+        display: flex !important;
+        gap: 18px !important;
+        align-items: center !important;
+        will-change: transform !important;
+        transition: transform 0.78s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      /* ── Card ── */
+      .gal-card {
+        flex-shrink: 0 !important;
+        width: 74vw !important;
+        max-width: 880px !important;
+        height: 56vh !important;
+        min-height: 300px !important;
+        max-height: 600px !important;
         border-radius: 18px !important;
         overflow: hidden !important;
+        position: relative !important;
+        transform: scale(0.8) translateZ(0) !important;
+        will-change: transform, opacity !important;
+        transition:
+          transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.65s ease,
+          box-shadow 0.65s ease !important;
+        opacity: 0.35 !important;
         cursor: pointer !important;
-        background: rgba(255, 255, 255, 0.04) !important;
-        border: 1px solid rgba(255, 255, 255, 0.07) !important;
+        animation: galFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both !important;
       }
-      .ph-item img {
-        width: 100% !important;
-        display: block !important;
-        transition: transform 0.5s ease !important;
-        border-radius: 18px !important;
+      .gal-card:nth-child(1) {
+        animation-delay: 0s !important;
       }
-      .ph-item:hover img {
-        transform: scale(1.05) !important;
+      .gal-card:nth-child(2) {
+        animation-delay: 0.1s !important;
       }
-      /* fallback gradient when no image */
-      .ph-item .ph-fallback {
-        width: 100% !important;
-        aspect-ratio: 4/3 !important;
-        background: linear-gradient(
-          135deg,
-          rgba(202, 170, 152, 0.15),
-          rgba(154, 134, 120, 0.08)
-        ) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 2.5rem !important;
+      .gal-card:nth-child(3) {
+        animation-delay: 0.2s !important;
       }
-      .ph-item .ph-overlay {
-        position: absolute !important;
-        inset: 0 !important;
-        background: linear-gradient(
-          to top,
-          rgba(10, 14, 24, 0.85) 0%,
-          transparent 55%
-        ) !important;
-        opacity: 0 !important;
-        transition: opacity 0.35s ease !important;
-        border-radius: 18px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: flex-end !important;
-        padding: 18px !important;
+      .gal-card:nth-child(4) {
+        animation-delay: 0.3s !important;
       }
-      .ph-item:hover .ph-overlay {
-        opacity: 1 !important;
-      }
-      .ph-overlay-title {
-        font-size: 0.95rem !important;
-        font-weight: 600 !important;
-        color: #fff !important;
-        margin-bottom: 4px !important;
-      }
-      .ph-overlay-meta {
-        font-size: 0.78rem !important;
-        color: rgba(255, 255, 255, 0.6) !important;
-        display: flex !important;
-        gap: 10px !important;
-        align-items: center !important;
-      }
-      .ph-overlay-meta span {
-        display: flex !important;
-        align-items: center !important;
-        gap: 4px !important;
+      .gal-card:nth-child(5) {
+        animation-delay: 0.4s !important;
       }
 
-      /* Lightbox */
+      .gal-card.is-adjacent {
+        transform: scale(0.9) translateZ(0) !important;
+        opacity: 0.58 !important;
+      }
+      .gal-card.is-active {
+        transform: scale(1) translateZ(0) !important;
+        opacity: 1 !important;
+        cursor: default !important;
+        box-shadow:
+          0 0 0 1px rgba(202, 170, 152, 0.18),
+          0 50px 120px rgba(0, 0, 0, 0.68),
+          0 0 80px rgba(202, 170, 152, 0.06) !important;
+      }
+
+      /* B&W desaturate overlay — GPU-friendly alternative to CSS filter */
+      .gal-card-bw {
+        position: absolute !important;
+        inset: 0 !important;
+        background: rgba(20, 27, 40, 0.72) !important;
+        z-index: 1 !important;
+        pointer-events: none !important;
+        opacity: 1 !important;
+        transition: opacity 0.65s ease !important;
+        border-radius: inherit !important;
+      }
+      .gal-card.is-adjacent .gal-card-bw {
+        opacity: 0.55 !important;
+      }
+      .gal-card.is-active .gal-card-bw {
+        opacity: 0 !important;
+      }
+
+      /* ── Photo ── */
+      .gal-card-img {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+        pointer-events: none !important;
+        -webkit-user-drag: none !important;
+        will-change: transform !important;
+        transform: scale(1.04) translateZ(0) !important;
+        transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      .gal-card.is-active .gal-card-img {
+        transform: scale(1) translateZ(0) !important;
+      }
+
+      /* ── Overlays ── */
+      .gal-card-overlay {
+        position: absolute !important;
+        inset: 0 !important;
+        background:
+          linear-gradient(
+            to top,
+            rgba(4, 5, 12, 0.92) 0%,
+            rgba(4, 5, 12, 0.12) 42%,
+            transparent 65%
+          ),
+          linear-gradient(to bottom, rgba(4, 5, 12, 0.28) 0%, transparent 28%) !important;
+        z-index: 1 !important;
+        pointer-events: none !important;
+      }
+
+      /* Film grain — light, no blend mode */
+      .gal-card::after {
+        content: "" !important;
+        position: absolute !important;
+        inset: 0 !important;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E") !important;
+        background-size: 180px !important;
+        z-index: 5 !important;
+        pointer-events: none !important;
+        opacity: 0.35 !important;
+      }
+
+      /* Shimmer line on active */
+      .gal-card-shimmer {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 60px !important;
+        height: 100% !important;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.06),
+          transparent
+        ) !important;
+        z-index: 3 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.3s !important;
+      }
+      .gal-card.is-active .gal-card-shimmer {
+        opacity: 1 !important;
+        animation: shimmer 3.5s ease-in-out infinite !important;
+      }
+
+      /* ── Info overlay ── */
+      .gal-card-info {
+        position: absolute !important;
+        bottom: 32px !important;
+        left: 40px !important;
+        right: 40px !important;
+        z-index: 4 !important;
+        opacity: 0 !important;
+        transform: translateY(16px) !important;
+        transition:
+          opacity 0.55s ease 0.12s,
+          transform 0.55s ease 0.12s !important;
+        pointer-events: none !important;
+      }
+      .gal-card.is-active .gal-card-info {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+      .gal-card-num {
+        display: block !important;
+        font-family: "Courier New", monospace !important;
+        font-size: 0.63rem !important;
+        color: rgba(202, 170, 152, 0.7) !important;
+        letter-spacing: 5px !important;
+        margin-bottom: 8px !important;
+      }
+      .gal-card-title {
+        display: block !important;
+        font-family: "Bricolage Grotesque", sans-serif !important;
+        font-size: clamp(1.3rem, 2.8vw, 1.85rem) !important;
+        font-weight: 700 !important;
+        color: #fff !important;
+        line-height: 1.1 !important;
+        margin-bottom: 6px !important;
+        letter-spacing: -0.02em !important;
+      }
+      .gal-card-loc {
+        display: block !important;
+        font-size: 0.75rem !important;
+        color: rgba(255, 255, 255, 0.42) !important;
+        letter-spacing: 1px !important;
+        margin-bottom: 14px !important;
+      }
+      .gal-card-hint {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 0.6rem !important;
+        color: rgba(202, 170, 152, 0.55) !important;
+        letter-spacing: 3px !important;
+        text-transform: uppercase !important;
+        font-family: "Courier New", monospace !important;
+        border: 1px solid rgba(202, 170, 152, 0.2) !important;
+        padding: 5px 14px !important;
+        border-radius: 24px !important;
+        background: rgba(202, 170, 152, 0.04) !important;
+        backdrop-filter: blur(6px) !important;
+        -webkit-backdrop-filter: blur(6px) !important;
+        pointer-events: all !important;
+      }
+
+      /* ── Slide number (top-right) ── */
+      .gal-card-tag {
+        position: absolute !important;
+        top: 22px !important;
+        right: 24px !important;
+        z-index: 4 !important;
+        font-family: "Courier New", monospace !important;
+        font-size: 0.6rem !important;
+        color: rgba(255, 255, 255, 0.25) !important;
+        letter-spacing: 3px !important;
+        opacity: 0 !important;
+        transform: translateY(-8px) !important;
+        transition:
+          opacity 0.4s 0.2s,
+          transform 0.4s 0.2s !important;
+      }
+      .gal-card.is-active .gal-card-tag {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+
+      /* ── Progress bar ── */
+      .gal-progress {
+        margin: 22px max(40px, 6vw) 0 !important;
+        height: 1.5px !important;
+        background: rgba(255, 255, 255, 0.07) !important;
+        border-radius: 2px !important;
+        overflow: hidden !important;
+      }
+      .gal-progress-fill {
+        height: 100% !important;
+        background: linear-gradient(90deg, #caaa98, #e8cfc0) !important;
+        border-radius: 2px !important;
+        transform-origin: left !important;
+        transform: scaleX(0) !important;
+        transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      /* ── Lightbox ── */
       .ph-lightbox {
         position: fixed !important;
         inset: 0 !important;
         z-index: 9999 !important;
-        background: rgba(10, 14, 24, 0.97) !important;
+        background: rgba(4, 6, 14, 0.97) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -533,11 +779,14 @@
         opacity: 1 !important;
         pointer-events: all !important;
       }
+      .ph-lightbox.active img {
+        animation: lbScaleIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+      }
       .ph-lightbox img {
         max-width: 90vw !important;
         max-height: 85vh !important;
-        border-radius: 16px !important;
-        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.8) !important;
         object-fit: contain !important;
       }
       .ph-lb-close {
@@ -545,45 +794,265 @@
         top: 24px !important;
         right: 28px !important;
         font-size: 2rem !important;
-        color: #fff !important;
+        color: rgba(255, 255, 255, 0.7) !important;
         cursor: pointer !important;
         background: none !important;
         border: none !important;
         line-height: 1 !important;
-        opacity: 0.7 !important;
-        transition: opacity 0.2s !important;
+        transition:
+          color 0.2s,
+          transform 0.25s !important;
       }
       .ph-lb-close:hover {
-        opacity: 1 !important;
+        color: #fff !important;
+        transform: rotate(90deg) scale(1.15) !important;
       }
       .ph-lb-caption {
         position: absolute !important;
         bottom: 28px !important;
         left: 50% !important;
         transform: translateX(-50%) !important;
-        color: rgba(255, 255, 255, 0.65) !important;
-        font-size: 0.9rem !important;
+        color: rgba(255, 255, 255, 0.45) !important;
+        font-size: 0.85rem !important;
         white-space: nowrap !important;
+        letter-spacing: 1px !important;
+        font-family: "Courier New", monospace !important;
       }
 
-      /* ── Kill fly-label & fix footer ── */
-      .section-fly-label { display: none !important; }
-      .footer-inner {
+      /* ── Kill fly-label ── */
+      .section-fly-label {
+        display: none !important;
+      }
+
+      /* ── Footer v2 ── */
+      /* ════════════════════════════
+         FOOTER REDESIGN — .ft2
+      ════════════════════════════ */
+      .ft2 {
+        position: relative !important;
+        padding: 72px 0 0 !important;
+        background: linear-gradient(
+          180deg,
+          rgba(10, 14, 24, 0) 0%,
+          rgba(8, 11, 20, 0.98) 60%
+        ) !important;
+        overflow: hidden !important;
+      }
+      /* Glow blob background */
+      .ft2::before {
+        content: "" !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 700px !important;
+        height: 300px !important;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(202, 170, 152, 0.06) 0%,
+          transparent 70%
+        ) !important;
+        pointer-events: none !important;
+      }
+      /* Top gradient line */
+      .ft2-line {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        height: 1px !important;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(202, 170, 152, 0.15) 20%,
+          #caaa98 50%,
+          rgba(202, 170, 152, 0.15) 80%,
+          transparent 100%
+        ) !important;
+      }
+      /* Top 3-col grid */
+      .ft2-top {
+        display: grid !important;
+        grid-template-columns: 1.4fr 1fr 1fr !important;
+        gap: 56px !important;
+        padding-bottom: 56px !important;
+        align-items: start !important;
+      }
+      /* Brand col */
+      .ft2-logo {
+        display: flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        font-family: "Bricolage Grotesque", sans-serif !important;
+        font-size: 1.25rem !important;
+        font-weight: 800 !important;
+        color: #fff !important;
+        margin-bottom: 16px !important;
+        letter-spacing: -0.3px !important;
+      }
+      .ft2-logo .logo-dot {
+        width: 10px !important;
+        height: 10px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #caaa98, #9a8678) !important;
+        box-shadow: 0 0 12px rgba(202, 170, 152, 0.7) !important;
+        flex-shrink: 0 !important;
+      }
+      .ft2-tagline {
+        font-size: 0.9rem !important;
+        color: rgba(255, 255, 255, 0.4) !important;
+        line-height: 1.7 !important;
+        max-width: 280px !important;
+        margin-bottom: 28px !important;
+      }
+      /* Status badge */
+      .ft2-status {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 7px 14px !important;
+        border-radius: 40px !important;
+        border: 1px solid rgba(74, 222, 128, 0.25) !important;
+        background: rgba(74, 222, 128, 0.06) !important;
+        font-size: 0.78rem !important;
+        color: rgba(255, 255, 255, 0.55) !important;
+        font-weight: 500 !important;
+      }
+      .ft2-status-dot {
+        width: 7px !important;
+        height: 7px !important;
+        border-radius: 50% !important;
+        background: #4ade80 !important;
+        box-shadow: 0 0 8px #4ade80 !important;
+        animation: ft2-pulse 2s infinite !important;
+      }
+      @keyframes ft2-pulse {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.6;
+          transform: scale(0.8);
+        }
+      }
+      /* Col header */
+      .ft2-nav-title {
+        display: block !important;
+        font-size: 0.68rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 2.5px !important;
+        text-transform: uppercase !important;
+        color: #caaa98 !important;
+        margin-bottom: 20px !important;
+      }
+      /* Nav col */
+      .ft2-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+      .ft2-nav a {
+        font-size: 0.9rem !important;
+        color: rgba(255, 255, 255, 0.45) !important;
+        text-decoration: none !important;
+        transition:
+          color 0.2s,
+          padding-left 0.2s !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+      .ft2-nav a::before {
+        content: "" !important;
+        width: 0 !important;
+        height: 1px !important;
+        background: #caaa98 !important;
+        transition: width 0.25s !important;
+      }
+      .ft2-nav a:hover {
+        color: #e8cfc0 !important;
+      }
+      .ft2-nav a:hover::before {
+        width: 14px !important;
+      }
+      /* Social col */
+      .ft2-social-col {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .ft2-socials {
         display: flex !important;
         flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+      }
+      .ft2-socials a {
+        width: 42px !important;
+        height: 42px !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(202, 170, 152, 0.15) !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: rgba(255, 255, 255, 0.45) !important;
+        font-size: 1.15rem !important;
+        text-decoration: none !important;
+        transition: all 0.25s !important;
+      }
+      .ft2-socials a:hover {
+        border-color: #caaa98 !important;
+        color: #caaa98 !important;
+        background: rgba(202, 170, 152, 0.1) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(202, 170, 152, 0.15) !important;
+      }
+      /* Bottom bar */
+      .ft2-bottom {
+        display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
+        padding: 20px 0 !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
         flex-wrap: wrap !important;
-        gap: 16px !important;
+        gap: 10px !important;
+      }
+      .ft2-copy,
+      .ft2-made {
+        font-size: 0.78rem !important;
+        color: rgba(255, 255, 255, 0.25) !important;
+        letter-spacing: 0.2px !important;
+      }
+      /* Responsive */
+      @media (max-width: 768px) {
+        .ft2-top {
+          grid-template-columns: 1fr 1fr !important;
+          gap: 36px !important;
+        }
+        .ft2-brand {
+          grid-column: 1 / -1 !important;
+        }
+        .ft2-tagline {
+          max-width: 100% !important;
+        }
       }
       @media (max-width: 480px) {
-        .footer-inner {
+        .ft2 {
+          padding-top: 52px !important;
+        }
+        .ft2-top {
+          grid-template-columns: 1fr !important;
+          gap: 28px !important;
+          padding-bottom: 36px !important;
+        }
+        .ft2-bottom {
           flex-direction: column !important;
           align-items: center !important;
-          justify-content: center !important;
           text-align: center !important;
+          gap: 6px !important;
         }
-        .footer-links { justify-content: center !important; }
       }
     </style>
   </head>
@@ -823,22 +1292,6 @@
         </div>
       </div>
 
-      <!-- marquee strip -->
-      <div class="hero-marquee" aria-hidden="true">
-        <div class="marquee-inner">
-          <span>UI/UX Design</span><span class="mx">✦</span>
-          <span>Frontend Dev</span><span class="mx">✦</span>
-          <span>Web Animation</span><span class="mx">✦</span> <span>Figma</span
-          ><span class="mx">✦</span> <span>React</span><span class="mx">✦</span>
-          <span>Creative Code</span><span class="mx">✦</span>
-          <span>UI/UX Design</span><span class="mx">✦</span>
-          <span>Frontend Dev</span><span class="mx">✦</span>
-          <span>Web Animation</span><span class="mx">✦</span> <span>Figma</span
-          ><span class="mx">✦</span> <span>React</span><span class="mx">✦</span>
-          <span>Creative Code</span><span class="mx">✦</span>
-        </div>
-      </div>
-
       <div class="scroll-indicator">
         <span>Scroll</span>
         <div class="scroll-line"></div>
@@ -970,93 +1423,6 @@
           </div>
         </div>
 
-        <!-- ── BLOCK 2: Photo Gallery ── -->
-        <div class="pg2-gallery" data-scroll="fade-up" data-delay="100">
-          <!-- Card 1: Main photo — tall -->
-          <div class="pg2-card pg2-card--tall">
-            <img src="images/avatar.jpg" alt="Chau Tan Dat" />
-            <div class="pg2-card-overlay">
-              <span class="pg2-tag">📍 Ho Chi Minh City</span>
-              <div class="pg2-card-info">
-                <span class="pg2-card-title">Daily Coding ☕</span>
-                <span class="pg2-card-sub">Frontend Developer & Designer</span>
-              </div>
-            </div>
-            <div class="pg2-badge pg2-badge--avail">
-              <span class="pg2-badge-dot"></span> Available for work
-            </div>
-          </div>
-
-          <!-- Card 2: Stat card -->
-          <div class="pg2-card pg2-card--stat">
-            <div class="pg2-stat-grid">
-              <div class="pg2-stat">
-                <span class="pg2-stat-num">3+</span>
-                <span class="pg2-stat-lbl">Years exp.</span>
-              </div>
-              <div class="pg2-stat">
-                <span class="pg2-stat-num">20+</span>
-                <span class="pg2-stat-lbl">Projects</span>
-              </div>
-              <div class="pg2-stat">
-                <span class="pg2-stat-num">10+</span>
-                <span class="pg2-stat-lbl">Clients</span>
-              </div>
-              <div class="pg2-stat">
-                <span class="pg2-stat-num">∞</span>
-                <span class="pg2-stat-lbl">Passion</span>
-              </div>
-            </div>
-            <p class="pg2-stat-quote">
-              "Design is not just what it looks like — it's how it works."
-            </p>
-          </div>
-
-          <!-- Card 3: Photo 2 -->
-          <div
-            class="pg2-card pg2-card--photo ag-placeholder-item"
-            data-label="photo-2"
-          >
-            <img
-              src="images/photo-2.jpg"
-              alt="Outdoor"
-              onerror="this.style.display = 'none'"
-            />
-            <div class="pg2-card-overlay">
-              <div class="pg2-card-info">
-                <span class="pg2-card-title">Outdoor Vibes 🌿</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4: Tech stack -->
-          <div class="pg2-card pg2-card--stack">
-            <span class="pg2-stack-label">Tech I love</span>
-            <div class="pg2-stack-list">
-              <span>HTML</span><span>CSS</span><span>JavaScript</span>
-              <span>React</span><span>Figma</span><span>Node.js</span>
-            </div>
-            <div class="pg2-stack-icon"><i class="bx bx-code-alt"></i></div>
-          </div>
-
-          <!-- Card 5: Photo 3 -->
-          <div
-            class="pg2-card pg2-card--photo ag-placeholder-item"
-            data-label="photo-3"
-          >
-            <img
-              src="images/photo-3.jpg"
-              alt="Sport"
-              onerror="this.style.display = 'none'"
-            />
-            <div class="pg2-card-overlay">
-              <div class="pg2-card-info">
-                <span class="pg2-card-title">Football ⚽</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <!-- ── BLOCK 3: My Journey Timeline ── -->
         <div class="about-journey">
           <h3 class="about-journey-title" data-scroll="fade-up">
@@ -1169,178 +1535,156 @@
     <section class="photo-section section" id="photography">
       <div class="container">
         <div class="section-header" data-scroll="fade-up">
+          <span class="section-tag" data-scroll="fade-left">My Photos</span>
           <h2 class="section-title">
             Through My Lens <span class="gradient-text">📸</span>
           </h2>
-          <p class="section-subtitle">
+          <p class="section-sub" data-scroll="fade-up" data-delay="100">
             Moments I captured — from streets to sunsets, football to friends.
           </p>
         </div>
+      </div>
 
-        <div class="ph-grid" data-scroll="fade-up" data-delay="100">
-          <!-- Photo 1 -->
+      <!-- HUD -->
+      <div class="gal-hud">
+        <span class="gal-hud-tag">🎞 &nbsp; 35mm Archive</span>
+        <span class="gal-hud-counter" id="galCounter">01 / 05</span>
+        <span class="gal-hud-hint">drag to explore</span>
+      </div>
+
+      <!-- Gallery viewport (full-width) -->
+      <div class="gal-viewport" id="galViewport">
+        <div class="gal-track" id="galTrack">
           <div
-            class="ph-item"
-            data-src="images/photo-1.jpg"
-            data-title="Daily Vibes"
-            data-loc="Ho Chi Minh City"
-            data-date="2024"
+            class="gal-card is-active"
+            data-index="0"
+            data-src="images/IMG_1205.JPG"
+            data-title="Golden Light"
+            data-loc="Vietnam · 2019"
           >
             <img
-              src="images/photo-1.jpg"
-              alt="Photo 1"
-              onerror="
-                this.parentElement.querySelector('.ph-fallback').style.display =
-                  'flex';
-                this.style.display = 'none';
-              "
+              class="gal-card-img"
+              src="images/IMG_1205.JPG"
+              alt="Golden Light"
+              draggable="false"
             />
-            <div class="ph-fallback" style="display: none">📷</div>
-            <div class="ph-overlay">
-              <div class="ph-overlay-title">Daily Vibes</div>
-              <div class="ph-overlay-meta">
-                <span>📍 Ho Chi Minh City</span>
-                <span>🗓 2024</span>
-              </div>
+            <div class="gal-card-bw"></div>
+            <div class="gal-card-overlay"></div>
+            <div class="gal-card-shimmer"></div>
+            <span class="gal-card-tag">001 / 005</span>
+            <div class="gal-card-info">
+              <span class="gal-card-num">001</span>
+              <span class="gal-card-title">Golden Light</span>
+              <span class="gal-card-loc">Vietnam · 2019</span>
+              <span class="gal-card-hint">↗ click to enlarge</span>
             </div>
           </div>
 
-          <!-- Photo 2 -->
           <div
-            class="ph-item"
-            data-src="images/photo-2.jpg"
-            data-title="Outdoor Escape"
-            data-loc="Somewhere Green"
-            data-date="2024"
+            class="gal-card"
+            data-index="1"
+            data-src="images/IMG_1132.JPG"
+            data-title="Summer Moments"
+            data-loc="Vietnam · 2019"
           >
             <img
-              src="images/photo-2.jpg"
-              alt="Photo 2"
-              onerror="
-                this.parentElement.querySelector('.ph-fallback').style.display =
-                  'flex';
-                this.style.display = 'none';
-              "
+              class="gal-card-img"
+              src="images/IMG_1132.JPG"
+              alt="Summer Moments"
+              draggable="false"
             />
-            <div class="ph-fallback" style="display: none">🌿</div>
-            <div class="ph-overlay">
-              <div class="ph-overlay-title">Outdoor Escape</div>
-              <div class="ph-overlay-meta">
-                <span>📍 Somewhere Green</span>
-                <span>🗓 2024</span>
-              </div>
+            <div class="gal-card-bw"></div>
+            <div class="gal-card-overlay"></div>
+            <div class="gal-card-shimmer"></div>
+            <span class="gal-card-tag">002 / 005</span>
+            <div class="gal-card-info">
+              <span class="gal-card-num">002</span>
+              <span class="gal-card-title">Summer Moments</span>
+              <span class="gal-card-loc">Vietnam · 2019</span>
+              <span class="gal-card-hint">↗ click to enlarge</span>
             </div>
           </div>
 
-          <!-- Photo 3 -->
           <div
-            class="ph-item"
-            data-src="images/photo-3.jpg"
-            data-title="Football Nights"
-            data-loc="Local Field"
-            data-date="2023"
+            class="gal-card"
+            data-index="2"
+            data-src="images/IMG_1133.JPG"
+            data-title="Canon Series"
+            data-loc="Vietnam · 2019"
           >
             <img
-              src="images/photo-3.jpg"
-              alt="Photo 3"
-              onerror="
-                this.parentElement.querySelector('.ph-fallback').style.display =
-                  'flex';
-                this.style.display = 'none';
-              "
+              class="gal-card-img"
+              src="images/IMG_1133.JPG"
+              alt="Canon Series"
+              draggable="false"
             />
-            <div class="ph-fallback" style="display: none">⚽</div>
-            <div class="ph-overlay">
-              <div class="ph-overlay-title">Football Nights</div>
-              <div class="ph-overlay-meta">
-                <span>📍 Local Field</span>
-                <span>🗓 2023</span>
-              </div>
+            <div class="gal-card-bw"></div>
+            <div class="gal-card-overlay"></div>
+            <div class="gal-card-shimmer"></div>
+            <span class="gal-card-tag">003 / 005</span>
+            <div class="gal-card-info">
+              <span class="gal-card-num">003</span>
+              <span class="gal-card-title">Canon Series</span>
+              <span class="gal-card-loc">Vietnam · 2019</span>
+              <span class="gal-card-hint">↗ click to enlarge</span>
             </div>
           </div>
 
-          <!-- Photo 4 -->
           <div
-            class="ph-item"
-            data-src="images/photo-4.jpg"
-            data-title="City at Night"
-            data-loc="District 1"
-            data-date="2024"
+            class="gal-card"
+            data-index="3"
+            data-src="images/IMG_1212.JPG"
+            data-title="Late Afternoon"
+            data-loc="Vietnam · 2019"
           >
             <img
-              src="images/photo-4.jpg"
-              alt="Photo 4"
-              onerror="
-                this.parentElement.querySelector('.ph-fallback').style.display =
-                  'flex';
-                this.style.display = 'none';
-              "
+              class="gal-card-img"
+              src="images/IMG_1212.JPG"
+              alt="Late Afternoon"
+              draggable="false"
             />
-            <div class="ph-fallback" style="display: none">🌆</div>
-            <div class="ph-overlay">
-              <div class="ph-overlay-title">City at Night</div>
-              <div class="ph-overlay-meta">
-                <span>📍 District 1</span>
-                <span>🗓 2024</span>
-              </div>
+            <div class="gal-card-bw"></div>
+            <div class="gal-card-overlay"></div>
+            <div class="gal-card-shimmer"></div>
+            <span class="gal-card-tag">004 / 005</span>
+            <div class="gal-card-info">
+              <span class="gal-card-num">004</span>
+              <span class="gal-card-title">Late Afternoon</span>
+              <span class="gal-card-loc">Vietnam · 2019</span>
+              <span class="gal-card-hint">↗ click to enlarge</span>
             </div>
           </div>
 
-          <!-- Photo 5 -->
           <div
-            class="ph-item"
-            data-src="images/photo-5.jpg"
-            data-title="Golden Hour"
-            data-loc="Rooftop"
-            data-date="2023"
+            class="gal-card"
+            data-index="4"
+            data-src="images/IMG_1213.JPG"
+            data-title="Captured"
+            data-loc="Vietnam · 2019"
           >
             <img
-              src="images/photo-5.jpg"
-              alt="Photo 5"
-              onerror="
-                this.parentElement.querySelector('.ph-fallback').style.display =
-                  'flex';
-                this.style.display = 'none';
-              "
+              class="gal-card-img"
+              src="images/IMG_1213.JPG"
+              alt="Captured"
+              draggable="false"
             />
-            <div class="ph-fallback" style="display: none">🌅</div>
-            <div class="ph-overlay">
-              <div class="ph-overlay-title">Golden Hour</div>
-              <div class="ph-overlay-meta">
-                <span>📍 Rooftop</span>
-                <span>🗓 2023</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Photo 6 -->
-          <div
-            class="ph-item"
-            data-src="images/photo-6.jpg"
-            data-title="Street Stories"
-            data-loc="Old Quarter"
-            data-date="2024"
-          >
-            <img
-              src="images/photo-6.jpg"
-              alt="Photo 6"
-              onerror="
-                this.parentElement.querySelector('.ph-fallback').style.display =
-                  'flex';
-                this.style.display = 'none';
-              "
-            />
-            <div class="ph-fallback" style="display: none">🛵</div>
-            <div class="ph-overlay">
-              <div class="ph-overlay-title">Street Stories</div>
-              <div class="ph-overlay-meta">
-                <span>📍 Old Quarter</span>
-                <span>🗓 2024</span>
-              </div>
+            <div class="gal-card-bw"></div>
+            <div class="gal-card-overlay"></div>
+            <div class="gal-card-shimmer"></div>
+            <span class="gal-card-tag">005 / 005</span>
+            <div class="gal-card-info">
+              <span class="gal-card-num">005</span>
+              <span class="gal-card-title">Captured</span>
+              <span class="gal-card-loc">Vietnam · 2019</span>
+              <span class="gal-card-hint">↗ click to enlarge</span>
             </div>
           </div>
         </div>
-        <!-- /.ph-grid -->
+      </div>
+
+      <!-- Progress bar -->
+      <div class="gal-progress">
+        <div class="gal-progress-fill" id="galProgress"></div>
       </div>
     </section>
 
@@ -1886,19 +2230,72 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="ft2">
+      <div class="ft2-line"></div>
       <div class="container">
-        <div class="footer-inner">
-          <div class="footer-logo">
-            <span class="logo-dot"></span>
-            <span>Chau Tan Dat</span>
+        <div class="ft2-top">
+          <!-- Brand -->
+          <div class="ft2-brand">
+            <div class="ft2-logo">
+              <span class="logo-dot"></span>
+              <span>Chau Tan Dat</span>
+            </div>
+            <p class="ft2-tagline">
+              Turning ideas into&nbsp;<span class="gradient-text"
+                >pixel-perfect</span
+              >&nbsp;experiences — one line of code at a time.
+            </p>
+            <div class="ft2-status">
+              <span class="ft2-status-dot"></span>
+              Available for new projects
+            </div>
           </div>
-          <p>© 2026 Chau Tan Dat</p>
-          <div class="footer-links">
+
+          <!-- Navigate -->
+          <nav class="ft2-nav">
+            <span class="ft2-nav-title">Navigate</span>
             <a href="#home">Home</a>
             <a href="#about">About</a>
+            <a href="#photography">Photos</a>
+            <a href="#skills">Skills</a>
             <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <!-- Connect -->
+          <div class="ft2-social-col">
+            <span class="ft2-nav-title">Connect</span>
+            <div class="ft2-socials">
+              <a
+                href="https://github.com/chautdat"
+                target="_blank"
+                rel="noopener"
+                aria-label="GitHub"
+              >
+                <i class="bx bxl-github"></i>
+              </a>
+              <a href="mailto:chautdat1109@gmail.com" aria-label="Email">
+                <i class="bx bx-envelope"></i>
+              </a>
+              <a href="tel:+84984905718" aria-label="Phone">
+                <i class="bx bx-phone"></i>
+              </a>
+              <a href="#contact" aria-label="Hire Me">
+                <i class="bx bx-briefcase"></i>
+              </a>
+            </div>
           </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="ft2-bottom">
+          <span class="ft2-copy"
+            >© 2026 Chau Tan Dat — All rights reserved.</span
+          >
+          <span class="ft2-made"
+            >Made with <span style="color: #e06c6c">♥</span> &amp; lots of
+            ☕</span
+          >
         </div>
       </div>
     </footer>
@@ -1921,34 +2318,177 @@
 
     <script src="script.js?v=204"></script>
     <script>
-      // Photography lightbox
+      // ── Immersive Gallery v6 ──
       (function () {
+        const cards = Array.from(document.querySelectorAll(".gal-card"));
+        const track = document.getElementById("galTrack");
+        const viewport = document.getElementById("galViewport");
+        const counter = document.getElementById("galCounter");
+        const progress = document.getElementById("galProgress");
         const lb = document.getElementById("phLightbox");
         const lbImg = document.getElementById("phLbImg");
         const lbCap = document.getElementById("phLbCaption");
         const lbClose = document.getElementById("phLbClose");
-        document.querySelectorAll(".ph-item").forEach(function (item) {
-          item.addEventListener("click", function () {
-            const src = item.dataset.src;
-            const title = item.dataset.title || "";
-            const loc = item.dataset.loc || "";
-            const date = item.dataset.date || "";
-            lbImg.src = src;
+
+        const TOTAL = cards.length;
+        let current = 0,
+          didDrag = false;
+
+        function gap() {
+          return 18;
+        }
+
+        function getOffset() {
+          const vw = viewport.clientWidth;
+          const cw = cards[0] ? cards[0].offsetWidth : 0;
+          return vw / 2 - cw / 2 - current * (cw + gap());
+        }
+
+        function update(animate) {
+          if (animate === false) {
+            track.style.transition = "none";
+          } else {
+            track.style.transition =
+              "transform 0.78s cubic-bezier(0.16,1,0.3,1)";
+          }
+          track.style.transform = "translateX(" + getOffset() + "px)";
+
+          cards.forEach(function (c, i) {
+            c.classList.remove("is-active", "is-adjacent");
+            const d = Math.abs(i - current);
+            if (d === 0) c.classList.add("is-active");
+            else if (d === 1) c.classList.add("is-adjacent");
+          });
+
+          const n = current + 1;
+          if (counter)
+            counter.textContent = (n < 10 ? "0" + n : n) + " / 0" + TOTAL;
+
+          if (progress) {
+            const pct = TOTAL > 1 ? current / (TOTAL - 1) : 1;
+            progress.style.transform = "scaleX(" + pct + ")";
+          }
+        }
+
+        // Click on card
+        cards.forEach(function (c, i) {
+          c.addEventListener("click", function () {
+            if (didDrag) return;
+            if (i !== current) {
+              current = i;
+              update();
+              return;
+            }
+            lbImg.src = c.dataset.src;
             lbCap.textContent =
-              title + (loc ? "  📍 " + loc : "") + (date ? "  🗓 " + date : "");
+              (c.dataset.title || "") +
+              (c.dataset.loc ? "  ·  " + c.dataset.loc : "");
             lb.classList.add("active");
           });
         });
+
+        // Mouse drag
+        let dragX = null;
+        viewport.addEventListener("mousedown", function (e) {
+          dragX = e.clientX;
+          didDrag = false;
+          viewport.classList.add("is-dragging");
+        });
+        window.addEventListener("mousemove", function (e) {
+          if (dragX === null) return;
+          if (Math.abs(e.clientX - dragX) > 6) didDrag = true;
+        });
+        window.addEventListener("mouseup", function (e) {
+          if (dragX === null) return;
+          const dx = e.clientX - dragX;
+          if (Math.abs(dx) > 55) {
+            if (dx < 0 && current < TOTAL - 1) current++;
+            else if (dx > 0 && current > 0) current--;
+            update();
+          }
+          dragX = null;
+          viewport.classList.remove("is-dragging");
+          setTimeout(function () {
+            didDrag = false;
+          }, 50);
+        });
+
+        // Touch swipe
+        let touchX = null;
+        viewport.addEventListener(
+          "touchstart",
+          function (e) {
+            touchX = e.touches[0].clientX;
+          },
+          { passive: true },
+        );
+        viewport.addEventListener(
+          "touchend",
+          function (e) {
+            if (touchX === null) return;
+            const dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 50) {
+              if (dx < 0 && current < TOTAL - 1) current++;
+              else if (dx > 0 && current > 0) current--;
+              update();
+            }
+            touchX = null;
+          },
+          { passive: true },
+        );
+
+        // Trackpad 2-finger
+        let wheelTimer = null,
+          wheelAcc = 0;
+        viewport.addEventListener(
+          "wheel",
+          function (e) {
+            e.preventDefault();
+            wheelAcc += e.deltaX || -e.deltaY;
+            clearTimeout(wheelTimer);
+            wheelTimer = setTimeout(function () {
+              if (Math.abs(wheelAcc) > 40) {
+                if (wheelAcc > 0 && current < TOTAL - 1) current++;
+                else if (wheelAcc < 0 && current > 0) current--;
+                update();
+              }
+              wheelAcc = 0;
+            }, 80);
+          },
+          { passive: false },
+        );
+
+        // Keyboard
+        document.addEventListener("keydown", function (e) {
+          if (lb && lb.classList.contains("active")) return;
+          if (e.key === "ArrowRight" && current < TOTAL - 1) {
+            current++;
+            update();
+          }
+          if (e.key === "ArrowLeft" && current > 0) {
+            current--;
+            update();
+          }
+        });
+
+        // Lightbox close
         function closeLb() {
           lb.classList.remove("active");
           lbImg.src = "";
         }
-        lbClose.addEventListener("click", closeLb);
-        lb.addEventListener("click", function (e) {
-          if (e.target === lb) closeLb();
-        });
+        lbClose && lbClose.addEventListener("click", closeLb);
+        lb &&
+          lb.addEventListener("click", function (e) {
+            if (e.target === lb) closeLb();
+          });
         document.addEventListener("keydown", function (e) {
           if (e.key === "Escape") closeLb();
+        });
+
+        // Init + resize
+        update(false);
+        window.addEventListener("resize", function () {
+          update(false);
         });
       })();
     </script>
