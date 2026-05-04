@@ -220,18 +220,18 @@ const secIndNum = document.getElementById("secIndNum");
 const secIndName = document.getElementById("secIndName");
 
 const sectionMeta = [
-  { id: "home",        num: "01", name: "HOME" },
-  { id: "about",       num: "02", name: "ABOUT" },
-  { id: "skills",      num: "03", name: "SKILLS" },
-  { id: "projects",    num: "04", name: "WORK" },
+  { id: "home", num: "01", name: "HOME" },
+  { id: "about", num: "02", name: "ABOUT" },
+  { id: "skills", num: "03", name: "SKILLS" },
+  { id: "projects", num: "04", name: "WORK" },
   { id: "photography", num: "05", name: "PHOTOS" },
-  { id: "contact",     num: "06", name: "CONTACT" },
+  { id: "contact", num: "06", name: "CONTACT" },
 ];
 
 function updateSecIndicator() {
   const sy = window.scrollY;
   let current = sectionMeta[0];
-  sectionMeta.forEach(meta => {
+  sectionMeta.forEach((meta) => {
     const el = document.getElementById(meta.id);
     if (el && sy >= el.offsetTop - window.innerHeight * 0.4) current = meta;
   });
@@ -1413,11 +1413,15 @@ document.querySelectorAll(".project-card").forEach((card, i) => {
 
 // ── 11. SCROLL-TRIGGERED ambient background glow ──
 const ambientColors = {
-  home:     "radial-gradient(ellipse 80% 60% at 50% 0%,    rgba(255,32,32,0.05) 0%, transparent 70%)",
-  about:    "radial-gradient(ellipse 70% 50% at 20% 50%,   rgba(200,0,0,0.06)   0%, transparent 60%)",
-  skills:   "radial-gradient(ellipse 60% 60% at 80% 40%,   rgba(255,32,32,0.05) 0%, transparent 60%)",
-  projects: "radial-gradient(ellipse 80% 40% at 50% 80%,   rgba(149,1,1,0.08)   0%, transparent 60%)",
-  contact:  "radial-gradient(ellipse 60% 50% at 50% 100%,  rgba(255,32,32,0.05) 0%, transparent 60%)",
+  home: "radial-gradient(ellipse 80% 60% at 50% 0%,    rgba(255,32,32,0.05) 0%, transparent 70%)",
+  about:
+    "radial-gradient(ellipse 70% 50% at 20% 50%,   rgba(200,0,0,0.06)   0%, transparent 60%)",
+  skills:
+    "radial-gradient(ellipse 60% 60% at 80% 40%,   rgba(255,32,32,0.05) 0%, transparent 60%)",
+  projects:
+    "radial-gradient(ellipse 80% 40% at 50% 80%,   rgba(149,1,1,0.08)   0%, transparent 60%)",
+  contact:
+    "radial-gradient(ellipse 60% 50% at 50% 100%,  rgba(255,32,32,0.05) 0%, transparent 60%)",
 };
 const ambientEl = document.createElement("div");
 ambientEl.className = "section-ambient";

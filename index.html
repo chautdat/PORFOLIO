@@ -3267,7 +3267,9 @@
         transition: opacity 0.4s ease;
         pointer-events: none;
       }
-      .sec-indicator.visible { opacity: 1; }
+      .sec-indicator.visible {
+        opacity: 1;
+      }
       .sec-ind-num {
         font-family: "Courier New", monospace;
         font-size: 0.52rem;
@@ -3278,21 +3280,25 @@
       .sec-ind-sep {
         font-family: "Courier New", monospace;
         font-size: 0.4rem;
-        color: rgba(255,32,32,0.25);
+        color: rgba(255, 32, 32, 0.25);
         line-height: 1;
       }
       .sec-ind-name {
         font-family: "Courier New", monospace;
         font-size: 0.42rem;
         letter-spacing: 2.5px;
-        color: rgba(255,255,255,0.18);
+        color: rgba(255, 255, 255, 0.18);
         writing-mode: vertical-rl;
         text-orientation: mixed;
         transform: rotate(180deg);
         margin-top: 4px;
         line-height: 1;
       }
-      @media (max-width: 768px) { .sec-indicator { display: none; } }
+      @media (max-width: 768px) {
+        .sec-indicator {
+          display: none;
+        }
+      }
 
       /* ── BACK TO TOP ── */
       .btt-btn {
@@ -3312,8 +3318,12 @@
         cursor: pointer;
         opacity: 0;
         transform: translateY(16px);
-        transition: opacity 0.3s ease, transform 0.3s ease,
-          border-color 0.2s, color 0.2s, background 0.2s;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease,
+          border-color 0.2s,
+          color 0.2s,
+          background 0.2s;
         pointer-events: none;
         -webkit-backdrop-filter: blur(8px);
         backdrop-filter: blur(8px);
@@ -3330,7 +3340,12 @@
         transform: translateY(-3px);
       }
       @media (max-width: 480px) {
-        .btt-btn { bottom: 20px; right: 20px; width: 38px; height: 38px; }
+        .btt-btn {
+          bottom: 20px;
+          right: 20px;
+          width: 38px;
+          height: 38px;
+        }
       }
 
       /* ══════════════════════════════
@@ -3887,6 +3902,9 @@
             <a href="#projects" class="hero-cta-btn">
               VIEW PROJECTS <span class="hero-cta-arrow">→</span>
             </a>
+            <a href="cv/ChauTanDat_CV.pdf" download class="hero-cta-ghost">
+              DOWNLOAD CV <span class="hero-cta-arrow">↓</span>
+            </a>
             <a href="#contact" class="hero-cta-ghost">HIRE ME</a>
           </div>
         </div>
@@ -4022,6 +4040,9 @@
                   rel="noopener"
                   class="hero-cta-btn"
                   >VIEW GITHUB <span class="hero-cta-arrow">↗</span></a
+                >
+                <a href="cv/ChauTanDat_CV.pdf" download class="hero-cta-ghost"
+                  >DOWNLOAD CV <span class="hero-cta-arrow">↓</span></a
                 >
                 <a href="#contact" class="hero-cta-ghost">LET'S TALK →</a>
               </div>
@@ -4741,8 +4762,20 @@
                   >
                 </div>
               </div>
+              <div class="ct-row">
+                <span class="ct-icon"><i class="bx bxl-linkedin"></i></span>
+                <div class="ct-txt">
+                  <span class="ct-lbl">LINKEDIN</span>
+                  <a
+                    href="https://linkedin.com/in/chautdat"
+                    target="_blank"
+                    rel="noopener"
+                    class="ct-val"
+                    >linkedin.com/in/chautdat</a
+                  >
+                </div>
+              </div>
             </div>
-
             <!-- Availability badge -->
             <div class="ct-avail">
               <span class="ct-avail-dot"></span>
@@ -4843,6 +4876,13 @@
               aria-label="GitHub"
               ><i class="bx bxl-github"></i
             ></a>
+            <a
+              href="https://linkedin.com/in/chautdat"
+              target="_blank"
+              rel="noopener"
+              aria-label="LinkedIn"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
             <a href="mailto:chautdat1109@gmail.com" aria-label="Email"
               ><i class="bx bx-envelope"></i
             ></a>
@@ -4883,13 +4923,22 @@
       <a href="mailto:chautdat1109@gmail.com" class="mm-cta-line">
         chautdat1109@gmail.com <span>↗</span>
       </a>
+      <a href="cv/ChauTanDat_CV.pdf" download class="mm-cta-line">
+        DOWNLOAD CV <span>↓</span>
+      </a>
     </div>
     <div class="mm-backdrop" id="mmBackdrop" hidden></div>
 
     <!-- Back to Top -->
     <button class="btt-btn" id="bttBtn" aria-label="Back to top">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path
+          d="M8 13V3M3 8l5-5 5 5"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
     </button>
 
