@@ -175,21 +175,19 @@
 
 // ===== LOADER =====
 (function () {
-  const ring = document.getElementById("loaderRingFill");
+  const bar = document.getElementById("loaderBar");
   const percentEl = document.getElementById("loaderPercent");
-  const circumference = 2 * Math.PI * 54; // 339.3
   let current = 0;
-  const duration = 1800; // ms
+  const duration = 1800;
   const start = performance.now();
 
   function tick(now) {
     const elapsed = now - start;
     const progress = Math.min(elapsed / duration, 1);
-    // easeOutCubic
     const eased = 1 - Math.pow(1 - progress, 3);
     current = Math.round(eased * 100);
     if (percentEl) percentEl.textContent = current;
-    if (ring) ring.style.strokeDashoffset = circumference * (1 - eased);
+    if (bar) bar.style.width = current + "%";
     if (progress < 1) {
       requestAnimationFrame(tick);
     }
@@ -199,12 +197,14 @@
   window.addEventListener("load", () => {
     setTimeout(() => {
       if (percentEl) percentEl.textContent = "100";
-      if (ring) ring.style.strokeDashoffset = 0;
+      if (bar) bar.style.width = "100%";
       setTimeout(() => {
-        document.getElementById("loader").classList.add("hidden");
+        const loaderEl = document.getElementById("loader");
+        loaderEl.classList.add("hide");
         document.body.classList.remove("no-scroll");
+        setTimeout(() => loaderEl.classList.add("done"), 1000);
         animateStats();
-      }, 400);
+      }, 350);
     }, 300);
   });
 })();
@@ -212,14 +212,55 @@ document.body.classList.add("no-scroll");
 
 // ===== NAVBAR =====
 const navbar = document.getElementById("navbar");
+// ── Hero kanji parallax + Back to Top + Section Indicator ──
+const heroKanji = document.querySelector(".hero-kanji");
+const bttBtn = document.getElementById("bttBtn");
+const secIndicator = document.getElementById("secIndicator");
+const secIndNum = document.getElementById("secIndNum");
+const secIndName = document.getElementById("secIndName");
+
+const sectionMeta = [
+  { id: "home",        num: "01", name: "HOME" },
+  { id: "about",       num: "02", name: "ABOUT" },
+  { id: "skills",      num: "03", name: "SKILLS" },
+  { id: "projects",    num: "04", name: "WORK" },
+  { id: "photography", num: "05", name: "PHOTOS" },
+  { id: "contact",     num: "06", name: "CONTACT" },
+];
+
+function updateSecIndicator() {
+  const sy = window.scrollY;
+  let current = sectionMeta[0];
+  sectionMeta.forEach(meta => {
+    const el = document.getElementById(meta.id);
+    if (el && sy >= el.offsetTop - window.innerHeight * 0.4) current = meta;
+  });
+  if (secIndNum) secIndNum.textContent = current.num;
+  if (secIndName) secIndName.textContent = current.name;
+  if (secIndicator) secIndicator.classList.toggle("visible", sy > 100);
+}
+
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-  }
+  const sy = window.scrollY;
+  // Navbar
+  navbar.classList.toggle("scrolled", sy > 50);
+  // Nav active
   updateActiveNav();
+  // Parallax kanji
+  if (heroKanji && sy < window.innerHeight) {
+    heroKanji.style.transform = `translateY(${sy * 0.25}px)`;
+  }
+  // Back to top
+  if (bttBtn) bttBtn.classList.toggle("visible", sy > 400);
+  // Section indicator
+  updateSecIndicator();
 });
+
+if (bttBtn) {
+  bttBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
 
 // Active nav link on scroll
 function updateActiveNav() {
@@ -371,10 +412,62 @@ document
   .querySelectorAll(".reveal")
   .forEach((el) => revealObserver.observe(el));
 
+// ===== HERO FULLVIEWPORT — MINA STYLE REVEAL =====
+(function () {
+  function triggerHero() {
+    // Big title lines
+    document.querySelectorAll(".hbt-line").forEach((el) => {
+      el.classList.add("hbt-visible");
+    });
+    // Descriptor + bottom row
+    setTimeout(() => {
+      const d = document.querySelector(".hero-descriptor");
+      const b = document.querySelector(".hero-bottom-row");
+      if (d) d.classList.add("hbt-visible");
+      if (b) b.classList.add("hbt-visible");
+    }, 300);
+
+    // Counter animation for new hero stats
+    document.querySelectorAll(".hsi-num[data-count]").forEach((el) => {
+      const target = parseInt(el.dataset.count);
+      let current = 0;
+      const step = Math.ceil(target / 30);
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = current;
+        if (current >= target) clearInterval(timer);
+      }, 50);
+    });
+  }
+
+  const loader = document.getElementById("loader");
+  if (loader) {
+    const mo = new MutationObserver(() => {
+      if (loader.classList.contains("hidden") || loader.style.opacity === "0") {
+        triggerHero();
+        mo.disconnect();
+      }
+    });
+    mo.observe(loader, {
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    });
+  }
+  // Fallback
+  setTimeout(triggerHero, 1800);
+})();
+
 // ===== SIDE SCROLL DOTS =====
 (function () {
   const dots = document.querySelectorAll(".scroll-dot");
-  const sections = ["home", "about", "skills", "projects", "contact"];
+  const sections = [
+    "home",
+    "about",
+    "skills",
+    "projects",
+    "photography",
+    "contact",
+  ];
 
   dots.forEach((dot) => {
     dot.addEventListener("click", () => {
@@ -420,6 +513,7 @@ document
 
 // ===== COUNTER ANIMATION =====
 function animateStats() {
+  // About section stats
   document.querySelectorAll(".stat-num").forEach((el) => {
     const target = parseInt(el.dataset.target);
     let current = 0;
@@ -431,6 +525,35 @@ function animateStats() {
         clearInterval(timer);
       } else el.textContent = Math.floor(current);
     }, 30);
+  });
+  // Hero stats (.hsi-num with data-count)
+  document.querySelectorAll(".hsi-num[data-count]").forEach((el) => {
+    const target = parseInt(el.dataset.count);
+    let current = 0;
+    const step = Math.max(1, target / 40);
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        el.textContent = target;
+        clearInterval(timer);
+      } else el.textContent = Math.floor(current);
+    }, 35);
+  });
+  // Also ed-fact-num (about editorial)
+  document.querySelectorAll(".ed-fact-num").forEach((el) => {
+    const raw = el.textContent.replace(/\D/g, "");
+    const suffix = el.textContent.replace(/[0-9]/g, "");
+    const target = parseInt(raw);
+    if (!target) return;
+    let current = 0;
+    const step = Math.max(1, target / 40);
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        el.textContent = target + suffix;
+        clearInterval(timer);
+      } else el.textContent = Math.floor(current) + suffix;
+    }, 35);
   });
 }
 
@@ -550,65 +673,6 @@ if (tagText) {
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", () => {
     mobileMenuOpen = false;
-  });
-});
-
-// ===== TEXT SCRAMBLE EFFECT trên hero title =====
-class TextScramble {
-  constructor(el) {
-    this.el = el;
-    this.chars = "!<>-_\\/[]{}—=+*^?#@$%&";
-    this.update = this.update.bind(this);
-  }
-  setText(newText) {
-    const old = this.el.innerText;
-    const len = Math.max(old.length, newText.length);
-    const promise = new Promise((res) => (this.resolve = res));
-    this.queue = [];
-    for (let i = 0; i < len; i++) {
-      const from = old[i] || "";
-      const to = newText[i] || "";
-      const start = Math.floor(Math.random() * 10);
-      const end = start + Math.floor(Math.random() * 12);
-      this.queue.push({ from, to, start, end });
-    }
-    cancelAnimationFrame(this.frameReq);
-    this.frame = 0;
-    this.update();
-    return promise;
-  }
-  update() {
-    let output = "",
-      complete = 0;
-    for (let i = 0, n = this.queue.length; i < n; i++) {
-      let { from, to, start, end, char } = this.queue[i];
-      if (this.frame >= end) {
-        complete++;
-        output += to;
-      } else if (this.frame >= start) {
-        if (!char || Math.random() < 0.28) {
-          char = this.chars[Math.floor(Math.random() * this.chars.length)];
-          this.queue[i].char = char;
-        }
-        output += `<span class="scramble-char">${char}</span>`;
-      } else output += from;
-    }
-    this.el.innerHTML = output;
-    if (complete === this.queue.length) this.resolve();
-    else {
-      this.frameReq = requestAnimationFrame(this.update);
-      this.frame++;
-    }
-  }
-}
-
-// Áp dụng scramble cho hero title lines khi load xong
-window.addEventListener("load", () => {
-  const lines = document.querySelectorAll(".hero-title .line");
-  lines.forEach((line, i) => {
-    const original = line.textContent.trim();
-    const fx = new TextScramble(line);
-    setTimeout(() => fx.setText(original), 2200 + i * 200);
   });
 });
 
@@ -1012,6 +1076,19 @@ if (aboutSection) {
   countObserver.observe(aboutSection);
 }
 
+// ===== PROJECT ROW — spotlight red glow theo chuột =====
+document.querySelectorAll(".pj-row").forEach((row) => {
+  row.addEventListener("mousemove", (e) => {
+    const rect = row.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    row.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,32,32,0.06) 0%, transparent 60%)`;
+  });
+  row.addEventListener("mouseleave", () => {
+    row.style.background = "";
+  });
+});
+
 // ===== SKILL CARDS — spotlight glow theo chuột =====
 document.querySelectorAll(".skill-card").forEach((card) => {
   card.addEventListener("mousemove", (e) => {
@@ -1319,7 +1396,7 @@ document.querySelectorAll(".project-card").forEach((card, i) => {
   shimmer.className = "card-shimmer";
   shimmer.style.cssText = `
     position:absolute; inset:0; border-radius:inherit;
-    background:linear-gradient(105deg, transparent 40%, rgba(202,170,152,0.07) 50%, transparent 60%);
+    background:linear-gradient(105deg, transparent 40%, rgba(255,32,32,0.06) 50%, transparent 60%);
     background-size: 200% 100%; background-position: -100% 0;
     pointer-events:none; transition: background-position 0.6s ease; z-index:1;
   `;
@@ -1336,15 +1413,11 @@ document.querySelectorAll(".project-card").forEach((card, i) => {
 
 // ── 11. SCROLL-TRIGGERED ambient background glow ──
 const ambientColors = {
-  home: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(202,170,152,0.06) 0%, transparent 70%)",
-  about:
-    "radial-gradient(ellipse 70% 50% at 20% 50%, rgba(154,134,120,0.08) 0%, transparent 60%)",
-  skills:
-    "radial-gradient(ellipse 60% 60% at 80% 40%, rgba(202,170,152,0.07) 0%, transparent 60%)",
-  projects:
-    "radial-gradient(ellipse 80% 40% at 50% 80%, rgba(74,64,56,0.12) 0%, transparent 60%)",
-  contact:
-    "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(202,170,152,0.06) 0%, transparent 60%)",
+  home:     "radial-gradient(ellipse 80% 60% at 50% 0%,    rgba(255,32,32,0.05) 0%, transparent 70%)",
+  about:    "radial-gradient(ellipse 70% 50% at 20% 50%,   rgba(200,0,0,0.06)   0%, transparent 60%)",
+  skills:   "radial-gradient(ellipse 60% 60% at 80% 40%,   rgba(255,32,32,0.05) 0%, transparent 60%)",
+  projects: "radial-gradient(ellipse 80% 40% at 50% 80%,   rgba(149,1,1,0.08)   0%, transparent 60%)",
+  contact:  "radial-gradient(ellipse 60% 50% at 50% 100%,  rgba(255,32,32,0.05) 0%, transparent 60%)",
 };
 const ambientEl = document.createElement("div");
 ambientEl.className = "section-ambient";
@@ -1365,33 +1438,151 @@ document
   .querySelectorAll("#home, #about, #skills, #projects, #contact")
   .forEach((s) => ambientObserver.observe(s));
 
-// ── 12. SECTION TITLE GLITCH flicker on entry ──
-function glitchFlicker(el) {
-  let count = 0;
-  const maxFlicker = 5;
-  const interval = setInterval(() => {
-    el.style.opacity = count % 2 === 0 ? "0.7" : "1";
-    el.style.textShadow =
-      count % 2 === 0 ? "2px 0 #caaa98, -2px 0 #9a8678" : "none";
-    count++;
-    if (count > maxFlicker * 2) {
-      clearInterval(interval);
-      el.style.opacity = "";
-      el.style.textShadow = "";
+// ── 12. TEXT SCRAMBLE ENGINE (Mina-style) ──
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = "!<>-_\\/[]{}—=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    this.update = this.update.bind(this);
+  }
+
+  // Scramble plain text nodes only, preserve child elements (spans, etc.)
+  setText(newText) {
+    const oldText = newText;
+    const length = oldText.length;
+    const promise = new Promise((resolve) => (this.resolve = resolve));
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i];
+      const to = oldText[i];
+      const start = Math.floor(Math.random() * 12);
+      const end = start + Math.floor(Math.random() * 14) + 6;
+      this.queue.push({ from, to, start, end });
     }
-  }, 60);
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+
+  update() {
+    let output = "";
+    let complete = 0;
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.28) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span class="scramble-char">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+    this.el.innerHTML = output;
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }
 }
 
-const glitchObserver = new IntersectionObserver(
+// Apply scramble to section titles that have data-scramble attribute
+// We scramble text content but preserve inner HTML structure for gradient spans
+function scrambleElement(el) {
+  // Get all text nodes + gradient spans
+  const html = el.innerHTML;
+  // Extract plain text for scrambling (keep gradient spans intact)
+  const textEl = document.createElement("div");
+  textEl.innerHTML = html;
+
+  // Only scramble direct text nodes
+  const walker = document.createTreeWalker(textEl, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    const trimmed = node.textContent.trim();
+    if (trimmed.length > 0) textNodes.push(node);
+  }
+
+  textNodes.forEach((tNode) => {
+    const original = tNode.textContent;
+    const span = document.createElement("span");
+    span.setAttribute("data-target", original);
+    span.textContent = original;
+    tNode.parentNode.replaceChild(span, tNode);
+
+    const scrambler = new TextScramble(span);
+    scrambler.setText(original);
+  });
+
+  el.innerHTML = textEl.innerHTML;
+}
+
+const scrambleObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        setTimeout(() => glitchFlicker(entry.target), 400); // chạy lại mỗi lần vào view
+        setTimeout(() => scrambleElement(entry.target), 200);
       }
     });
   },
-  { threshold: 0.5 },
+  { threshold: 0.4 },
 );
+// Scramble section titles on scroll
 document
   .querySelectorAll('[data-scroll="char-split"]')
-  .forEach((el) => glitchObserver.observe(el));
+  .forEach((el) => scrambleObserver.observe(el));
+
+// Scramble hero lines after loader (data-scramble attribute)
+(function () {
+  function runHeroScramble() {
+    document.querySelectorAll("[data-scramble]").forEach((el, i) => {
+      const original = el.textContent.trim();
+      if (!original) return;
+      const fx = new TextScramble(el);
+      setTimeout(() => fx.setText(original), 300 + i * 180);
+    });
+  }
+  const loader = document.getElementById("loader");
+  if (loader) {
+    const mo = new MutationObserver(() => {
+      if (loader.classList.contains("hidden") || loader.style.opacity === "0") {
+        runHeroScramble();
+        mo.disconnect();
+      }
+    });
+    mo.observe(loader, {
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    });
+  }
+  setTimeout(runHeroScramble, 2000); // fallback
+})();
+
+// ── 13. SPACED-LETTER REVEAL on section headings ──
+(function () {
+  const tags = document.querySelectorAll(".section-tag");
+  const tagObs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("tag-revealed");
+          tagObs.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
+  tags.forEach((t) => tagObs.observe(t));
+})();
