@@ -52,6 +52,10 @@
     <!-- ── Theme Color ── -->
     <meta name="theme-color" content="#000000" />
 
+    <!-- ── GSAP & ScrollTrigger ── -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
@@ -1483,6 +1487,43 @@
         z-index: 0;
       }
 
+      /* ═══ HOVER-REVEAL PORTRAIT ═══ */
+      .hero-portrait-reveal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 10;
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        filter: grayscale(30%) contrast(1.1);
+      }
+      .hero-portrait-reveal.visible {
+        opacity: 1;
+      }
+      .hero-portrait-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid rgba(255, 32, 32, 0.3);
+        box-shadow: 
+          0 0 80px rgba(255, 32, 32, 0.4),
+          0 0 150px rgba(255, 32, 32, 0.2),
+          inset 0 0 60px rgba(0, 0, 0, 0.5);
+      }
+      .hero-hover-trigger {
+        position: relative;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+      .hero-hover-trigger:hover {
+        color: rgba(255, 32, 32, 0.6);
+      }
+
       /* Top meta bar */
       .hero-topbar {
         position: relative;
@@ -1761,6 +1802,135 @@
         }
       }
       .hsh-line {
+        width: 2px;
+        height: 60px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 32, 32, 0.4),
+          transparent
+        );
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          transform: scaleY(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scaleY(1.3);
+          opacity: 0.5;
+        }
+      }
+      .hsh-text {
+        font-family: "Courier New", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 3.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.2);
+        writing-mode: vertical-rl;
+      }
+
+      /* ═══════════════════════════════════════════════════════
+         MANIFESTO SECTION — cinematic quote fullscreen
+      ═══════════════════════════════════════════════════════ */
+      .manifesto-section {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000000;
+        padding: 80px max(40px, 6vw);
+        overflow: hidden;
+      }
+      .manifesto-section::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(149, 1, 1, 0.15) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+        animation: manifestoGlow 8s ease-in-out infinite alternate;
+      }
+      @keyframes manifestoGlow {
+        0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.3; }
+        100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+      }
+
+      .manifesto-container {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(40px);
+        animation: manifestoFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      }
+      @keyframes manifestoFadeIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .manifesto-pretext {
+        display: block;
+        font-family: "Courier New", monospace;
+        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: rgba(255, 32, 32, 0.3);
+        margin-bottom: 40px;
+      }
+
+      .manifesto-main {
+        margin: 0 0 40px;
+        border: none;
+        padding: 0;
+      }
+      .manifesto-main p {
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-size: clamp(1.8rem, 4vw, 3.2rem);
+        font-weight: 400;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.85);
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+      .manifesto-highlight {
+        color: #ff2020;
+        font-weight: 600;
+      }
+
+      .manifesto-attribution {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 50px;
+      }
+      .manifesto-line {
+        width: 60px;
+        height: 1px;
+        background: rgba(255, 32, 32, 0.3);
+      }
+      .manifesto-author {
+        font-family: "Courier New", monospace;
+        font-size: 0.62rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.25);
+      }
+
+      .hsh-line {
         display: block;
         width: 40px;
         height: 1px;
@@ -1786,11 +1956,15 @@
         color: rgba(255, 255, 255, 0.18);
       }
 
-      /* Responsive */
+      /* ═══ RESPONSIVE — Mobile Optimization ═══ */
       @media (max-width: 768px) {
         .hero-kanji {
           font-size: 50vw;
           opacity: 0.5;
+        }
+        .hero-portrait-reveal {
+          width: 300px;
+          height: 300px;
         }
         .hero-bottom-row {
           flex-direction: column;
@@ -1803,6 +1977,34 @@
         .hero-cta-col {
           align-items: flex-start;
         }
+        
+        /* Manifesto mobile */
+        .manifesto-section {
+          padding: 60px 24px;
+        }
+        .manifesto-pretext {
+          font-size: 0.6rem;
+          letter-spacing: 0.25em;
+        }
+        .manifesto-main p {
+          font-size: clamp(1.3rem, 6vw, 2rem);
+        }
+        
+        /* Footer mobile */
+        .jp-footer {
+          padding: 40px 24px;
+        }
+        .jp-footer-top {
+          flex-direction: column;
+          gap: 12px;
+        }
+        .jp-footer-bottom {
+          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
+          font-size: 0.52rem;
+        }
+        
         .hero-descriptor {
           flex-direction: column;
           gap: 16px;
@@ -3051,11 +3253,84 @@
       /* ══════════════════════════════
          FOOTER — EDITORIAL BIG CTA
       ══════════════════════════════ */
+      /* ═══════════════════════════════════════════════════════
+         FOOTER — Japanese Minimalist Style
+      ═══════════════════════════════════════════════════════ */
+      .jp-footer {
+        position: relative;
+        background: #000000;
+        padding: 60px max(40px, 6vw);
+        border-top: 1px solid rgba(255, 32, 32, 0.1);
+      }
+      .jp-footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+      }
+      
+      .jp-footer-top {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      .jp-footer-name {
+        font-family: "Courier New", monospace;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+      }
+      .jp-footer-kanji {
+        font-family: "Bricolage Grotesque", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: rgba(255, 32, 32, 0.2);
+        letter-spacing: 0.05em;
+      }
+      
+      .jp-footer-line {
+        width: 140px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 32, 32, 0.3) 50%,
+          transparent 100%
+        );
+      }
+      
+      .jp-footer-bottom {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: "Courier New", monospace;
+        font-size: 0.58rem;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.18);
+      }
+      .jp-footer-sep {
+        color: rgba(255, 32, 32, 0.2);
+        font-size: 0.5rem;
+      }
+      .jp-footer-label {
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .jp-footer-location {
+        color: rgba(255, 255, 255, 0.15);
+      }
+
+      /* Old footer — keep for backwards compatibility if needed */
       .ed-footer {
         padding: 80px 0 0;
         background: #060000;
         position: relative;
         overflow: hidden;
+        display: none; /* Hide old footer */
       }
       .ed-footer::before {
         content: "";
@@ -3828,9 +4103,14 @@
       <!-- Background kanji decoration -->
       <div class="hero-kanji" aria-hidden="true">制作</div>
 
+      <!-- Hover-reveal Portrait -->
+      <div class="hero-portrait-reveal">
+        <img src="images/avatar.jpg" alt="Chau Tan Dat Portrait" class="hero-portrait-img" />
+      </div>
+
       <!-- Top bar meta -->
       <div class="hero-topbar">
-        <span class="hero-topbar-left"
+        <span class="hero-topbar-left hero-hover-trigger"
           >CHAU TAN DAT · M.26 · ポートフォリオ</span
         >
         <span class="hero-topbar-right">
@@ -3914,6 +4194,26 @@
       <div class="hero-scroll-hint">
         <span class="hsh-line"></span>
         <span class="hsh-text">SCROLL</span>
+      </div>
+    </section>
+
+    <!-- ═══ MANIFESTO SECTION ═══ -->
+    <section class="manifesto-section">
+      <div class="manifesto-container">
+        <div class="manifesto-quote">
+          <span class="manifesto-pretext">W h a t &nbsp;&nbsp; p u l l e d &nbsp;&nbsp; m e &nbsp;&nbsp; i n .</span>
+        </div>
+        <blockquote class="manifesto-main">
+          <p>
+            I was drawn to a world where <span class="manifesto-highlight">design meets logic</span> — 
+            a space where I can imagine and create anything. 
+            That's what pulled me into <span class="manifesto-highlight">frontend</span>.
+          </p>
+        </blockquote>
+        <div class="manifesto-attribution">
+          <span class="manifesto-line"></span>
+          <span class="manifesto-author">CHAU TAN DAT · 志</span>
+        </div>
       </div>
     </section>
 
@@ -4835,61 +5135,22 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="ed-footer">
-      <div class="container">
-        <!-- Big CTA line -->
-        <div class="ed-ft-cta">
-          <a href="mailto:chautdat1109@gmail.com" class="ed-ft-big-link">
-            <span class="ed-ft-big-outline">START A</span>
-            <span class="ed-ft-big-fill">PROJECT ↗</span>
-          </a>
+    <!-- ═══ FOOTER — Japanese Minimalist Style ═══ -->
+    <footer class="jp-footer">
+      <div class="jp-footer-content">
+        <div class="jp-footer-top">
+          <div class="jp-footer-name">CHAU TAN DAT</div>
+          <div class="jp-footer-kanji">永遠</div>
         </div>
-
-        <!-- Divider -->
-        <div class="ed-ft-divider"></div>
-
-        <!-- Bottom row -->
-        <div class="ed-ft-bottom">
-          <div class="ed-ft-bottom-left">
-            <div class="ed-ft-logo">
-              <span class="logo-dot"></span>
-              <span>Chau Tan Dat</span>
-            </div>
-            <span class="ed-ft-copy">© 2026 · All rights reserved</span>
-          </div>
-
-          <nav class="ed-ft-nav">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#photography">Photos</a>
-            <a href="#contact">Contact</a>
-          </nav>
-
-          <div class="ed-ft-socials">
-            <a
-              href="https://github.com/chautdat"
-              target="_blank"
-              rel="noopener"
-              aria-label="GitHub"
-              ><i class="bx bxl-github"></i
-            ></a>
-            <a
-              href="https://linkedin.com/in/chautdat"
-              target="_blank"
-              rel="noopener"
-              aria-label="LinkedIn"
-              ><i class="bx bxl-linkedin"></i
-            ></a>
-            <a href="mailto:chautdat1109@gmail.com" aria-label="Email"
-              ><i class="bx bx-envelope"></i
-            ></a>
-            <a href="tel:+84984905718" aria-label="Phone"
-              ><i class="bx bx-phone"></i
-            ></a>
-          </div>
+        
+        <div class="jp-footer-line"></div>
+        
+        <div class="jp-footer-bottom">
+          <span class="jp-footer-year">© 2026</span>
+          <span class="jp-footer-sep">·</span>
+          <span class="jp-footer-label">M.26 · PORTFOLIO</span>
+          <span class="jp-footer-sep">·</span>
+          <span class="jp-footer-location">HO CHI MINH CITY</span>
         </div>
       </div>
     </footer>
@@ -4943,6 +5204,150 @@
     </button>
 
     <script src="script.js?v=204"></script>
+    
+    <!-- ═══ Hover-Reveal Portrait Script ═══ -->
+    <script>
+      (function() {
+        const trigger = document.querySelector('.hero-hover-trigger');
+        const portrait = document.querySelector('.hero-portrait-reveal');
+        
+        if (trigger && portrait) {
+          trigger.addEventListener('mouseenter', () => {
+            portrait.classList.add('visible');
+          });
+          
+          trigger.addEventListener('mouseleave', () => {
+            portrait.classList.remove('visible');
+          });
+        }
+      })();
+    </script>
+    
+    <!-- ═══ GSAP ScrollTrigger Animations ═══ -->
+    <script>
+      // Register ScrollTrigger plugin
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // Smooth scroll reveal for sections
+      gsap.utils.toArray('.section').forEach(section => {
+        gsap.from(section, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 85%',
+            end: 'top 20%',
+            toggleActions: 'play none none reverse',
+          },
+          y: 60,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power3.out'
+        });
+      });
+      
+      // Manifesto section — reveal with scale
+      gsap.from('.manifesto-container', {
+        scrollTrigger: {
+          trigger: '.manifesto-section',
+          start: 'top 60%',
+          end: 'top 20%',
+          toggleActions: 'play none none reverse',
+        },
+        scale: 0.95,
+        y: 80,
+        opacity: 0,
+        duration: 1.5,
+        ease: 'power4.out'
+      });
+      
+      // About section elements
+      gsap.from('.ed-big-heading', {
+        scrollTrigger: {
+          trigger: '.ed-big-heading',
+          start: 'top 80%',
+        },
+        y: 100,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+      });
+      
+      // Timeline items — stagger reveal
+      gsap.from('.ed-tl-item', {
+        scrollTrigger: {
+          trigger: '.ed-timeline',
+          start: 'top 70%',
+        },
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power2.out'
+      });
+      
+      // Skill cards — stagger reveal
+      gsap.from('.skill-card', {
+        scrollTrigger: {
+          trigger: '.skills-grid',
+          start: 'top 75%',
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'power2.out'
+      });
+      
+      // Project cards — stagger reveal
+      gsap.from('.pj-card', {
+        scrollTrigger: {
+          trigger: '.pj-grid',
+          start: 'top 75%',
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.2,
+        ease: 'power3.out'
+      });
+      
+      // Contact section reveal
+      gsap.from('.ct-wrap', {
+        scrollTrigger: {
+          trigger: '.contact',
+          start: 'top 70%',
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.out'
+      });
+      
+      // Parallax effect for kanji background
+      gsap.to('.hero-kanji', {
+        scrollTrigger: {
+          trigger: '.hero-fullvp',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        },
+        y: 200,
+        opacity: 0.02,
+        ease: 'none'
+      });
+      
+      // Smooth fade for footer
+      gsap.from('.jp-footer', {
+        scrollTrigger: {
+          trigger: '.jp-footer',
+          start: 'top 90%',
+        },
+        y: 30,
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.out'
+      });
+    </script>
+
     <script>
       // ── Immersive Gallery v7 — zero-lag live drag ──
       (function () {
