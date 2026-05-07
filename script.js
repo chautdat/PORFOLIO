@@ -223,9 +223,10 @@ const sectionMeta = [
   { id: "home", num: "01", name: "HOME" },
   { id: "about", num: "02", name: "ABOUT" },
   { id: "skills", num: "03", name: "SKILLS" },
-  { id: "projects", num: "04", name: "WORK" },
-  { id: "photography", num: "05", name: "PHOTOS" },
-  { id: "contact", num: "06", name: "CONTACT" },
+  { id: "services", num: "04", name: "SERVICES" },
+  { id: "projects", num: "05", name: "WORK" },
+  { id: "photography", num: "06", name: "PHOTOS" },
+  { id: "contact", num: "07", name: "CONTACT" },
 ];
 
 function updateSecIndicator() {
@@ -464,6 +465,7 @@ document
     "home",
     "about",
     "skills",
+    "services",
     "projects",
     "photography",
     "contact",
@@ -672,7 +674,7 @@ if (tagText) {
 // ===== NAV LINK =====
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", () => {
-    mobileMenuOpen = false;
+    closeMobileMenu();
   });
 });
 
@@ -1289,6 +1291,7 @@ document
 const sectionLabels = {
   about: "ABOUT",
   skills: "SKILLS",
+  services: "SERVICES",
   projects: "WORK",
   contact: "CONTACT",
 };
@@ -1317,7 +1320,7 @@ const labelObserver = new IntersectionObserver(
   { threshold: 0.3 },
 );
 document
-  .querySelectorAll("#about, #skills, #projects, #contact")
+  .querySelectorAll("#about, #skills, #services, #projects, #contact")
   .forEach((s) => labelObserver.observe(s));
 
 // ── 7. SCROLL VELOCITY — speed up animations when scrolling fast ──
@@ -1418,6 +1421,8 @@ const ambientColors = {
     "radial-gradient(ellipse 70% 50% at 20% 50%,   rgba(200,0,0,0.06)   0%, transparent 60%)",
   skills:
     "radial-gradient(ellipse 60% 60% at 80% 40%,   rgba(255,32,32,0.05) 0%, transparent 60%)",
+  services:
+    "radial-gradient(ellipse 60% 55% at 40% 50%,   rgba(255,32,32,0.06) 0%, transparent 62%)",
   projects:
     "radial-gradient(ellipse 80% 40% at 50% 80%,   rgba(149,1,1,0.08)   0%, transparent 60%)",
   contact:
@@ -1439,7 +1444,7 @@ const ambientObserver = new IntersectionObserver(
   { threshold: 0.4 },
 );
 document
-  .querySelectorAll("#home, #about, #skills, #projects, #contact")
+  .querySelectorAll("#home, #about, #skills, #services, #projects, #contact")
   .forEach((s) => ambientObserver.observe(s));
 
 // ── 12. TEXT SCRAMBLE ENGINE (Mina-style) ──
@@ -1589,4 +1594,167 @@ document
     { threshold: 0.5 },
   );
   tags.forEach((t) => tagObs.observe(t));
+})();
+
+// ===== HOVER REVEAL PORTRAIT =====
+(function () {
+  const trigger = document.querySelector(".hero-hover-trigger");
+  const portrait = document.querySelector(".hero-portrait-reveal");
+  if (!trigger || !portrait) return;
+
+  trigger.addEventListener("mouseenter", () => {
+    portrait.classList.add("visible");
+  });
+  trigger.addEventListener("mouseleave", () => {
+    portrait.classList.remove("visible");
+  });
+})();
+
+// ===== PAGE TRANSITION + KEYBOARD NAV =====
+(function () {
+  window.addEventListener("load", () => {
+    const transition = document.getElementById("pageTransition");
+    if (!transition) return;
+    document.body.classList.add("loading");
+    setTimeout(() => {
+      transition.classList.add("fade-out");
+      document.body.classList.remove("loading");
+    }, 500);
+  });
+
+  const sections = ["home", "about", "skills", "services", "projects", "photography", "contact"];
+  let currentSection = 0;
+  const shortcutsModal = document.getElementById("shortcutsModal");
+  const shortcutsClose = document.getElementById("shortcutsClose");
+  const sectionIndicator = document.getElementById("sectionIndicator");
+  const siSection = sectionIndicator
+    ? sectionIndicator.querySelector(".si-section")
+    : null;
+
+  function navigateToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function toggleShortcuts() {
+    if (shortcutsModal) shortcutsModal.classList.toggle("active");
+  }
+  function closeShortcuts() {
+    if (shortcutsModal) shortcutsModal.classList.remove("active");
+  }
+  function updateSectionIndicator(sectionId) {
+    if (!siSection) return;
+    const sectionNames = {
+      home: "HOME",
+      about: "ABOUT",
+      skills: "SKILLS",
+      services: "SERVICES",
+      projects: "PROJECTS",
+      photography: "PHOTOGRAPHY",
+      contact: "CONTACT",
+    };
+    siSection.textContent = sectionNames[sectionId] || sectionId.toUpperCase();
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+
+    if (e.key === "ArrowDown" || e.key === "j") {
+      e.preventDefault();
+      currentSection = Math.min(currentSection + 1, sections.length - 1);
+      navigateToSection(sections[currentSection]);
+    }
+    if (e.key === "ArrowUp" || e.key === "k") {
+      e.preventDefault();
+      currentSection = Math.max(currentSection - 1, 0);
+      navigateToSection(sections[currentSection]);
+    }
+    if (e.key >= "1" && e.key <= "7") {
+      e.preventDefault();
+      const index = parseInt(e.key, 10) - 1;
+      currentSection = index;
+      navigateToSection(sections[index]);
+    }
+    if (e.key === "h" || e.key === "H") {
+      e.preventDefault();
+      currentSection = 0;
+      navigateToSection("home");
+    }
+    if (e.key === "c" || e.key === "C") {
+      e.preventDefault();
+      currentSection = sections.length - 1;
+      navigateToSection("contact");
+    }
+    if (e.key === "?") {
+      e.preventDefault();
+      toggleShortcuts();
+    }
+    if (e.key === "Escape") closeShortcuts();
+  });
+
+  if (shortcutsClose) shortcutsClose.addEventListener("click", closeShortcuts);
+  if (shortcutsModal) {
+    shortcutsModal.addEventListener("click", (e) => {
+      if (e.target === shortcutsModal) closeShortcuts();
+    });
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        const index = sections.indexOf(id);
+        if (index !== -1) {
+          currentSection = index;
+          updateSectionIndicator(id);
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
+  sections.forEach((id) => {
+    const section = document.getElementById(id);
+    if (section) observer.observe(section);
+  });
+
+  let hasScrolled = false;
+  window.addEventListener("scroll", () => {
+    if (!hasScrolled && window.scrollY > 100) {
+      hasScrolled = true;
+      if (sectionIndicator) sectionIndicator.classList.add("visible");
+    }
+    if (window.scrollY < 100 && sectionIndicator) {
+      sectionIndicator.classList.remove("visible");
+      hasScrolled = false;
+    }
+  });
+})();
+
+// ===== IMAGE LAZY LOAD + PRELOAD =====
+(function () {
+  const images = document.querySelectorAll("img[src]");
+  const imageObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute("data-src");
+        }
+        img.classList.add("lazy-loaded");
+        imageObserver.unobserve(img);
+      });
+    },
+    { rootMargin: "50px" },
+  );
+  images.forEach((img) => imageObserver.observe(img));
+
+  ["images/avatar.jpg"].forEach((src) => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = src;
+    document.head.appendChild(link);
+  });
 })();
