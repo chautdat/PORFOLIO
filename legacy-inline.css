@@ -1635,6 +1635,28 @@ a.ct-val:hover {
   gap: 0;
   line-height: 0.9;
 }
+
+/* Japanese Subtitle - RIGHT AFTER TITLE */
+.jp-subtitle {
+  font-family: "Courier New", monospace !important;
+  font-size: 1.125rem !important;
+  color: rgba(255, 32, 32, 0.9) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.25em !important;
+  margin-top: 24px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  display: block !important;
+  opacity: 1 !important;
+  z-index: 1000 !important;
+  position: relative !important;
+  text-align: left !important;
+  background: transparent !important;
+  border: none !important;
+}
+
 .hbt-line {
   display: block;
   font-family: "Bricolage Grotesque", sans-serif;
