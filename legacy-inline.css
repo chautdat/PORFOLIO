@@ -1444,6 +1444,33 @@ a.ct-val:hover {
   background: #060000;
 }
 
+/* ═══ BIG TYPOGRAPHY OVERLAY - SAMURAI PHILOSOPHY ═══ */
+.hero-typography-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.15;
+}
+
+.hero-typo-text {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(60px, 12vw, 180px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  mix-blend-mode: overlay;
+}
+
 /* Giant kanji background decoration */
 /* ═══ HERO KANJI - JAPANESE SAMURAI THEME ═══ */
 .hero-kanji {
