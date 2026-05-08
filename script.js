@@ -177,7 +177,6 @@
 (function () {
   const bar = document.getElementById("loaderBar");
   const percentEl = document.getElementById("loaderPercent");
-  const loaderEl = document.getElementById("loader");
   let current = 0;
   const duration = 1800;
   const start = performance.now();
@@ -191,9 +190,6 @@
     if (bar) bar.style.width = current + "%";
     if (progress < 1) {
       requestAnimationFrame(tick);
-    } else {
-      // Animation complete, start sliding panels
-      if (loaderEl) loaderEl.classList.add("loading");
     }
   }
   requestAnimationFrame(tick);
@@ -203,17 +199,12 @@
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
       setTimeout(() => {
-        // Start hiding animation
-        if (loaderEl) {
-          loaderEl.classList.add("hiding");
-          setTimeout(() => {
-            loaderEl.classList.add("hide");
-            document.body.classList.remove("no-scroll");
-            setTimeout(() => loaderEl.classList.add("done"), 1000);
-            animateStats();
-          }, 500);
-        }
-      }, 400);
+        const loaderEl = document.getElementById("loader");
+        loaderEl.classList.add("hide");
+        document.body.classList.remove("no-scroll");
+        setTimeout(() => loaderEl.classList.add("done"), 1000);
+        animateStats();
+      }, 350);
     }, 300);
   });
 })();
