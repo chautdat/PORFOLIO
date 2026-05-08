@@ -181,13 +181,18 @@
   const loaderEl = document.getElementById("loader");
   const ringLength = 377;
   
-  const duration = 3000;
+  // 7 seconds animation - slow and smooth
+  const duration = 7000;
   const start = performance.now();
+
+  function easeOutQuart(x) {
+    return 1 - Math.pow(1 - x, 4);
+  }
 
   function tick(now) {
     const elapsed = now - start;
     const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 4);
+    const eased = easeOutQuart(progress);
     const current = Math.round(eased * 100);
     
     if (percentEl) percentEl.textContent = current;
@@ -199,16 +204,21 @@
     if (progress < 1) {
       requestAnimationFrame(tick);
     } else {
+      // Animation complete - add loading class
       if (loaderEl) loaderEl.classList.add("loading");
     }
   }
   requestAnimationFrame(tick);
 
+  // Wait for page to fully load, then start hiding
   window.addEventListener("load", () => {
+    // Wait a bit after animation completes, then slide panels
     setTimeout(() => {
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
       if (ringEl) ringEl.style.strokeDashoffset = 0;
+      
+      // After panels slide, hide everything
       setTimeout(() => {
         if (loaderEl) {
           loaderEl.classList.add("hiding");
@@ -218,11 +228,11 @@
             setTimeout(() => {
               loaderEl.classList.add("done");
               animateStats();
-            }, 800);
+            }, 500);
           }, 600);
         }
-      }, 400);
-    }, 300);
+      }, 700);
+    }, 200);
   });
 })();
 document.body.classList.add("no-scroll");

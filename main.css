@@ -586,6 +586,7 @@ img {
   stroke-dasharray: 377;
   stroke-dashoffset: 377;
   filter: drop-shadow(0 0 8px rgba(255, 32, 32, 0.5));
+  transition: stroke-dashoffset 0.05s linear;
 }
 .ld-ring-center {
   position: absolute;
@@ -624,6 +625,7 @@ img {
   background: linear-gradient(90deg, var(--primary), var(--primary-2));
   border-radius: 1px;
   box-shadow: 0 0 10px var(--primary);
+  transition: width 0.05s linear;
 }
 
 /* Name & sub */
