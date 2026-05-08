@@ -460,12 +460,14 @@
         <div class="ed-intro-block">
           <!-- Big editorial heading -->
           <div class="ed-heading-wrap" data-scroll="fade-up">
-            <h2 class="ed-big-heading jp-hover-group" data-jp="重要なものを作る" data-en="I BUILD THINGS THAT MATTER.">
-              <span class="ed-bh-line">重要な</span>
-              <span class="ed-bh-line ed-bh-outline">ものを</span>
-              <span class="ed-bh-line ed-bh-dim">作る</span>
-            </h2>
-            <p class="jp-subtitle">作る・BUILD SOMETHING MEANINGFUL・制作</p>
+            <div class="ed-heading-row">
+              <p class="jp-intro-subtitle">作る・BUILD SOMETHING MEANINGFUL・制作</p>
+              <h2 class="ed-big-heading jp-hover-group" data-jp="重要なものを作る" data-en="I BUILD THINGS THAT MATTER.">
+                <span class="ed-bh-line">重要な</span>
+                <span class="ed-bh-line ed-bh-outline">ものを</span>
+                <span class="ed-bh-line ed-bh-dim">作る</span>
+              </h2>
+            </div>
           </div>
 
           <!-- Two-col info row -->
@@ -721,12 +723,14 @@
 
         <!-- Big heading -->
         <div class="ed-heading-wrap" data-scroll="fade-up">
-          <h2 class="ed-big-heading jp-hover-group" data-jp="私が提供するもの" data-en="WHAT I BRING TO THE TABLE.">
-            <span class="ed-bh-line">私が</span>
-            <span class="ed-bh-line ed-bh-outline">提供する</span>
-            <span class="ed-bh-line ed-bh-dim">もの</span>
-          </h2>
-          <p class="jp-subtitle">What I Bring to the Table</p>
+          <div class="ed-heading-row">
+            <p class="jp-skills-subtitle">作る・WHAT I PROVIDE・制作</p>
+            <h2 class="ed-big-heading jp-hover-group" data-jp="私が提供するもの" data-en="WHAT I BRING TO THE TABLE.">
+              <span class="ed-bh-line">私が</span>
+              <span class="ed-bh-line ed-bh-outline">提供する</span>
+              <span class="ed-bh-line ed-bh-dim">もの</span>
+            </h2>
+          </div>
         </div>
 
         <!-- ── SKILL ROWS — editorial list style ── -->
@@ -946,8 +950,9 @@
           <h2 class="pj-big-heading jp-hover-group" data-jp="選ばれた作品" data-en="SELECTED WORKS">
             <span class="pj-bh-line pj-bh-outline">選ばれた</span>
             <span class="pj-bh-line">作品</span>
-            <span class="pj-bh-line pj-bh-dim">— 2024/26</span>
           </h2>
+          <p class="jp-photo-subtitle">作る・SELECTED WORKS・制作</p>
+          <span class="pj-bh-line pj-bh-dim">— 2024/26</span>
           <p class="jp-subtitle">Selected Works</p>
           <p class="pj-sub">
             Real products I've designed and built — from mobile apps to full web
@@ -1179,7 +1184,7 @@
               <span class="ph-edh-line ph-edh-outline">私のレンズ</span>
               <span class="ph-edh-line">を通して</span>
             </div>
-            <p class="jp-subtitle">Through My Lens</p>
+            <p class="jp-photo-subtitle">私のレンズを通して・THROUGH MY LENS・私のレンズを通して</p>
             <div class="ph-ed-meta">
               <p class="ph-ed-desc">
                 Moments I captured — streets, sunsets, life in motion.
@@ -1497,38 +1502,67 @@
     <div class="shortcuts-modal" id="shortcutsModal">
       <div class="shortcuts-content">
         <button class="shortcuts-close" id="shortcutsClose">×</button>
-        <h3 class="shortcuts-title">⌨️ KEYBOARD SHORTCUTS</h3>
+        <div class="shortcuts-kanji" aria-hidden="true">鍵</div>
+        <h3 class="shortcuts-title">
+          <span class="shortcuts-title-jp">鍵</span>
+          <span class="shortcuts-title-en">KEYBOARD SHORTCUTS</span>
+          <span class="shortcuts-title-jp">ショートカット</span>
+        </h3>
+        <div class="shortcuts-line"></div>
         <div class="shortcuts-grid">
           <div class="shortcut-item">
-            <kbd>↑</kbd> <kbd>↓</kbd>
-            <span>Navigate sections</span>
+            <div class="shortcut-keys">
+              <kbd>↑</kbd> <kbd>↓</kbd>
+            </div>
+            <span class="shortcut-label">セクション移動</span>
+            <span class="shortcut-label-en">Navigate sections</span>
           </div>
           <div class="shortcut-item">
-            <kbd>J</kbd> <kbd>K</kbd>
-            <span>Scroll down/up</span>
+            <div class="shortcut-keys">
+              <kbd>J</kbd> <kbd>K</kbd>
+            </div>
+            <span class="shortcut-label">上下スクロール</span>
+            <span class="shortcut-label-en">Scroll down/up</span>
           </div>
           <div class="shortcut-item">
-            <kbd>1</kbd> - <kbd>7</kbd>
-            <span>Jump to section</span>
+            <div class="shortcut-keys">
+              <kbd>1</kbd> - <kbd>7</kbd>
+            </div>
+            <span class="shortcut-label">セクションへジャンプ</span>
+            <span class="shortcut-label-en">Jump to section</span>
           </div>
           <div class="shortcut-item">
-            <kbd>H</kbd>
-            <span>Go to Home</span>
+            <div class="shortcut-keys">
+              <kbd>H</kbd>
+            </div>
+            <span class="shortcut-label">ホームへ</span>
+            <span class="shortcut-label-en">Go to Home</span>
           </div>
           <div class="shortcut-item">
-            <kbd>C</kbd>
-            <span>Go to Contact</span>
+            <div class="shortcut-keys">
+              <kbd>C</kbd>
+            </div>
+            <span class="shortcut-label">お問い合わせ</span>
+            <span class="shortcut-label-en">Go to Contact</span>
           </div>
           <div class="shortcut-item">
-            <kbd>?</kbd>
-            <span>Toggle this menu</span>
+            <div class="shortcut-keys">
+              <kbd>?</kbd>
+            </div>
+            <span class="shortcut-label">メニュー表示</span>
+            <span class="shortcut-label-en">Toggle this menu</span>
           </div>
           <div class="shortcut-item">
-            <kbd>ESC</kbd>
-            <span>Close modals</span>
+            <div class="shortcut-keys">
+              <kbd>ESC</kbd>
+            </div>
+            <span class="shortcut-label">閉じる</span>
+            <span class="shortcut-label-en">Close modals</span>
           </div>
         </div>
-        <p class="shortcuts-hint">Hover over name in hero to reveal portrait ✨</p>
+        <div class="shortcuts-footer">
+          <span class="shortcuts-hint">ヒーローの名前ホバーでポートレート表示</span>
+        </div>
       </div>
     </div>
 
