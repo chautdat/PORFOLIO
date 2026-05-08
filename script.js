@@ -178,10 +178,8 @@
   const bar = document.getElementById("loaderBar");
   const percentEl = document.getElementById("loaderPercent");
   const loaderEl = document.getElementById("loader");
-  const ringEl = document.getElementById("loaderRing");
-  const ringLength = 408;
   let current = 0;
-  const duration = 1500;
+  const duration = 1800;
   const start = performance.now();
 
   function tick(now) {
@@ -191,13 +189,10 @@
     current = Math.round(eased * 100);
     if (percentEl) percentEl.textContent = current;
     if (bar) bar.style.width = current + "%";
-    if (ringEl) {
-      const offset = ringLength - (eased * ringLength);
-      ringEl.style.strokeDashoffset = offset;
-    }
     if (progress < 1) {
       requestAnimationFrame(tick);
     } else {
+      // Animation complete, start sliding panels
       if (loaderEl) loaderEl.classList.add("loading");
     }
   }
@@ -207,19 +202,19 @@
     setTimeout(() => {
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
-      if (ringEl) ringEl.style.strokeDashoffset = 0;
       setTimeout(() => {
+        // Start hiding animation
         if (loaderEl) {
           loaderEl.classList.add("hiding");
           setTimeout(() => {
             loaderEl.classList.add("hide");
             document.body.classList.remove("no-scroll");
-            setTimeout(() => loaderEl.classList.add("done"), 800);
+            setTimeout(() => loaderEl.classList.add("done"), 1000);
             animateStats();
           }, 500);
         }
-      }, 300);
-    }, 200);
+      }, 400);
+    }, 300);
   });
 })();
 document.body.classList.add("no-scroll");
