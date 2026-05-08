@@ -181,7 +181,7 @@
   const loaderEl = document.getElementById("loader");
   const ringLength = 377;
   
-  // 7 seconds animation - slow and smooth
+  // 7 seconds animation
   const duration = 7000;
   const start = performance.now();
 
@@ -204,21 +204,17 @@
     if (progress < 1) {
       requestAnimationFrame(tick);
     } else {
-      // Animation complete - add loading class
-      if (loaderEl) loaderEl.classList.add("loading");
-    }
-  }
-  requestAnimationFrame(tick);
-
-  // Wait for page to fully load, then start hiding
-  window.addEventListener("load", () => {
-    // Wait a bit after animation completes, then slide panels
-    setTimeout(() => {
+      // Animation COMPLETE - show panels then hide
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
       if (ringEl) ringEl.style.strokeDashoffset = 0;
       
-      // After panels slide, hide everything
+      // Start sliding panels
+      setTimeout(() => {
+        if (loaderEl) loaderEl.classList.add("loading");
+      }, 300);
+      
+      // Hide after panels slide
       setTimeout(() => {
         if (loaderEl) {
           loaderEl.classList.add("hiding");
@@ -226,14 +222,15 @@
             loaderEl.classList.add("hide");
             document.body.classList.remove("no-scroll");
             setTimeout(() => {
-              loaderEl.classList.add("done");
+              if (loaderEl) loaderEl.classList.add("done");
               animateStats();
             }, 500);
           }, 600);
         }
-      }, 700);
-    }, 200);
-  });
+      }, 1300);
+    }
+  }
+  requestAnimationFrame(tick);
 })();
 document.body.classList.add("no-scroll");
 
