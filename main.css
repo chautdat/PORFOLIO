@@ -518,9 +518,7 @@ img {
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  transition:
-    opacity 0.8s ease,
-    visibility 0.8s ease;
+  overflow: hidden;
 }
 .loader.hide {
   opacity: 0;
@@ -531,26 +529,38 @@ img {
   display: none;
 }
 
-/* Background kanji decoration */
-.ld-bg-kanji {
+/* Floating particles */
+.ld-particles {
   position: absolute;
-  font-size: clamp(15rem, 40vw, 30rem);
-  font-weight: 900;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 32, 32, 0.08);
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
-  z-index: 0;
-  animation: ldBgPulse 4s ease-in-out infinite;
-  letter-spacing: -0.05em;
 }
-@keyframes ldBgPulse {
+.ld-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+.ld-particle:nth-child(1) { left: 10%; top: 20%; animation: ldFloat 6s ease-in-out infinite; }
+.ld-particle:nth-child(2) { left: 20%; top: 80%; animation: ldFloat 8s ease-in-out infinite 1s; }
+.ld-particle:nth-child(3) { left: 80%; top: 30%; animation: ldFloat 7s ease-in-out infinite 0.5s; }
+.ld-particle:nth-child(4) { left: 70%; top: 70%; animation: ldFloat 9s ease-in-out infinite 2s; }
+.ld-particle:nth-child(5) { left: 40%; top: 10%; animation: ldFloat 5s ease-in-out infinite 1.5s; }
+.ld-particle:nth-child(6) { left: 90%; top: 50%; animation: ldFloat 7s ease-in-out infinite 0.8s; }
+.ld-particle:nth-child(7) { left: 5%; top: 60%; animation: ldFloat 6s ease-in-out infinite 2.5s; }
+.ld-particle:nth-child(8) { left: 60%; top: 90%; animation: ldFloat 8s ease-in-out infinite 1.2s; }
+
+@keyframes ldFloat {
   0%, 100% {
-    opacity: 0.4;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.02);
+    transform: translateY(-30px) scale(1.5);
+    opacity: 0.6;
   }
 }
 
@@ -561,159 +571,120 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
 }
 
-/* Kanji with glow */
-.ld-kanji-wrap {
+/* Circular progress ring */
+.ld-ring {
   position: relative;
-  margin-bottom: 8px;
+  width: 140px;
+  height: 140px;
 }
-.ld-kanji {
-  font-family: "Shippori Mincho", "Noto Serif JP", serif;
-  font-size: clamp(3rem, 8vw, 5rem);
-  font-weight: 800;
-  color: var(--primary);
-  letter-spacing: 0.05em;
-  animation: ldKanjiSpin 8s linear infinite;
-  text-shadow: 0 0 30px rgba(255, 32, 32, 0.5);
+.ld-ring svg {
+  width: 140px;
+  height: 140px;
+  transform: rotate(-90deg);
 }
-@keyframes ldKanjiSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.ld-ring-track {
+  fill: none;
+  stroke: rgba(255, 32, 32, 0.1);
+  stroke-width: 2;
 }
-.ld-kanji-glow {
+.ld-ring-progress {
+  fill: none;
+  stroke: url(#loaderGrad);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 408;
+  stroke-dashoffset: 408;
+  transition: stroke-dashoffset 0.1s linear;
+  filter: drop-shadow(0 0 8px rgba(255, 32, 32, 0.5));
+}
+.ld-ring-center {
   position: absolute;
-  inset: -20px;
-  background: radial-gradient(circle, rgba(255, 32, 32, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  animation: ldGlowPulse 2s ease-in-out infinite;
-  pointer-events: none;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-@keyframes ldGlowPulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
-}
-
-/* Counter */
 .ld-counter {
   font-family: var(--font-heading);
-  font-size: clamp(3rem, 10vw, 6rem);
-  font-weight: 900;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: var(--primary);
-  letter-spacing: -0.03em;
-  text-shadow: 0 0 40px rgba(255, 32, 32, 0.6);
+  letter-spacing: -0.02em;
   line-height: 1;
 }
-.ld-counter::after {
-  content: "%";
-  font-size: 0.35em;
+.ld-percent {
+  font-size: 0.8rem;
   font-weight: 600;
-  margin-left: 4px;
-  opacity: 0.7;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+/* Kanji accent */
+.ld-kanji-accent {
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  opacity: 0.6;
+  letter-spacing: 0.1em;
 }
 
 /* Progress bar */
 .ld-bar-wrap {
-  width: clamp(200px, 40vw, 320px);
-  height: 3px;
+  width: 200px;
+  height: 2px;
   background: rgba(255, 32, 32, 0.1);
-  border-radius: 2px;
+  border-radius: 1px;
   overflow: hidden;
   position: relative;
-}
-.ld-bar-wrap::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 32, 32, 0.3), transparent);
-  animation: ldBarShine 1.5s ease-in-out infinite;
-}
-@keyframes ldBarShine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
 }
 .ld-bar {
   height: 100%;
   background: linear-gradient(90deg, var(--primary), var(--primary-2));
-  border-radius: 2px;
-  box-shadow: 0 0 15px var(--primary);
-  transition: width 0.1s ease-out;
+  border-radius: 1px;
+  box-shadow: 0 0 10px var(--primary);
+  transition: width 0.1s linear;
+  position: relative;
+}
+.ld-bar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: 6px;
+  height: 6px;
+  background: var(--primary-2);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary);
 }
 
-/* Name & sub */
+/* Name */
 .ld-name {
   font-family: var(--font-heading);
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--text);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  animation: ldNameFlicker 3s ease-in-out infinite;
-  margin-top: 12px;
-}
-@keyframes ldNameFlicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-  52% { opacity: 1; }
-  54% { opacity: 0.7; }
-  56% { opacity: 1; }
-}
-.ld-sub {
-  font-family: "Shippori Mincho", "Noto Serif JP", serif;
-  font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+.ld-subtitle {
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
   color: var(--text-muted);
-  margin-top: -10px;
+  text-transform: uppercase;
 }
 
-/* Sliding panels */
-.ld-panel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: var(--bg);
-  z-index: 5;
-}
-.ld-panel--top {
-  top: 0;
-  transform: translateY(-100%);
-  border-bottom: 1px solid rgba(255, 32, 32, 0.1);
-}
-.ld-panel--bottom {
-  bottom: 0;
-  transform: translateY(100%);
-  border-top: 1px solid rgba(255, 32, 32, 0.1);
-}
-.loader.loading .ld-panel--top {
-  animation: ldSlideDown 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-.loader.loading .ld-panel--bottom {
-  animation: ldSlideUp 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-.loader.hiding .ld-panel--top {
-  animation: ldSlideUpHide 0.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-.loader.hiding .ld-panel--bottom {
-  animation: ldSlideDownHide 0.5s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-@keyframes ldSlideDown {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(0); }
-}
-@keyframes ldSlideUp {
-  0% { transform: translateY(100%); }
-  100% { transform: translateY(0); }
-}
-@keyframes ldSlideUpHide {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-100%); }
-}
-@keyframes ldSlideDownHide {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
+/* Decorative lines */
+.ld-line {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  margin: 8px 0;
 }
 
 /* ===== NAVBAR ===== */
