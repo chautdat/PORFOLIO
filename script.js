@@ -1680,6 +1680,7 @@ document
       navigateToSection("home");
     }
     if (e.key === "c" || e.key === "C") {
+      if (e.metaKey || e.ctrlKey) return;
       e.preventDefault();
       currentSection = sections.length - 1;
       navigateToSection("contact");
