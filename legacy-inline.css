@@ -1025,16 +1025,20 @@ a.ct-val:hover {
 
 /* ── Each photo item ── */
 .ph-item {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  cursor: pointer;
-  height: 240px;
-  background: var(--surface);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-  transition:
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.4s ease;
+  position: relative !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  height: 240px !important;
+  background: var(--surface) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease !important;
+}
+.ph-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
 }
 .ph-item:hover {
   transform: translateY(-6px);
@@ -4577,4 +4581,26 @@ body.loading {
   -webkit-text-stroke: 2px rgba(255, 32, 32, 0.9) !important;
   color: transparent !important;
   text-shadow: 0 0 30px rgba(255, 32, 32, 0.6) !important;
+}
+
+/* DEBUG - Force photo images visible */
+#photography .ph-item img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+#photography .ph-grid {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+#photography .ph-item {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
 }

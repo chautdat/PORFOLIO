@@ -431,9 +431,34 @@ document.querySelectorAll('[data-scroll="fade-up"]').forEach((el) => {
 });
 
 // ══════════════════════════════════════════════════════════════════
-// 11. JAPANESE TEXT - KEEP STATIC (No hover animation)
+// 11. PHOTOGRAPHY GRID REVEAL ANIMATION
 // ══════════════════════════════════════════════════════════════════
-// Text remains in Japanese from HTML - clean & simple!
+document.addEventListener("DOMContentLoaded", function () {
+  const cols = document.querySelectorAll(".ph-col");
+  const grid = document.getElementById("phGrid");
+
+  if (grid && cols.length > 0) {
+    const io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            cols.forEach(function (col) {
+              col.classList.add("ph-revealed");
+            });
+          } else {
+            cols.forEach(function (col) {
+              col.classList.remove("ph-revealed");
+            });
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    io.observe(grid);
+  }
+});
+
 console.log("🎌 Japanese text kept static - no animation needed!");
 
 console.log("🎬 Mina-style animations loaded!");
