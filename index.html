@@ -137,14 +137,38 @@
 
     <!-- Loader -->
     <div class="loader" id="loader">
-      <!-- Two sliding panels -->
+      <!-- SVG Gradients -->
+      <svg width="0" height="0" style="position:absolute">
+        <defs>
+          <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#ff2020"/>
+            <stop offset="100%" style="stop-color:#ff6b6b"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <!-- Background kanji -->
+      <div class="ld-bg-kanji" aria-hidden="true">侍</div>
+      <!-- Sliding panels -->
       <div class="ld-panel ld-panel--top"></div>
       <div class="ld-panel ld-panel--bottom"></div>
       <!-- Content -->
       <div class="ld-content">
-        <div class="ld-kanji" aria-hidden="true">制作</div>
-        <div class="ld-counter" id="loaderPercent">0</div>
-        <div class="ld-bar-wrap"><div class="ld-bar" id="loaderBar"></div></div>
+        <!-- Ring progress -->
+        <div class="ld-ring">
+          <svg viewBox="0 0 140 140">
+            <circle class="ld-ring-track" cx="70" cy="70" r="60"/>
+            <circle class="ld-ring-progress" id="loaderRing" cx="70" cy="70" r="60"/>
+          </svg>
+          <div class="ld-ring-center">
+            <div class="ld-counter" id="loaderPercent">0</div>
+            <div class="ld-percent">%</div>
+          </div>
+        </div>
+        <!-- Progress bar -->
+        <div class="ld-bar-wrap">
+          <div class="ld-bar" id="loaderBar"></div>
+        </div>
+        <!-- Name -->
         <div class="ld-name">CHAU TAN DAT</div>
         <div class="ld-sub">PORTFOLIO · ポートフォリオ</div>
       </div>
@@ -1630,7 +1654,7 @@
       </svg>
     </button>
 
-    <script src="script.js?v=204"></script>
+    <script src="script.js?v=301"></script>
     <script src="animations.js"></script>
   </body>
 </html>

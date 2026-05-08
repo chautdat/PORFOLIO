@@ -177,19 +177,29 @@
 (function () {
   const bar = document.getElementById("loaderBar");
   const percentEl = document.getElementById("loaderPercent");
-  let current = 0;
-  const duration = 1800;
+  const ringEl = document.getElementById("loaderRing");
+  const loaderEl = document.getElementById("loader");
+  const ringLength = 377;
+  
+  const duration = 3000;
   const start = performance.now();
 
   function tick(now) {
     const elapsed = now - start;
     const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    current = Math.round(eased * 100);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    const current = Math.round(eased * 100);
+    
     if (percentEl) percentEl.textContent = current;
     if (bar) bar.style.width = current + "%";
+    if (ringEl) {
+      ringEl.style.strokeDashoffset = ringLength - (eased * ringLength);
+    }
+    
     if (progress < 1) {
       requestAnimationFrame(tick);
+    } else {
+      if (loaderEl) loaderEl.classList.add("loading");
     }
   }
   requestAnimationFrame(tick);
@@ -198,13 +208,20 @@
     setTimeout(() => {
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
+      if (ringEl) ringEl.style.strokeDashoffset = 0;
       setTimeout(() => {
-        const loaderEl = document.getElementById("loader");
-        loaderEl.classList.add("hide");
-        document.body.classList.remove("no-scroll");
-        setTimeout(() => loaderEl.classList.add("done"), 1000);
-        animateStats();
-      }, 350);
+        if (loaderEl) {
+          loaderEl.classList.add("hiding");
+          setTimeout(() => {
+            loaderEl.classList.add("hide");
+            document.body.classList.remove("no-scroll");
+            setTimeout(() => {
+              loaderEl.classList.add("done");
+              animateStats();
+            }, 800);
+          }, 600);
+        }
+      }, 400);
     }, 300);
   });
 })();
