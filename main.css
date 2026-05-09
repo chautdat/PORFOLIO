@@ -260,6 +260,7 @@
   border: 1px solid rgba(255, 32, 32, 0.15);
   border-radius: 24px;
   padding: 36px;
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   /* Animation handled by JavaScript when section comes into view */
@@ -425,6 +426,7 @@ a.ct-contact-item:hover i {
   border: 1px solid rgba(255, 32, 32, 0.15);
   border-radius: 24px;
   padding: 40px;
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   /* Animation handled by JavaScript when section comes into view */
@@ -1079,6 +1081,7 @@ img {
   color: transparent;
   -webkit-text-stroke: 1px rgba(255, 32, 32, 0.04);
   letter-spacing: -0.05em;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
   opacity: 0;
@@ -1506,6 +1509,7 @@ img {
   /* Simple solid background for better compatibility */
   background: rgba(20, 20, 30, 0.85);
   -webkit-backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1582,9 +1586,9 @@ img {
     background 0.25s;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  min-width: -webkit-fill-available; /* Samsung Internet 5.0+ support */
-  min-width: -moz-available; /* Firefox support */
   min-width: fit-content; /* Modern browsers */
+  min-width: -webkit-fill-available; /* Safari & Samsung Internet */
+  min-width: -moz-available; /* Firefox */
   text-align: center; /* Center text */
 }
 .nav-link:hover {
@@ -1906,6 +1910,7 @@ img {
   pointer-events: none;
   z-index: 0;
   line-height: 1;
+  -webkit-user-select: none;
   -webkit-user-select: none;
   user-select: none;
 }
@@ -5674,7 +5679,8 @@ img {
     color: rgba(255, 255, 255, 0.05);
     line-height: 1;
     -webkit-user-select: none;
-    user-select: none;
+    -webkit-user-select: none;
+  user-select: none;
   }
   /* Mockup screen floating */
   .pf-mockup-wrap {
@@ -5867,7 +5873,8 @@ img {
     color: rgba(255, 255, 255, 0.06);
     line-height: 1;
     -webkit-user-select: none;
-    user-select: none;
+    -webkit-user-select: none;
+  user-select: none;
   }
   .project-github-btn {
     position: absolute;
@@ -6783,7 +6790,8 @@ img {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
+    -webkit-user-select: none;
+  user-select: none;
     z-index: 0;
   }
 
@@ -7050,6 +7058,7 @@ img {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.92);
+  -webkit-backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   z-index: 99998;
@@ -7362,6 +7371,7 @@ img {
   color: rgba(220, 38, 38, 0.025);
   font-family: serif;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   z-index: 0;
   animation: jp-float 20s ease-in-out infinite;
@@ -7440,8 +7450,8 @@ img {
     rgba(220, 38, 38, 0.02) 20px,
     rgba(220, 38, 38, 0.02) 21px
   );
-  mask-image: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
   -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
   pointer-events: none;
   z-index: 0;
 }
@@ -9491,6 +9501,7 @@ ENHANCED ANIMATIONS: GLITCH · MORPHING · PARALLAX
   font-weight: 900;
   line-height: 1;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   animation: kanji-float 6s ease-in-out infinite;
 }
