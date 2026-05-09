@@ -137,15 +137,6 @@
 
     <!-- Loader -->
     <div class="loader" id="loader">
-      <!-- SVG Gradients -->
-      <svg width="0" height="0" style="position:absolute">
-        <defs>
-          <linearGradient id="loaderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#ff2020"/>
-            <stop offset="100%" style="stop-color:#ff6b6b"/>
-          </linearGradient>
-        </defs>
-      </svg>
       <!-- Background kanji -->
       <div class="ld-bg-kanji" aria-hidden="true">侍</div>
       <!-- Sliding panels -->
@@ -155,7 +146,13 @@
       <div class="ld-content">
         <!-- Ring progress -->
         <div class="ld-ring">
-          <svg viewBox="0 0 140 140">
+          <svg class="ld-ring-svg" viewBox="0 0 140 140">
+            <defs>
+              <linearGradient id="ldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ff2020"/>
+                <stop offset="100%" stop-color="#ff6b6b"/>
+              </linearGradient>
+            </defs>
             <circle class="ld-ring-track" cx="70" cy="70" r="60"/>
             <circle class="ld-ring-progress" id="loaderRing" cx="70" cy="70" r="60"/>
           </svg>
@@ -170,7 +167,7 @@
         </div>
         <!-- Name -->
         <div class="ld-name">CHAU TAN DAT</div>
-        <div class="ld-sub">PORTFOLIO · ポートフォリオ</div>
+        <div class="ld-sub">PORTFOLIO</div>
       </div>
     </div>
 
@@ -1654,7 +1651,7 @@
       </svg>
     </button>
 
-    <script src="script.js?v=303"></script>
+    <script src="script.js?v=304"></script>
     <script src="animations.js"></script>
   </body>
 </html>
