@@ -170,7 +170,7 @@ body::before {
   gap: 14px !important;
   padding: 14px 16px !important;
   border-radius: 14px !important;
-  background: rgba(255, 32, 32, 0.05) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
   border: 1px solid rgba(255, 32, 32, 0.1) !important;
   transition:
     background 0.2s,
@@ -178,7 +178,7 @@ body::before {
     transform 0.2s !important;
 }
 .ct-row:hover {
-  background: rgba(255, 32, 32, 0.09) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   border-color: rgba(255, 32, 32, 0.22) !important;
   transform: translateX(4px) !important;
 }
@@ -187,7 +187,7 @@ body::before {
   height: 40px !important;
   min-width: 40px !important;
   border-radius: 10px !important;
-  background: rgba(255, 32, 32, 0.12) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
   border: 1px solid rgba(255, 32, 32, 0.18) !important;
   display: flex !important;
   align-items: center !important;
@@ -236,7 +236,7 @@ a.ct-val:hover {
 .ct-field input,
 .ct-field textarea {
   width: 100% !important;
-  background: rgba(8, 12, 22, 0.9) !important;
+  background: rgba(0, 0, 0, 0.9) !important;
   border: 1px solid rgba(255, 32, 32, 0.15) !important;
   border-radius: 12px !important;
   padding: 20px 16px 8px !important;
@@ -247,7 +247,7 @@ a.ct-val:hover {
   box-sizing: border-box !important;
 }
 .ct-field input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px rgb(8, 12, 22) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px rgb(0, 0, 0) inset !important;
   -webkit-text-fill-color: #f0e8e0 !important;
 }
 .ct-field input:focus,

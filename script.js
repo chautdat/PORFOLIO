@@ -1786,3 +1786,71 @@ document
     document.head.appendChild(link);
   });
 })();
+
+// ===== PHOTO GALLERY =====
+(function () {
+  const phGrid = document.getElementById("phGrid");
+  
+  // Lightbox functionality
+  let lightbox = document.querySelector(".ph-lightbox");
+  
+  // Create lightbox if not exists
+  if (!lightbox) {
+    lightbox = document.createElement("div");
+    lightbox.className = "ph-lightbox";
+    lightbox.innerHTML = `
+      <button class="ph-lightbox-close">&times;</button>
+      <img src="" alt="">
+      <div class="ph-lightbox-info">
+        <div class="ph-lightbox-title"></div>
+        <div class="ph-lightbox-loc"></div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+    
+    // Close button
+    lightbox.querySelector(".ph-lightbox-close").addEventListener("click", closeLightbox);
+    
+    // Click outside to close
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    
+    // ESC to close
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox.classList.contains("active")) {
+        closeLightbox();
+      }
+    });
+  }
+  
+  function openLightbox(src, title, loc) {
+    const img = lightbox.querySelector("img");
+    const titleEl = lightbox.querySelector(".ph-lightbox-title");
+    const locEl = lightbox.querySelector(".ph-lightbox-loc");
+    
+    img.src = src;
+    titleEl.textContent = title;
+    locEl.textContent = loc;
+    
+    lightbox.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+  
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+  
+  // Photo item click handlers
+  if (phGrid) {
+    phGrid.querySelectorAll(".ph-jp-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const src = item.dataset.src || item.querySelector("img").src;
+        const title = item.dataset.title || "";
+        const loc = item.dataset.loc || "";
+        openLightbox(src, title, loc);
+      });
+    });
+  }
+})();

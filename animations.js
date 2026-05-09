@@ -434,29 +434,85 @@ document.querySelectorAll('[data-scroll="fade-up"]').forEach((el) => {
 // 11. PHOTOGRAPHY GRID REVEAL ANIMATION
 // ══════════════════════════════════════════════════════════════════
 document.addEventListener("DOMContentLoaded", function () {
-  const cols = document.querySelectorAll(".ph-col");
-  const grid = document.getElementById("phGrid");
+  const photoSection = document.querySelector(".photo-section");
+  const phGrid = document.getElementById("phGrid");
+  const sakuraContainer = document.getElementById("phSakura");
 
-  if (grid && cols.length > 0) {
-    const io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            cols.forEach(function (col) {
-              col.classList.add("ph-revealed");
-            });
-          } else {
-            cols.forEach(function (col) {
-              col.classList.remove("ph-revealed");
-            });
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
+  // Intersection Observer for section visibility
+  const sectionObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        } else {
+          entry.target.classList.remove("in-view");
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
 
-    io.observe(grid);
+  if (photoSection) {
+    sectionObserver.observe(photoSection);
   }
+
+  // Sakura Petals Animation
+  if (sakuraContainer) {
+    function createSakuraPetal() {
+      const petal = document.createElement("div");
+      petal.className = "sakura-petal";
+      
+      // Random position
+      petal.style.left = Math.random() * 100 + "%";
+      
+      // Random size
+      const size = 6 + Math.random() * 8;
+      petal.style.width = size + "px";
+      petal.style.height = size + "px";
+      
+      // Random animation duration
+      const duration = 8 + Math.random() * 6;
+      petal.style.animationDuration = duration + "s";
+      
+      // Random delay
+      petal.style.animationDelay = Math.random() * 2 + "s";
+      
+      sakuraContainer.appendChild(petal);
+      
+      // Remove petal after animation completes
+      setTimeout(function () {
+        petal.remove();
+      }, (duration + 2) * 1000);
+    }
+
+    // Create initial petals
+    for (let i = 0; i < 8; i++) {
+      setTimeout(createSakuraPetal, i * 300);
+    }
+
+    // Continue creating petals
+    setInterval(createSakuraPetal, 1500);
+  }
+
+  // Parallax effect on photo items
+  const phItems = document.querySelectorAll(".ph-jp-item");
+  
+  photoSection.addEventListener("mousemove", function (e) {
+    const rect = photoSection.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    phItems.forEach(function (item, index) {
+      const intensity = 5 + index * 2;
+      item.style.transform = `translateY(0) translateX(${x * intensity}px) translateY(${y * intensity}px)`;
+    });
+  });
+
+  photoSection.addEventListener("mouseleave", function () {
+    phItems.forEach(function (item) {
+      item.style.transform = "";
+    });
+  });
 });
 
 console.log("🎌 Japanese text kept static - no animation needed!");
