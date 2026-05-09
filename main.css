@@ -42,7 +42,6 @@
   font-weight: 500 !important;
   color: transparent !important;
   -webkit-text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
-  text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
   letter-spacing: 0.15em !important;
   margin: 0 0 0 30px !important;
   padding: 0 !important;
@@ -65,7 +64,6 @@
   font-weight: 500 !important;
   color: transparent !important;
   -webkit-text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
-  text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
   letter-spacing: 0.15em !important;
   margin: 0 0 0 20px !important;
   padding: 0 !important;
@@ -88,7 +86,6 @@
   font-weight: 500 !important;
   color: transparent !important;
   -webkit-text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
-  text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
   letter-spacing: 0.15em !important;
   margin: 15px 0 0 0 !important;
   padding: 0 !important;
@@ -108,7 +105,6 @@
   font-weight: 500 !important;
   color: transparent !important;
   -webkit-text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
-  text-stroke: 1px rgba(220, 38, 38, 0.7) !important;
   letter-spacing: 0.15em !important;
   margin: 0 0 0 20px !important;
   padding: 0 !important;
@@ -1586,9 +1582,9 @@ img {
     background 0.25s;
   letter-spacing: 0.01em;
   white-space: nowrap;
-  min-width: fit-content; /* Modern browsers */
   min-width: -webkit-fill-available; /* Safari & Samsung Internet */
   min-width: -moz-available; /* Firefox */
+  min-width: fit-content; /* Modern browsers */
   text-align: center; /* Center text */
 }
 .nav-link:hover {
