@@ -1584,7 +1584,7 @@ img {
   white-space: nowrap;
   min-width: -webkit-fill-available; /* Safari & Samsung Internet */
   min-width: -moz-available; /* Firefox */
-  min-width: fit-content; /* Modern browsers */
+  min-width: -webkit-fill-available; /* Modern browsers */
   text-align: center; /* Center text */
 }
 .nav-link:hover {
@@ -5676,7 +5676,7 @@ img {
     line-height: 1;
     -webkit-user-select: none;
     -webkit-user-select: none;
-  user-select: none;
+    user-select: none;
   }
   /* Mockup screen floating */
   .pf-mockup-wrap {
@@ -5870,7 +5870,7 @@ img {
     line-height: 1;
     -webkit-user-select: none;
     -webkit-user-select: none;
-  user-select: none;
+    user-select: none;
   }
   .project-github-btn {
     position: absolute;
@@ -6787,7 +6787,7 @@ img {
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
-  user-select: none;
+    user-select: none;
     z-index: 0;
   }
 
@@ -7354,7 +7354,12 @@ img {
   padding: 120px 0;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--bg) 0%, rgba(220, 38, 38, 0.02) 50%, var(--bg) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    rgba(220, 38, 38, 0.02) 50%,
+    var(--bg) 100%
+  );
 }
 
 /* Background Elements */
@@ -7374,8 +7379,13 @@ img {
 }
 
 @keyframes jp-float {
-  0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-  50% { transform: translate(-50%, -50%) rotate(3deg); }
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(3deg);
+  }
 }
 
 .jp-bg-circle {
@@ -7412,7 +7422,11 @@ img {
   right: 10%;
   width: 60px;
   height: 60px;
-  background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(220, 38, 38, 0.08) 0%,
+    transparent 70%
+  );
   border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
   animation: jp-pulse 8s ease-in-out infinite;
 }
@@ -7422,14 +7436,25 @@ img {
   left: 5%;
   width: 80px;
   height: 80px;
-  background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.06) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(220, 38, 38, 0.06) 0%,
+    transparent 70%
+  );
   border-radius: 40% 60% 60% 40% / 50% 50% 50% 50%;
   animation: jp-pulse 10s ease-in-out infinite reverse;
 }
 
 @keyframes jp-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 /* Seigaiha Pattern */
@@ -7446,8 +7471,8 @@ img {
     rgba(220, 38, 38, 0.02) 20px,
     rgba(220, 38, 38, 0.02) 21px
   );
-  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
-  mask-image: linear-gradient(to top, rgba(0,0,0,0.1), transparent);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
   pointer-events: none;
   z-index: 0;
 }
@@ -7483,8 +7508,13 @@ img {
 }
 
 @keyframes jp-glow {
-  0%, 100% { box-shadow: 0 0 4px var(--accent); }
-  50% { box-shadow: 0 0 12px var(--accent); }
+  0%,
+  100% {
+    box-shadow: 0 0 4px var(--accent);
+  }
+  50% {
+    box-shadow: 0 0 12px var(--accent);
+  }
 }
 
 .jp-label-wrap {
@@ -7553,18 +7583,21 @@ img {
 }
 
 @keyframes jpPulse {
-  0%, 100% { 
+  0%,
+  100% {
     text-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
     opacity: 1;
   }
-  50% { 
-    text-shadow: 0 0 50px rgba(220, 38, 38, 0.8), 0 0 80px rgba(220, 38, 38, 0.4);
+  50% {
+    text-shadow:
+      0 0 50px rgba(220, 38, 38, 0.8),
+      0 0 80px rgba(220, 38, 38, 0.4);
     opacity: 0.9;
   }
 }
 
 .jp-title-jp::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
@@ -7575,7 +7608,7 @@ img {
 }
 
 .jp-title-jp::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -8px;
   left: 0;
@@ -7619,13 +7652,13 @@ img {
   border: 1px solid var(--border);
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     inset 0 0 60px rgba(220, 38, 38, 0.03);
 }
 
 .jp-shoji-frame::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 8px;
   border: 1px solid rgba(220, 38, 38, 0.1);
@@ -7646,7 +7679,9 @@ img {
   height: 100%;
   object-fit: cover;
   filter: grayscale(20%) contrast(1.05);
-  transition: filter 0.5s ease, transform 0.5s ease;
+  transition:
+    filter 0.5s ease,
+    transform 0.5s ease;
 }
 
 .jp-shoji-frame:hover .jp-portrait {
@@ -7657,11 +7692,7 @@ img {
 .jp-shoji-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 60%,
-    rgba(0, 0, 0, 0.3) 100%
-  );
+  background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.3) 100%);
   pointer-events: none;
   z-index: 1;
 }
@@ -7895,7 +7926,11 @@ img {
 }
 
 .jp-info-card--highlight {
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.08), rgba(220, 38, 38, 0.03));
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.08),
+    rgba(220, 38, 38, 0.03)
+  );
   border-color: rgba(220, 38, 38, 0.2);
 }
 
@@ -7938,8 +7973,15 @@ img {
 }
 
 @keyframes status-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
 }
 
 .jp-interests-section {
@@ -8091,7 +8133,7 @@ img {
 }
 
 .jp-stats-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -8200,7 +8242,7 @@ img {
 }
 
 .jp-tl-dot::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -8287,8 +8329,13 @@ img {
 }
 
 @keyframes now-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(220, 38, 38, 0); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(220, 38, 38, 0);
+  }
 }
 
 .jp-tl-item--now .jp-tl-content {
