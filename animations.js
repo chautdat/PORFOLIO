@@ -449,7 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.15 },
   );
 
   if (photoSection) {
@@ -461,28 +461,31 @@ document.addEventListener("DOMContentLoaded", function () {
     function createSakuraPetal() {
       const petal = document.createElement("div");
       petal.className = "sakura-petal";
-      
+
       // Random position
       petal.style.left = Math.random() * 100 + "%";
-      
+
       // Random size
       const size = 15 + Math.random() * 15;
       petal.style.width = size + "px";
       petal.style.height = size + "px";
-      
+
       // Random animation duration
       const duration = 8 + Math.random() * 6;
       petal.style.animationDuration = duration + "s";
-      
+
       // Random delay
       petal.style.animationDelay = Math.random() * 2 + "s";
-      
+
       sakuraContainer.appendChild(petal);
-      
+
       // Remove petal after animation completes
-      setTimeout(function () {
-        petal.remove();
-      }, (duration + 2) * 1000);
+      setTimeout(
+        function () {
+          petal.remove();
+        },
+        (duration + 2) * 1000,
+      );
     }
 
     // Create initial petals (more for full page)
@@ -496,12 +499,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Parallax effect on photo items
   const phItems = document.querySelectorAll(".ph-jp-item");
-  
+
   photoSection.addEventListener("mousemove", function (e) {
     const rect = photoSection.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    
+
     phItems.forEach(function (item, index) {
       const intensity = 5 + index * 2;
       item.style.transform = `translateY(0) translateX(${x * intensity}px) translateY(${y * intensity}px)`;
@@ -531,7 +534,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (ctInfoCard) {
     ctInfoCard.style.opacity = "0";
     ctInfoCard.style.transform = "translateY(50px)";
-    ctInfoCard.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
+    ctInfoCard.style.transition =
+      "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
   }
 
   // Contact form animation - fade up with delay
@@ -539,7 +543,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (ctForm) {
     ctForm.style.opacity = "0";
     ctForm.style.transform = "translateY(50px)";
-    ctForm.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s";
+    ctForm.style.transition =
+      "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s";
   }
 
   // Contact header animation
@@ -547,7 +552,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (ctHeader) {
     ctHeader.style.opacity = "0";
     ctHeader.style.transform = "translateY(30px)";
-    ctHeader.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
+    ctHeader.style.transition =
+      "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
   }
 
   // Avatar ring pulse animation
@@ -571,7 +577,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Contact items staggered animation
-  const ctContactItems = contactSection.querySelectorAll(".ct-contact-item, .ct-social-btn");
+  const ctContactItems = contactSection.querySelectorAll(
+    ".ct-contact-item, .ct-social-btn",
+  );
   ctContactItems.forEach((item, index) => {
     item.style.opacity = "0";
     item.style.transform = "translateX(-20px)";
@@ -579,9 +587,12 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Form inputs animation on focus
-  const ctInputs = contactSection.querySelectorAll(".ct-form input, .ct-form textarea");
+  const ctInputs = contactSection.querySelectorAll(
+    ".ct-form input, .ct-form textarea",
+  );
   ctInputs.forEach((input) => {
-    input.style.transition = "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease";
+    input.style.transition =
+      "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease";
     input.addEventListener("focus", () => {
       input.style.transform = "translateY(-2px)";
     });
@@ -593,7 +604,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Submit button hover effect
   const ctSubmit = contactSection.querySelector(".ct-form-submit");
   if (ctSubmit) {
-    ctSubmit.style.transition = "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease";
+    ctSubmit.style.transition =
+      "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease";
     ctSubmit.addEventListener("mouseenter", () => {
       ctSubmit.style.transform = "translateY(-3px)";
       ctSubmit.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.3)";
@@ -639,7 +651,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     },
-    { threshold: 0.2 }
+    { threshold: 0.2 },
   );
 
   contactObserver.observe(contactSection);

@@ -181,7 +181,7 @@
   const loaderEl = document.getElementById("loader");
   const siteContent = document.getElementById("siteContent");
   const ringLength = 427; // 2 * PI * 68 (radius)
-  
+
   // 3 seconds animation
   const duration = 3000;
   const start = performance.now();
@@ -195,13 +195,13 @@
     const progress = Math.min(elapsed / duration, 1);
     const eased = easeOutQuart(progress);
     const current = Math.round(eased * 100);
-    
+
     if (percentEl) percentEl.textContent = current;
     if (bar) bar.style.width = current + "%";
     if (ringEl) {
-      ringEl.style.strokeDashoffset = ringLength - (eased * ringLength);
+      ringEl.style.strokeDashoffset = ringLength - eased * ringLength;
     }
-    
+
     if (progress < 1) {
       requestAnimationFrame(tick);
     } else {
@@ -209,12 +209,12 @@
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
       if (ringEl) ringEl.style.strokeDashoffset = 0;
-      
+
       // Start exit animation
       setTimeout(() => {
         if (loaderEl) loaderEl.classList.add("loading");
       }, 300);
-      
+
       // Hide loader
       setTimeout(() => {
         if (loaderEl) {
@@ -593,7 +593,7 @@ if (contactForm) {
     e.preventDefault();
     const btn = this.querySelector(".ct-form-submit");
     if (!btn) return;
-    
+
     btn.classList.add("loading");
     btn.disabled = true;
 
@@ -1276,7 +1276,15 @@ document
     }, 500);
   });
 
-  const sections = ["home", "about", "skills", "services", "projects", "photography", "contact"];
+  const sections = [
+    "home",
+    "about",
+    "skills",
+    "services",
+    "projects",
+    "photography",
+    "contact",
+  ];
   let currentSection = 0;
   const shortcutsModal = document.getElementById("shortcutsModal");
   const shortcutsClose = document.getElementById("shortcutsClose");
@@ -1417,13 +1425,13 @@ document
 // ===== PHOTO GALLERY =====
 (function () {
   const phGrid = document.getElementById("phGrid");
-  
+
   // Lightbox functionality
   let lightbox = document.querySelector(".ph-lightbox");
-  
+
   function setupLightbox() {
     if (!lightbox) return;
-    
+
     const closeBtn = lightbox.querySelector(".ph-lightbox-close");
     if (closeBtn) {
       closeBtn.addEventListener("click", (e) => {
@@ -1431,13 +1439,13 @@ document
         closeLightbox();
       });
     }
-    
+
     // Click outside to close
     lightbox.addEventListener("click", (e) => {
       if (e.target === lightbox) closeLightbox();
     });
   }
-  
+
   // Create lightbox if not exists
   if (!lightbox) {
     lightbox = document.createElement("div");
@@ -1452,35 +1460,35 @@ document
     `;
     document.body.appendChild(lightbox);
   }
-  
+
   // Setup event listeners
   setupLightbox();
-  
+
   // ESC to close (global)
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && lightbox.classList.contains("active")) {
       closeLightbox();
     }
   });
-  
+
   function openLightbox(src, title, loc) {
     const img = lightbox.querySelector("img");
     const titleEl = lightbox.querySelector(".ph-lightbox-title");
     const locEl = lightbox.querySelector(".ph-lightbox-loc");
-    
+
     img.src = src;
     titleEl.textContent = title;
     locEl.textContent = loc;
-    
+
     lightbox.classList.add("active");
     document.body.style.overflow = "hidden";
   }
-  
+
   function closeLightbox() {
     lightbox.classList.remove("active");
     document.body.style.overflow = "";
   }
-  
+
   // Photo item click handlers
   if (phGrid) {
     phGrid.querySelectorAll(".ph-jp-item").forEach((item) => {
@@ -1495,38 +1503,41 @@ document
 })();
 
 // ===== JP ABOUT SECTION - COUNTER ANIMATION =====
-(function() {
-  const statNums = document.querySelectorAll('.jp-stats-num[data-target]');
-  
+(function () {
+  const statNums = document.querySelectorAll(".jp-stats-num[data-target]");
+
   function animateCounter(el, target) {
     const duration = 2000;
     const start = performance.now();
-    
+
     function update(currentTime) {
       const elapsed = currentTime - start;
       const progress = Math.min(elapsed / duration, 1);
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(easeOut * target);
-      el.textContent = current + '+';
-      
+      el.textContent = current + "+";
+
       if (progress < 1) {
         requestAnimationFrame(update);
       }
     }
-    
+
     requestAnimationFrame(update);
   }
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseInt(el.dataset.target);
-        animateCounter(el, target);
-        observer.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-  
-  statNums.forEach(num => observer.observe(num));
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.target);
+          animateCounter(el, target);
+          observer.unobserve(el);
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  statNums.forEach((num) => observer.observe(num));
 })();

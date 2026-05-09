@@ -594,221 +594,328 @@
 
       <!-- About Section - Japanese Minimalist -->
       <section class="about section jp-about" id="about">
-        <!-- Background Kanji -->
+        <!-- Japanese Background Elements -->
         <div class="jp-bg-kanji" aria-hidden="true">人</div>
         <div class="jp-bg-circle" aria-hidden="true"></div>
+        <div class="jp-bg-circle jp-bg-circle-2" aria-hidden="true"></div>
+        <!-- Ink splatter decorations -->
+        <div class="jp-ink-splatter jp-ink-1" aria-hidden="true"></div>
+        <div class="jp-ink-splatter jp-ink-2" aria-hidden="true"></div>
+        <!-- Traditional pattern -->
+        <div class="jp-seigaiha-pattern" aria-hidden="true"></div>
 
         <div class="container">
-          <!-- Section Header -->
+          <!-- Section Header - Calligraphy Style -->
           <div class="jp-section-header" data-scroll="fade-up">
-            <div class="jp-label-wrap">
-              <span class="jp-label-num">01</span>
-              <span class="jp-label-dash">—</span>
-              <span class="jp-label-kanji">私</span>
+            <div class="jp-header-decoration">
+              <span class="jp-decoration-line"></span>
+              <span class="jp-decoration-dot"></span>
+              <span class="jp-decoration-line"></span>
             </div>
-            <h2 class="jp-title">About Me</h2>
-            <p class="jp-subtitle">作る・BUILD SOMETHING MEANINGFUL・制作</p>
+            <span class="section-num">01 · About</span>
+            <h2 class="jp-title">
+              <span class="jp-title-jp jp-font">意味</span>
+            </h2>
+            <p class="jp-subtitle">
+              <span class="jp-font">作る</span> · Build Something Meaningful ·
+              <span class="jp-font">制作</span>
+            </p>
           </div>
 
-          <!-- Main Content Grid -->
-          <div class="jp-main-grid">
-            <!-- Left Column - Avatar & Quick -->
-            <div class="jp-left-col" data-scroll="fade-up">
-              <div class="jp-avatar-wrap">
-                <div class="jp-avatar-circle"></div>
-                <img
-                  src="images/avatar.jpg"
-                  alt="Chau Tan Dat"
-                  class="jp-avatar"
-                />
-                <div class="jp-avatar-frame"></div>
-              </div>
-
-              <div class="jp-quick-info">
-                <h3 class="jp-name">Chau Tan Dat</h3>
-                <p class="jp-role">Frontend Developer & Designer</p>
-                <div class="jp-location">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  <span>Ho Chi Minh City, Vietnam</span>
+          <!-- Main Content - Traditional Japanese Layout -->
+          <div class="jp-about-main">
+            <!-- Left: Portrait with Shoji Frame -->
+            <div class="jp-portrait-section" data-scroll="fade-up">
+              <div class="jp-shoji-frame">
+                <div class="jp-shoji-inner">
+                  <img
+                    src="images/avatar.jpg"
+                    alt="Chau Tan Dat"
+                    class="jp-portrait"
+                  />
                 </div>
+                <div class="jp-shoji-overlay"></div>
               </div>
 
-              <div class="jp-quick-stats">
-                <div class="jp-stat">
-                  <span class="jp-stat-num">10+</span>
+              <!-- Name & Role in Brush Style -->
+              <div class="jp-identity">
+                <h3 class="jp-name">
+                  <span class="jp-name-en">Chau Tan Dat</span>
+                  <span class="jp-name-jp jp-font">· 田中</span>
+                </h3>
+                <p class="jp-role-badge">
+                  <span class="jp-font">侍</span> Frontend Developer
+                </p>
+              </div>
+
+              <!-- Quick Stats with Japanese Numerals -->
+              <div class="jp-stats-mini">
+                <div class="jp-stat-item">
+                  <span class="jp-stat-num">十+</span>
                   <span class="jp-stat-label">Projects</span>
                 </div>
-                <div class="jp-stat">
-                  <span class="jp-stat-num">2+</span>
+                <div class="jp-stat-divider">·</div>
+                <div class="jp-stat-item">
+                  <span class="jp-stat-num">二+</span>
                   <span class="jp-stat-label">Years</span>
                 </div>
-                <div class="jp-stat">
-                  <span class="jp-stat-num">15+</span>
-                  <span class="jp-stat-label">Tech Stack</span>
+                <div class="jp-stat-divider">·</div>
+                <div class="jp-stat-item">
+                  <span class="jp-stat-num">十五+</span>
+                  <span class="jp-stat-label">Tech</span>
                 </div>
+              </div>
+
+              <!-- Location -->
+              <div class="jp-location-badge">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>Ho Chi Minh City, Vietnam</span>
               </div>
             </div>
 
-            <!-- Right Column - Bio -->
-            <div class="jp-right-col" data-scroll="fade-up" data-delay="100">
-              <!-- Quote -->
-              <div class="jp-quote">
-                <span class="jp-quote-mark">—</span>
-                <p>
-                  I build interfaces the way a sword gets forged — slow,
-                  obsessive, a little dramatic.
+            <!-- Right: Bio & Journey -->
+            <div
+              class="jp-content-section"
+              data-scroll="fade-up"
+              data-delay="150"
+            >
+              <!-- Main Quote - Calligraphy Style -->
+              <div class="jp-main-quote">
+                <div class="jp-quote-bracket jp-quote-open">「</div>
+                <p class="jp-quote-text">
+                  I craft interfaces with the precision of a
+                  <strong>katana</strong> — each pixel, a deliberate cut.
+                  Motion, silence, and the unseen details that make a product
+                  feel alive.
+                </p>
+                <div class="jp-quote-bracket jp-quote-close">」</div>
+                <span class="jp-quote-signature">— Dat</span>
+              </div>
+
+              <!-- Japanese Wisdom -->
+              <div class="jp-wisdom">
+                <span class="jp-wisdom-kanji">匠</span>
+                <p class="jp-wisdom-text jp-font">一を聞いて十を知る</p>
+                <p class="jp-wisdom-en">"Hear one, understand ten"</p>
+              </div>
+
+              <!-- Bio Paragraphs -->
+              <div class="jp-bio-section">
+                <p class="jp-bio-text">
+                  <span class="jp-marker"></span>
+                  <strong>Frontend developer</strong> rooted in Ho Chi Minh
+                  City. Years of trial and iteration forged a meticulous
+                  approach to building. Still debugging life, one commit at a
+                  time.
+                </p>
+                <p class="jp-bio-text">
+                  <span class="jp-marker"></span>
+                  I believe in the power of <strong>quiet details</strong> — the
+                  animation that feels right, the spacing that breathes, the
+                  interaction that delights without asking for attention.
                 </p>
               </div>
 
-              <!-- Bio Text -->
-              <div class="jp-bio">
-                <p>
-                  <strong>Frontend developer.</strong> Based in Ho Chi Minh City
-                  — Vietnam. Survived years of trial &amp; error, mastered the
-                  craft through countless iterations. Still debugging my life.
-                </p>
-                <p>
-                  I craft interfaces with precision and care.
-                  <strong>Motion, pixels, and the quiet details</strong> of a
-                  product nobody notices when they're done right.
-                </p>
-              </div>
-
-              <!-- Info Grid -->
-              <div class="jp-info-grid">
-                <div class="jp-info-item">
-                  <span class="jp-info-label">Location</span>
-                  <span class="jp-info-val">Ho Chi Minh City · Vietnam</span>
+              <!-- Info Grid - Minimal Style -->
+              <div class="jp-info-cards">
+                <div class="jp-info-card">
+                  <span class="jp-info-icon">地</span>
+                  <div class="jp-info-content">
+                    <span class="jp-info-label">Location</span>
+                    <span class="jp-info-value"
+                      >Ho Chi Minh City · Vietnam</span
+                    >
+                  </div>
                 </div>
-                <div class="jp-info-item">
-                  <span class="jp-info-label">Role</span>
-                  <span class="jp-info-val">Frontend Developer & Designer</span>
+                <div class="jp-info-card">
+                  <span class="jp-info-icon">技</span>
+                  <div class="jp-info-content">
+                    <span class="jp-info-label">Focus</span>
+                    <span class="jp-info-value"
+                      >Frontend Development & Design</span
+                    >
+                  </div>
                 </div>
-                <div class="jp-info-item">
-                  <span class="jp-info-label">Experience</span>
-                  <span class="jp-info-val">2+ Years in the Craft</span>
+                <div class="jp-info-card">
+                  <span class="jp-info-icon">時</span>
+                  <div class="jp-info-content">
+                    <span class="jp-info-label">Experience</span>
+                    <span class="jp-info-value">2+ Years in the Craft</span>
+                  </div>
                 </div>
-                <div class="jp-info-item">
-                  <span class="jp-info-label">Status</span>
-                  <span class="jp-info-val">Available for Work · 2026</span>
+                <div class="jp-info-card jp-info-card--highlight">
+                  <span class="jp-info-icon">空</span>
+                  <div class="jp-info-content">
+                    <span class="jp-info-label">Status</span>
+                    <span class="jp-info-value">
+                      <span class="jp-status-dot"></span>
+                      Available · 2026
+                    </span>
+                  </div>
                 </div>
               </div>
 
               <!-- Interests -->
-              <div class="jp-interests">
-                <span class="jp-interest">Football</span>
-                <span class="jp-interest">Photography</span>
-                <span class="jp-interest">Music</span>
+              <div class="jp-interests-section">
+                <span class="jp-interests-label">趣味 · Interests</span>
+                <div class="jp-interest-tags">
+                  <span class="jp-interest-tag">
+                    <span class="jp-font">蹴鞠</span> Football
+                  </span>
+                  <span class="jp-interest-tag">
+                    <span class="jp-font">写映</span> Photography
+                  </span>
+                  <span class="jp-interest-tag">
+                    <span class="jp-font">音楽</span> Music
+                  </span>
+                  <span class="jp-interest-tag">
+                    <span class="jp-font">書道</span> Calligraphy
+                  </span>
+                </div>
               </div>
 
-              <!-- CTA -->
-              <div class="jp-cta">
+              <!-- CTA Buttons -->
+              <div class="jp-cta-section">
                 <a
                   href="https://github.com/chautdat"
                   target="_blank"
                   class="jp-btn jp-btn--primary"
                 >
+                  <span class="jp-btn-icon">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                  </span>
                   View GitHub
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
                 </a>
                 <a
                   href="cv/CV_ChauTanDat_DataAnalystInter.pdf"
                   download
                   class="jp-btn jp-btn--outline"
                 >
-                  Download CV
+                  <span class="jp-font">履歴書</span> Download CV
                 </a>
               </div>
             </div>
           </div>
 
-          <!-- Stats Section -->
+          <!-- Stats Section - Traditional Cards -->
           <div class="jp-stats-section" data-scroll="fade-up">
             <div class="jp-stats-header">
-              <span class="jp-stats-label">03 · 三 · BY THE NUMBERS</span>
+              <div class="jp-stats-decoration">
+                <span class="jp-deco-line"></span>
+                <span class="jp-deco-kanji jp-font">数</span>
+                <span class="jp-deco-line"></span>
+              </div>
+              <span class="jp-stats-label">三 · BY THE NUMBERS</span>
             </div>
             <div class="jp-stats-grid">
-              <div class="jp-stats-item">
+              <div class="jp-stats-card">
                 <span class="jp-stats-num" data-target="10">0</span>
+                <span class="jp-stats-kanji">十</span>
                 <span class="jp-stats-text">Projects Completed</span>
               </div>
-              <div class="jp-stats-divider"></div>
-              <div class="jp-stats-item">
+              <div class="jp-stats-card">
                 <span class="jp-stats-num" data-target="15">0</span>
+                <span class="jp-stats-kanji">十</span>
                 <span class="jp-stats-text">Technologies Mastered</span>
               </div>
-              <div class="jp-stats-divider"></div>
-              <div class="jp-stats-item">
+              <div class="jp-stats-card">
                 <span class="jp-stats-num" data-target="2">0</span>
+                <span class="jp-stats-kanji">二</span>
                 <span class="jp-stats-text">Years of Experience</span>
               </div>
-              <div class="jp-stats-divider"></div>
-              <div class="jp-stats-item">
+              <div class="jp-stats-card jp-stats-card--infinite">
                 <span class="jp-stats-num">∞</span>
+                <span class="jp-stats-kanji jp-font">永</span>
                 <span class="jp-stats-text">Cups of Coffee</span>
               </div>
             </div>
           </div>
 
-          <!-- Timeline -->
+          <!-- Timeline - Ink Brush Style -->
           <div class="jp-timeline" data-scroll="fade-up">
             <div class="jp-timeline-header">
-              <span class="jp-timeline-label">JOURNEY · 旅路</span>
+              <span class="jp-timeline-label">
+                <span class="jp-font">旅路</span> · JOURNEY
+              </span>
             </div>
-            <div class="jp-timeline-items">
-              <div class="jp-tl-item">
-                <span class="jp-tl-year">2021</span>
-                <div class="jp-tl-content">
-                  <h4>The Beginning</h4>
-                  <p>
-                    First lines of HTML &amp; CSS. Built first static website.
-                  </p>
+            <div class="jp-timeline-track">
+              <div class="jp-tl-line"></div>
+              <div class="jp-tl-items">
+                <div class="jp-tl-item">
+                  <div class="jp-tl-marker">
+                    <span class="jp-tl-dot"></span>
+                    <span class="jp-tl-year">二千二十一</span>
+                  </div>
+                  <div class="jp-tl-content">
+                    <h4>The Beginning · <span class="jp-font">始</span></h4>
+                    <p>
+                      First lines of HTML & CSS. Built first static website.
+                    </p>
+                    <span class="jp-tl-kanji">一</span>
+                  </div>
                 </div>
-              </div>
-              <div class="jp-tl-item">
-                <span class="jp-tl-year">2022</span>
-                <div class="jp-tl-content">
-                  <h4>Design Meets Code</h4>
-                  <p>
-                    Discovered UI/UX &amp; Figma. Started combining design
-                    thinking with frontend.
-                  </p>
+                <div class="jp-tl-item">
+                  <div class="jp-tl-marker">
+                    <span class="jp-tl-dot"></span>
+                    <span class="jp-tl-year">二千二十二</span>
+                  </div>
+                  <div class="jp-tl-content">
+                    <h4>Design Meets Code · <span class="jp-font">融</span></h4>
+                    <p>
+                      Discovered UI/UX & Figma. Started combining design
+                      thinking.
+                    </p>
+                    <span class="jp-tl-kanji">二</span>
+                  </div>
                 </div>
-              </div>
-              <div class="jp-tl-item">
-                <span class="jp-tl-year">2023</span>
-                <div class="jp-tl-content">
-                  <h4>Going Deeper</h4>
-                  <p>
-                    Dived into React, Next.js and Flutter. Built real products.
-                  </p>
+                <div class="jp-tl-item">
+                  <div class="jp-tl-marker">
+                    <span class="jp-tl-dot"></span>
+                    <span class="jp-tl-year">二千二十三</span>
+                  </div>
+                  <div class="jp-tl-content">
+                    <h4>Going Deeper · <span class="jp-font">深</span></h4>
+                    <p>
+                      Dived into React, Next.js and Flutter. Built real
+                      products.
+                    </p>
+                    <span class="jp-tl-kanji">三</span>
+                  </div>
                 </div>
-              </div>
-              <div class="jp-tl-item jp-tl-item--now">
-                <span class="jp-tl-year">NOW</span>
-                <div class="jp-tl-content">
-                  <h4>Building &amp; Growing</h4>
-                  <p>Open to internship &amp; full-time roles.</p>
-                  <span class="jp-tl-badge">AVAILABLE NOW</span>
+                <div class="jp-tl-item jp-tl-item--now">
+                  <div class="jp-tl-marker">
+                    <span class="jp-tl-dot"></span>
+                    <span class="jp-tl-year">今</span>
+                  </div>
+                  <div class="jp-tl-content">
+                    <h4>
+                      Building & Growing · <span class="jp-font">造</span>
+                    </h4>
+                    <p>Open to internship & full-time roles.</p>
+                    <span class="jp-tl-badge">
+                      <span class="jp-font">可</span> AVAILABLE NOW
+                    </span>
+                    <span class="jp-tl-kanji">今</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1669,11 +1776,13 @@
         <div class="ph-end-quote">
           <span class="ph-end-kanji">写</span>
           <p class="ph-end-jp jp-font">一枚の写真は、千の言葉より雄弁である</p>
-          <p class="ph-end-en">A photograph speaks louder than a thousand words</p>
+          <p class="ph-end-en">
+            A photograph speaks louder than a thousand words
+          </p>
         </div>
-        
+
         <div class="ph-end-divider"></div>
-        
+
         <div class="ph-end-tags">
           <span class="ph-end-tag">Street</span>
           <span class="ph-end-dot"></span>
@@ -1718,7 +1827,16 @@
               <div class="ct-info-card">
                 <div class="ct-profile">
                   <div class="ct-avatar">
-                    <img src="./images/avatar.jpg" alt="Chau Tan Dat" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    <img
+                      src="./images/avatar.jpg"
+                      alt="Chau Tan Dat"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        border-radius: 50%;
+                      "
+                    />
                     <div class="ct-avatar-ring"></div>
                   </div>
                   <div class="ct-profile-text">
@@ -1802,9 +1920,16 @@
               <div class="ct-form-body">
                 <div class="ct-form-group">
                   <label for="fname">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                      <circle cx="12" cy="7" r="4"/>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                      <circle cx="12" cy="7" r="4" />
                     </svg>
                     お名前 · Name
                   </label>
@@ -1819,9 +1944,18 @@
                 </div>
                 <div class="ct-form-group">
                   <label for="femail">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                      <polyline points="22,6 12,13 2,6"/>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                      />
+                      <polyline points="22,6 12,13 2,6" />
                     </svg>
                     メール · Email
                   </label>
@@ -1836,8 +1970,17 @@
                 </div>
                 <div class="ct-form-group">
                   <label for="fmessage">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      />
                     </svg>
                     メッセージ · Message
                   </label>
