@@ -135,41 +135,66 @@
     </div>
     <canvas id="cur-fx-canvas"></canvas>
 
-    <!-- Loader -->
+    <!-- Loader - Japanese Ink Wash Style -->
     <div class="loader" id="loader">
-      <!-- Background kanji -->
-      <div class="ld-bg-kanji" aria-hidden="true">侍</div>
-      <!-- Sliding panels -->
-      <div class="ld-panel ld-panel--top"></div>
-      <div class="ld-panel ld-panel--bottom"></div>
-      <!-- Content -->
+      <!-- Ink Background -->
+      <div class="ld-ink-bg">
+        <div class="ld-ink-stroke"></div>
+        <div class="ld-ink-stroke"></div>
+        <div class="ld-ink-stroke"></div>
+      </div>
+      
+      <!-- Main Background Kanji -->
+      <div class="ld-main-kanji" aria-hidden="true">侍</div>
+      
+      <!-- Vertical Text Decorations -->
+      <div class="ld-vertical-text left" aria-hidden="true">武士道</div>
+      <div class="ld-vertical-text right" aria-hidden="true">構築</div>
+      
+      <!-- Corner Decorations -->
+      <div class="ld-corner top-left"></div>
+      <div class="ld-corner top-right"></div>
+      <div class="ld-corner bottom-left"></div>
+      <div class="ld-corner bottom-right"></div>
+      
+      <!-- Main Content -->
       <div class="ld-content">
-        <!-- Ring progress -->
+        <!-- Ink Brush Ring -->
         <div class="ld-ring">
-          <svg class="ld-ring-svg" viewBox="0 0 140 140">
+          <svg class="ld-ring-svg" viewBox="0 0 160 160">
             <defs>
               <linearGradient id="ldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#ff2020"/>
                 <stop offset="100%" stop-color="#ff6b6b"/>
               </linearGradient>
             </defs>
-            <circle class="ld-ring-track" cx="70" cy="70" r="60"/>
-            <circle class="ld-ring-progress" id="loaderRing" cx="70" cy="70" r="60"/>
+            <circle class="ld-ring-track" cx="80" cy="80" r="68"/>
+            <circle class="ld-ring-progress" id="loaderRing" cx="80" cy="80" r="68"/>
           </svg>
+          <div class="ld-ring-texture"></div>
           <div class="ld-ring-center">
-            <div class="ld-counter" id="loaderPercent">0</div>
-            <div class="ld-percent">%</div>
+            <span class="ld-calligraphy">侍</span>
           </div>
         </div>
-        <!-- Progress bar -->
-        <div class="ld-bar-wrap">
-          <div class="ld-bar" id="loaderBar"></div>
+        
+        <!-- Typography -->
+        <div class="ld-typography">
+          <div class="ld-name-jp"> Chau Tan Dat </div>
+          <div class="ld-name-en">Portfolio</div>
+          <div class="ld-subtitle">作る・Crafting Digital Experiences</div>
+          <div class="ld-deco-line"></div>
         </div>
-        <!-- Name -->
-        <div class="ld-name">CHAU TAN DAT</div>
-        <div class="ld-sub">PORTFOLIO</div>
+      </div>
+      
+      <!-- Bottom Status -->
+      <div class="ld-status">
+        <div class="ld-status-dot"></div>
+        <span class="ld-status-text">LOADING</span>
       </div>
     </div>
+
+    <!-- Site Content Wrapper - Hidden until loader completes -->
+    <div class="site-content" id="siteContent">
 
     <!-- Side Scroll Dots -->
     <nav id="scroll-dots" aria-label="Section navigation">
@@ -1651,7 +1676,9 @@
       </svg>
     </button>
 
-    <script src="script.js?v=304"></script>
+    </div><!-- end .site-content -->
+
+    <script src="script.js?v=305"></script>
     <script src="animations.js"></script>
   </body>
 </html>

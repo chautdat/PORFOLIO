@@ -179,10 +179,11 @@
   const percentEl = document.getElementById("loaderPercent");
   const ringEl = document.getElementById("loaderRing");
   const loaderEl = document.getElementById("loader");
-  const ringLength = 377;
+  const siteContent = document.getElementById("siteContent");
+  const ringLength = 427; // 2 * PI * 68 (radius)
   
-  // 7 seconds animation
-  const duration = 7000;
+  // 3 seconds animation
+  const duration = 3000;
   const start = performance.now();
 
   function easeOutQuart(x) {
@@ -204,23 +205,25 @@
     if (progress < 1) {
       requestAnimationFrame(tick);
     } else {
-      // Animation COMPLETE - show panels then hide
+      // Animation COMPLETE
       if (percentEl) percentEl.textContent = "100";
       if (bar) bar.style.width = "100%";
       if (ringEl) ringEl.style.strokeDashoffset = 0;
       
-      // Start sliding panels
+      // Start exit animation
       setTimeout(() => {
         if (loaderEl) loaderEl.classList.add("loading");
       }, 300);
       
-      // Hide after panels slide
+      // Hide loader
       setTimeout(() => {
         if (loaderEl) {
           loaderEl.classList.add("hiding");
           setTimeout(() => {
             loaderEl.classList.add("hide");
             document.body.classList.remove("no-scroll");
+            // Show site content with fade in
+            if (siteContent) siteContent.classList.add("visible");
             setTimeout(() => {
               if (loaderEl) loaderEl.classList.add("done");
               animateStats();

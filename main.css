@@ -509,7 +509,7 @@ img {
   }
 }
 
-/* ===== LOADER ===== */
+/* ===== LOADER - JAPANESE INK WASH STYLE ===== */
 .loader {
   position: fixed;
   inset: 0;
@@ -520,11 +520,19 @@ img {
   z-index: 10000;
   overflow: hidden;
 }
-.loader.hidden {
+
+/* Site content hidden by default - prevents flash during reload */
+.site-content {
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.site-content.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loader.hidden,
 .loader.hide {
   opacity: 0;
   visibility: hidden;
@@ -534,172 +542,434 @@ img {
   display: none;
 }
 
-/* Background kanji */
-.ld-bg-kanji {
+/* ── Background Ink Pattern ── */
+.ld-ink-bg {
   position: absolute;
-  font-size: clamp(12rem, 35vw, 25rem);
-  font-weight: 900;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 32, 32, 0.06);
-  pointer-events: none;
-  z-index: 0;
-  animation: ldBgPulse 4s ease-in-out infinite;
-  letter-spacing: -0.05em;
-  user-select: none;
-}
-@keyframes ldBgPulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.03); }
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  animation: ldInkFadeIn 1.5s ease forwards;
 }
 
-/* Content wrapper */
+@keyframes ldInkFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Horizontal brush strokes - decorative */
+.ld-ink-stroke {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 32, 32, 0.03) 20%, 
+    rgba(255, 32, 32, 0.08) 50%, 
+    rgba(255, 32, 32, 0.03) 80%, 
+    transparent 100%
+  );
+  animation: ldStrokeReveal 2s ease forwards;
+}
+
+.ld-ink-stroke:nth-child(1) { top: 20%; width: 60%; left: -10%; animation-delay: 0.2s; }
+.ld-ink-stroke:nth-child(2) { top: 45%; width: 80%; right: -10%; left: auto; animation-delay: 0.5s; }
+.ld-ink-stroke:nth-child(3) { top: 75%; width: 50%; left: 20%; animation-delay: 0.8s; }
+
+@keyframes ldStrokeReveal {
+  from { 
+    transform: scaleX(0); 
+    transform-origin: left;
+  }
+  to { 
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Main Kanji - large brush calligraphy */
+.ld-main-kanji {
+  position: absolute;
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: clamp(18rem, 45vw, 35rem);
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 32, 32, 0.04);
+  letter-spacing: -0.05em;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  animation: ldKanjiReveal 2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  text-shadow: 
+    0 0 80px rgba(255, 32, 32, 0.02),
+    0 0 150px rgba(255, 32, 32, 0.01);
+}
+
+@keyframes ldKanjiReveal {
+  from { 
+    opacity: 0; 
+    transform: scale(1.1) translateY(20px);
+    filter: blur(10px);
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Vertical text decoration */
+.ld-vertical-text {
+  position: absolute;
+  writing-mode: vertical-rl;
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: rgba(255, 32, 32, 0.15);
+  opacity: 0;
+  animation: ldVerticalFade 1.5s ease 1s forwards;
+}
+
+.ld-vertical-text.left {
+  left: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ld-vertical-text.right {
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+@keyframes ldVerticalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ── Main Content Center ── */
 .ld-content {
   position: relative;
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 40px;
+  opacity: 0;
+  animation: ldContentFade 1s ease 0.5s forwards;
 }
 
-/* Ring progress */
+@keyframes ldContentFade {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Ink Brush Progress Ring ── */
 .ld-ring {
   position: relative;
   width: 160px;
   height: 160px;
 }
+
 .ld-ring svg {
   width: 160px;
   height: 160px;
   transform: rotate(-90deg);
 }
+
 .ld-ring-track {
   fill: none;
-  stroke: rgba(255, 32, 32, 0.12);
-  stroke-width: 2;
+  stroke: rgba(255, 32, 32, 0.08);
+  stroke-width: 1.5;
 }
+
 .ld-ring-progress {
   fill: none;
   stroke: url(#ldGrad);
   stroke-width: 2.5;
   stroke-linecap: round;
-  stroke-dasharray: 377;
-  stroke-dashoffset: 377;
+  stroke-dasharray: 427;
+  stroke-dashoffset: 427;
+  transition: stroke-dashoffset 0.1s linear;
   filter: drop-shadow(0 0 8px rgba(255, 32, 32, 0.5));
-  transition: stroke-dashoffset 0.05s linear;
 }
+
+/* Brush texture overlay on ring */
+.ld-ring-texture {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(255, 32, 32, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(149, 1, 1, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Center calligraphy character */
 .ld-ring-center {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.ld-counter {
-  font-family: var(--font-heading);
-  font-size: 2.8rem;
-  font-weight: 800;
+
+.ld-calligraphy {
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 2.4rem;
   color: var(--primary);
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-.ld-percent {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
+  text-shadow: 0 0 30px rgba(255, 32, 32, 0.4);
+  animation: ldCalliPulse 3s ease-in-out infinite;
 }
 
-/* Progress bar */
-.ld-bar-wrap {
-  width: 180px;
-  height: 2px;
-  background: rgba(255, 32, 32, 0.1);
-  border-radius: 1px;
-  overflow: hidden;
-}
-.ld-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--primary), var(--primary-2));
-  border-radius: 1px;
-  box-shadow: 0 0 10px var(--primary);
-  transition: width 0.05s linear;
+@keyframes ldCalliPulse {
+  0%, 100% { 
+    opacity: 0.8;
+    text-shadow: 0 0 20px rgba(255, 32, 32, 0.3);
+  }
+  50% { 
+    opacity: 1;
+    text-shadow: 0 0 40px rgba(255, 32, 32, 0.5);
+  }
 }
 
-/* Name & sub */
-.ld-name {
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 700;
+/* ── Japanese Typography Below Ring ── */
+.ld-typography {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.ld-name-jp {
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
   color: var(--text);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.4em;
+  text-indent: 0.4em;
+  opacity: 0;
+  animation: ldNameReveal 1.2s ease 0.8s forwards;
+}
+
+.ld-name-en {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  animation: ldNamePulse 3s ease-in-out infinite;
+  opacity: 0;
+  animation: ldNameReveal 1.2s ease 1s forwards;
 }
-@keyframes ldNamePulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-  52% { opacity: 1; }
-  54% { opacity: 0.8; }
-  56% { opacity: 1; }
+
+.ld-subtitle {
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: rgba(255, 32, 32, 0.3);
+  margin-top: 4px;
+  opacity: 0;
+  animation: ldNameReveal 1.2s ease 1.2s forwards;
 }
-.ld-sub {
+
+@keyframes ldNameReveal {
+  from { 
+    opacity: 0; 
+    letter-spacing: 0.6em;
+  }
+  to { 
+    opacity: 1;
+  }
+}
+
+/* Decorative line under name */
+.ld-deco-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 32, 32, 0.3) 30%, 
+    rgba(255, 32, 32, 0.5) 50%, 
+    rgba(255, 32, 32, 0.3) 70%, 
+    transparent
+  );
+  position: relative;
+  opacity: 0;
+  animation: ldLineReveal 1s ease 1.4s forwards;
+}
+
+.ld-deco-line::before {
+  content: "侍";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-family: "Shippori Mincho", "Noto Serif JP", serif;
   font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-top: -12px;
+  color: var(--primary);
+  background: var(--bg);
+  padding: 0 8px;
 }
 
-/* Sliding panels */
-.ld-panel {
+@keyframes ldLineReveal {
+  from { 
+    opacity: 0; 
+    width: 0;
+  }
+  to { 
+    opacity: 1;
+    width: 60px;
+  }
+}
+
+/* ── Bottom Status Text ── */
+.ld-status {
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: var(--bg);
-  z-index: 5;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: ldStatusFade 1s ease 1.5s forwards;
 }
-.ld-panel--top {
+
+@keyframes ldStatusFade {
+  from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.ld-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: ldDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes ldDotPulse {
+  0%, 100% { 
+    opacity: 0.4; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 32, 32, 0.5);
+  }
+}
+
+.ld-status-text {
+  font-family: "Shippori Mincho", "Noto Serif JP", serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: rgba(255, 32, 32, 0.4);
+}
+
+/* ── Corner Decorations ── */
+.ld-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  animation: ldCornerFade 1s ease 1.8s forwards;
+}
+
+.ld-corner::before,
+.ld-corner::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 32, 32, 0.15);
+}
+
+.ld-corner.top-left {
+  top: 30px;
+  left: 30px;
+}
+.ld-corner.top-left::before {
   top: 0;
-  transform: translateY(-100%);
-  border-bottom: 1px solid rgba(255, 32, 32, 0.08);
+  left: 0;
+  width: 100%;
+  height: 1px;
 }
-.ld-panel--bottom {
+.ld-corner.top-left::after {
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.ld-corner.top-right {
+  top: 30px;
+  right: 30px;
+}
+.ld-corner.top-right::before {
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 1px;
+}
+.ld-corner.top-right::after {
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.ld-corner.bottom-left {
+  bottom: 70px;
+  left: 30px;
+}
+.ld-corner.bottom-left::before {
   bottom: 0;
-  transform: translateY(100%);
-  border-top: 1px solid rgba(255, 32, 32, 0.08);
+  left: 0;
+  width: 100%;
+  height: 1px;
 }
-.loader.loading .ld-panel--top {
-  animation: ldSlideDown 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+.ld-corner.bottom-left::after {
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
 }
-.loader.loading .ld-panel--bottom {
-  animation: ldSlideUp 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+
+.ld-corner.bottom-right {
+  bottom: 70px;
+  right: 30px;
 }
-.loader.hiding .ld-panel--top {
-  animation: ldSlideUpHide 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+.ld-corner.bottom-right::before {
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 1px;
 }
-.loader.hiding .ld-panel--bottom {
-  animation: ldSlideDownHide 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+.ld-corner.bottom-right::after {
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
 }
-@keyframes ldSlideDown {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(0); }
+
+@keyframes ldCornerFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-@keyframes ldSlideUp {
-  0% { transform: translateY(100%); }
-  100% { transform: translateY(0); }
+
+/* ── Exit Animation - Ink Dissolve ── */
+.loader.loading .ld-content,
+.loader.loading .ld-ink-bg {
+  animation: ldExitFade 1.2s cubic-bezier(0.4, 0, 1, 1) forwards;
+  animation-delay: 0s;
 }
-@keyframes ldSlideUpHide {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-100%); }
-}
-@keyframes ldSlideDownHide {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
+
+@keyframes ldExitFade {
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+    filter: blur(4px);
+  }
 }
 
 /* ===== NAVBAR ===== */
