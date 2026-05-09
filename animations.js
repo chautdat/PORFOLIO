@@ -466,7 +466,7 @@ document.addEventListener("DOMContentLoaded", function () {
       petal.style.left = Math.random() * 100 + "%";
       
       // Random size
-      const size = 6 + Math.random() * 8;
+      const size = 15 + Math.random() * 15;
       petal.style.width = size + "px";
       petal.style.height = size + "px";
       
@@ -485,13 +485,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }, (duration + 2) * 1000);
     }
 
-    // Create initial petals
-    for (let i = 0; i < 8; i++) {
-      setTimeout(createSakuraPetal, i * 300);
+    // Create initial petals (more for full page)
+    for (let i = 0; i < 40; i++) {
+      setTimeout(createSakuraPetal, i * 100);
     }
 
-    // Continue creating petals
-    setInterval(createSakuraPetal, 1500);
+    // Continue creating petals (faster rate)
+    setInterval(createSakuraPetal, 500);
   }
 
   // Parallax effect on photo items
@@ -518,3 +518,169 @@ document.addEventListener("DOMContentLoaded", function () {
 console.log("🎌 Japanese text kept static - no animation needed!");
 
 console.log("🎬 Mina-style animations loaded!");
+
+// ══════════════════════════════════════════════════════════════════
+// 12. CONTACT SECTION ANIMATIONS
+// ══════════════════════════════════════════════════════════════════
+document.addEventListener("DOMContentLoaded", function () {
+  const contactSection = document.querySelector(".contact.section");
+  if (!contactSection) return;
+
+  // Contact info card animation - fade up from bottom
+  const ctInfoCard = contactSection.querySelector(".ct-info-card");
+  if (ctInfoCard) {
+    ctInfoCard.style.opacity = "0";
+    ctInfoCard.style.transform = "translateY(50px)";
+    ctInfoCard.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
+  }
+
+  // Contact form animation - fade up with delay
+  const ctForm = contactSection.querySelector(".ct-form");
+  if (ctForm) {
+    ctForm.style.opacity = "0";
+    ctForm.style.transform = "translateY(50px)";
+    ctForm.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s";
+  }
+
+  // Contact header animation
+  const ctHeader = contactSection.querySelector(".ct-header");
+  if (ctHeader) {
+    ctHeader.style.opacity = "0";
+    ctHeader.style.transform = "translateY(30px)";
+    ctHeader.style.transition = "opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
+  }
+
+  // Avatar ring pulse animation
+  const ctAvatarRing = contactSection.querySelector(".ct-avatar-ring");
+  if (ctAvatarRing) {
+    const ringStyle = document.createElement("style");
+    ringStyle.textContent = `
+      @keyframes ringPulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.15); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .ct-avatar-ring {
+        animation: ringPulse 3s ease-in-out infinite;
+      }
+      .contact.section:hover .ct-avatar-ring {
+        animation: ringPulse 1.5s ease-in-out infinite;
+      }
+    `;
+    document.head.appendChild(ringStyle);
+  }
+
+  // Contact items staggered animation
+  const ctContactItems = contactSection.querySelectorAll(".ct-contact-item, .ct-social-btn");
+  ctContactItems.forEach((item, index) => {
+    item.style.opacity = "0";
+    item.style.transform = "translateX(-20px)";
+    item.style.transition = `opacity 0.5s ease ${0.4 + index * 0.1}s, transform 0.5s ease ${0.4 + index * 0.1}s`;
+  });
+
+  // Form inputs animation on focus
+  const ctInputs = contactSection.querySelectorAll(".ct-form input, .ct-form textarea");
+  ctInputs.forEach((input) => {
+    input.style.transition = "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease";
+    input.addEventListener("focus", () => {
+      input.style.transform = "translateY(-2px)";
+    });
+    input.addEventListener("blur", () => {
+      input.style.transform = "translateY(0)";
+    });
+  });
+
+  // Submit button hover effect
+  const ctSubmit = contactSection.querySelector(".ct-form-submit");
+  if (ctSubmit) {
+    ctSubmit.style.transition = "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease";
+    ctSubmit.addEventListener("mouseenter", () => {
+      ctSubmit.style.transform = "translateY(-3px)";
+      ctSubmit.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.3)";
+    });
+    ctSubmit.addEventListener("mouseleave", () => {
+      ctSubmit.style.transform = "translateY(0)";
+      ctSubmit.style.boxShadow = "none";
+    });
+  }
+
+  // Intersection Observer for contact section
+  const contactObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // Animate header
+          if (ctHeader) {
+            ctHeader.style.opacity = "1";
+            ctHeader.style.transform = "translateY(0)";
+          }
+
+          // Animate info card
+          if (ctInfoCard) {
+            ctInfoCard.style.opacity = "1";
+            ctInfoCard.style.transform = "translateY(0)";
+          }
+
+          // Animate form
+          if (ctForm) {
+            ctForm.style.opacity = "1";
+            ctForm.style.transform = "translateY(0)";
+          }
+
+          // Animate contact items
+          setTimeout(() => {
+            ctContactItems.forEach((item) => {
+              item.style.opacity = "1";
+              item.style.transform = "translateX(0)";
+            });
+          }, 300);
+
+          contactObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  contactObserver.observe(contactSection);
+});
+
+// Form input floating label animation
+document.addEventListener("DOMContentLoaded", function () {
+  const formGroups = document.querySelectorAll(".ct-form-group");
+  formGroups.forEach((group) => {
+    const input = group.querySelector("input, textarea");
+    if (!input) return;
+
+    // Check initial state
+    if (input.value) {
+      group.classList.add("has-value");
+    }
+
+    input.addEventListener("input", () => {
+      if (input.value) {
+        group.classList.add("has-value");
+      } else {
+        group.classList.remove("has-value");
+      }
+    });
+  });
+});
+
+// Status dot blink animation
+document.addEventListener("DOMContentLoaded", function () {
+  const statusDot = document.querySelector(".ct-status-dot");
+  if (statusDot) {
+    const dotStyle = document.createElement("style");
+    dotStyle.textContent = `
+      @keyframes statusBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+      .ct-status-dot {
+        animation: statusBlink 2s ease-in-out infinite;
+      }
+    `;
+    document.head.appendChild(dotStyle);
+  }
+});

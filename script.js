@@ -591,11 +591,10 @@ const contactForm = document.getElementById("contactForm");
 if (contactForm) {
   contactForm.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const btn = this.querySelector('button[type="submit"]');
-    const original = btn.innerHTML;
-
-    // Loading state
-    btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+    const btn = this.querySelector(".ct-form-submit");
+    if (!btn) return;
+    
+    btn.classList.add("loading");
     btn.disabled = true;
 
     try {
@@ -607,24 +606,21 @@ if (contactForm) {
       });
 
       if (response.ok) {
-        // Success
-        btn.innerHTML = '<i class="bx bx-check"></i> Sent successfully!';
-        btn.style.background = "linear-gradient(135deg, #4caf6e, #2e7d4f)";
+        btn.classList.remove("loading");
+        btn.classList.add("success");
         this.reset();
         setTimeout(() => {
-          btn.innerHTML = original;
-          btn.style.background = "";
+          btn.classList.remove("success");
           btn.disabled = false;
         }, 4000);
       } else {
         throw new Error("Send failed");
       }
     } catch {
-      btn.innerHTML = '<i class="bx bx-error"></i> Failed, try again';
-      btn.style.background = "linear-gradient(135deg, #e06060, #b03030)";
+      btn.classList.remove("loading");
+      btn.classList.add("error");
       setTimeout(() => {
-        btn.innerHTML = original;
-        btn.style.background = "";
+        btn.classList.remove("error");
         btn.disabled = false;
       }, 3000);
     }
@@ -704,375 +700,6 @@ document.querySelectorAll(".nav-link").forEach((link) => {
     closeMobileMenu();
   });
 });
-
-// ===== PARTICLE CANVAS — STARFIELD (full-page, scroll-aware, synced with cursor) =====
-const canvas = document.getElementById("particleCanvas");
-if (canvas) {
-  const ctx = canvas.getContext("2d");
-  let W = (canvas.width = window.innerWidth);
-  let H = (canvas.height = window.innerHeight);
-
-  window.addEventListener("resize", () => {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    initStars();
-  });
-
-  // ── Shared mouse state (synced with cursor JS) ──
-  let mx = -999,
-    my = -999;
-  let smx = -999,
-    smy = -999; // smoothed for aurora pull
-  document.addEventListener("mousemove", (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-  });
-  document.addEventListener("mouseleave", () => {
-    mx = -999;
-    my = -999;
-  });
-
-  // ── Scroll state for section-aware aurora ──
-  let scrollRatio = 0; // 0 = top, 1 = bottom
-  let targetScrollRatio = 0;
-  window.addEventListener(
-    "scroll",
-    () => {
-      const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-      targetScrollRatio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-    },
-    { passive: true },
-  );
-
-  // ── Click ripple waves (synced with cursor click burst) ──
-  const bgRipples = [];
-  document.addEventListener("mousedown", () => {
-    if (mx < 0) return;
-    bgRipples.push({ x: mx, y: my, r: 0, alpha: 0.35, speed: 3.5 });
-    bgRipples.push({ x: mx, y: my, r: 0, alpha: 0.18, speed: 2.2 });
-  });
-
-  // ── Stars ──
-  const STAR_COUNT = 200;
-  let stars = [];
-
-  function mkStar() {
-    const size =
-      Math.random() < 0.12
-        ? Math.random() * 2 + 1.2
-        : Math.random() < 0.38
-          ? Math.random() * 0.9 + 0.5
-          : Math.random() * 0.45 + 0.15;
-    return {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      size,
-      baseAlpha: Math.random() * 0.5 + 0.25,
-      alpha: 0,
-      twinkleSpeed: Math.random() * 0.012 + 0.004,
-      twinklePhase: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.07,
-      vy: (Math.random() - 0.5) * 0.055,
-      hue:
-        Math.random() < 0.3
-          ? "232,207,192"
-          : Math.random() < 0.5
-            ? "180,195,255"
-            : "255,255,255",
-    };
-  }
-  function initStars() {
-    stars = Array.from({ length: STAR_COUNT }, mkStar);
-  }
-  initStars();
-
-  // ── Shooting stars ──
-  let meteors = [];
-  function spawnMeteor() {
-    const fromTop = Math.random() < 0.6;
-    meteors.push({
-      x: fromTop ? Math.random() * W : -50,
-      y: fromTop ? -10 : Math.random() * H * 0.4,
-      len: Math.random() * 130 + 80,
-      speed: Math.random() * 6 + 5,
-      alpha: 1,
-      angle: fromTop
-        ? Math.PI / 4 + (Math.random() - 0.5) * 0.3
-        : Math.PI / 6 + (Math.random() - 0.5) * 0.2,
-      width: Math.random() * 1.2 + 0.4,
-    });
-  }
-  setInterval(() => spawnMeteor(), 3000 + Math.random() * 2000);
-  setInterval(() => {
-    if (Math.random() < 0.28) spawnMeteor();
-  }, 1100);
-
-  // ── Aurora blobs — 5 blobs covering full page depth ──
-  // Each aurora "zone" corresponds to a scroll position
-  const auroras = [
-    // Hero zone — warm primary
-    {
-      bx: 0.15,
-      by: 0.8,
-      x: 0,
-      y: 0,
-      r: 360,
-      hue: "202,170,152",
-      phase: 0,
-      speed: 0.003,
-      zone: 0.0,
-    },
-    // Hero zone — blue accent (top right)
-    {
-      bx: 0.85,
-      by: 0.25,
-      x: 0,
-      y: 0,
-      r: 300,
-      hue: "107,130,234",
-      phase: 2.1,
-      speed: 0.0025,
-      zone: 0.05,
-    },
-    // About/Skills zone — warm mid
-    {
-      bx: 0.2,
-      by: 0.55,
-      x: 0,
-      y: 0,
-      r: 290,
-      hue: "202,170,152",
-      phase: 1.0,
-      speed: 0.004,
-      zone: 0.35,
-    },
-    // Projects zone — blue deep
-    {
-      bx: 0.75,
-      by: 0.6,
-      x: 0,
-      y: 0,
-      r: 260,
-      hue: "90,120,220",
-      phase: 3.5,
-      speed: 0.003,
-      zone: 0.65,
-    },
-    // Contact zone — warm accent
-    {
-      bx: 0.35,
-      by: 0.75,
-      x: 0,
-      y: 0,
-      r: 240,
-      hue: "180,130,100",
-      phase: 4.8,
-      speed: 0.0035,
-      zone: 0.88,
-    },
-  ];
-  // Init positions
-  auroras.forEach((a) => {
-    a.x = a.bx * W;
-    a.y = a.by * H;
-  });
-
-  // ── Draw loop ──
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Smooth scroll
-    scrollRatio += (targetScrollRatio - scrollRatio) * 0.04;
-
-    // Smooth mouse for aurora
-    if (mx > 0) {
-      smx += (mx - smx) * 0.025;
-      smy += (my - smy) * 0.025;
-    }
-
-    // ── Aurora blobs ──
-    auroras.forEach((a, i) => {
-      a.phase += a.speed;
-
-      // Base position from viewport — shifts UP as user scrolls past this aurora's zone
-      const scrollDelta = (scrollRatio - a.zone) * H * 0.6;
-      const targetY = a.by * H - scrollDelta;
-      a.y += (targetY - a.y) * 0.012;
-      a.x = a.bx * W;
-
-      // Subtle mouse pull
-      if (mx > 0) {
-        const pullStrength = 0.00014;
-        a.x += (smx - a.x) * pullStrength * 60;
-        a.y += (smy - a.y) * pullStrength * 40;
-      }
-
-      // Proximity to current scroll zone = brighter
-      const zoneProx = Math.max(0, 1 - Math.abs(scrollRatio - a.zone) * 4);
-      const pulse = Math.sin(a.phase) * 0.022 + 0.055;
-      const extra = zoneProx * 0.045;
-
-      // Brighter near cursor
-      let cursorBoost = 0;
-      if (mx > 0) {
-        const d = Math.hypot(mx - a.x, my - a.y);
-        cursorBoost = Math.max(0, 1 - d / 600) * 0.04;
-      }
-
-      const intensity = pulse + extra + cursorBoost;
-      const grad = ctx.createRadialGradient(a.x, a.y, 0, a.x, a.y, a.r);
-      grad.addColorStop(0, `rgba(${a.hue},${(intensity * 1.8).toFixed(3)})`);
-      grad.addColorStop(0.45, `rgba(${a.hue},${(intensity * 0.5).toFixed(3)})`);
-      grad.addColorStop(1, `rgba(${a.hue},0)`);
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.ellipse(
-        a.x,
-        a.y + Math.sin(a.phase * 0.7) * 22,
-        a.r * 1.7,
-        a.r * 0.5,
-        0,
-        0,
-        Math.PI * 2,
-      );
-      ctx.fill();
-    });
-
-    // ── Stars ──
-    stars.forEach((s) => {
-      s.twinklePhase += s.twinkleSpeed;
-
-      let boost = 1;
-      if (mx > 0) {
-        const d = Math.hypot(s.x - mx, s.y - my);
-        if (d < 160) boost = 1 + (1 - d / 160) * 1.8;
-      }
-      s.alpha =
-        s.baseAlpha *
-        (0.5 + 0.5 * Math.sin(s.twinklePhase)) *
-        Math.min(boost, 2.2);
-
-      s.x += s.vx;
-      s.y += s.vy;
-      if (s.x < -10) s.x = W + 5;
-      if (s.x > W + 10) s.x = -5;
-      if (s.y < -10) s.y = H + 5;
-      if (s.y > H + 10) s.y = -5;
-
-      // Repel from cursor
-      if (mx > 0) {
-        const dx = s.x - mx,
-          dy = s.y - my;
-        const dist = Math.hypot(dx, dy);
-        if (dist < 90) {
-          const f = ((90 - dist) / 90) * 0.7;
-          s.x += (dx / dist) * f;
-          s.y += (dy / dist) * f;
-        }
-      }
-
-      if (s.size > 1) {
-        const gr = ctx.createRadialGradient(
-          s.x,
-          s.y,
-          0,
-          s.x,
-          s.y,
-          s.size * 3.8,
-        );
-        gr.addColorStop(0, `rgba(${s.hue},${Math.min(s.alpha, 1).toFixed(3)})`);
-        gr.addColorStop(
-          0.4,
-          `rgba(${s.hue},${(Math.min(s.alpha, 1) * 0.3).toFixed(3)})`,
-        );
-        gr.addColorStop(1, `rgba(${s.hue},0)`);
-        ctx.fillStyle = gr;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size * 3.8, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${s.hue},${Math.min(s.alpha, 1).toFixed(3)})`;
-      ctx.fill();
-
-      if (s.size > 1.4 && Math.sin(s.twinklePhase) > 0.55) {
-        const len = s.size * (5 + boost);
-        ctx.strokeStyle = `rgba(${s.hue},${(Math.min(s.alpha, 1) * 0.35).toFixed(3)})`;
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(s.x - len, s.y);
-        ctx.lineTo(s.x + len, s.y);
-        ctx.moveTo(s.x, s.y - len);
-        ctx.lineTo(s.x, s.y + len);
-        ctx.stroke();
-      }
-    });
-
-    // ── Meteors ──
-    meteors = meteors.filter((m) => m.alpha > 0.01);
-    meteors.forEach((m) => {
-      const tx = m.x - Math.cos(m.angle) * m.len,
-        ty = m.y - Math.sin(m.angle) * m.len;
-      const gr = ctx.createLinearGradient(tx, ty, m.x, m.y);
-      gr.addColorStop(0, `rgba(255,255,255,0)`);
-      gr.addColorStop(0.7, `rgba(232,207,192,${(m.alpha * 0.4).toFixed(3)})`);
-      gr.addColorStop(1, `rgba(255,255,255,${m.alpha.toFixed(3)})`);
-      ctx.beginPath();
-      ctx.moveTo(tx, ty);
-      ctx.lineTo(m.x, m.y);
-      ctx.strokeStyle = gr;
-      ctx.lineWidth = m.width;
-      ctx.lineCap = "round";
-      ctx.stroke();
-
-      const gg = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 5);
-      gg.addColorStop(0, `rgba(255,255,255,${m.alpha.toFixed(3)})`);
-      gg.addColorStop(1, "rgba(255,255,255,0)");
-      ctx.fillStyle = gg;
-      ctx.beginPath();
-      ctx.arc(m.x, m.y, 5, 0, Math.PI * 2);
-      ctx.fill();
-
-      m.x += Math.cos(m.angle) * m.speed;
-      m.y += Math.sin(m.angle) * m.speed;
-      m.alpha -= 0.007;
-      if (m.x > W + 60 || m.y > H + 60) m.alpha = 0;
-    });
-
-    // ── Click ripple waves ──
-    for (let i = bgRipples.length - 1; i >= 0; i--) {
-      const rp = bgRipples[i];
-      rp.r += rp.speed;
-      rp.alpha -= 0.005;
-      if (rp.alpha <= 0) {
-        bgRipples.splice(i, 1);
-        continue;
-      }
-      ctx.beginPath();
-      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(202,170,152,${rp.alpha.toFixed(3)})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-
-    // ── Cursor ambient glow (large soft) ──
-    if (mx > 0) {
-      const cg = ctx.createRadialGradient(mx, my, 0, mx, my, 200);
-      cg.addColorStop(0, "rgba(202,170,152,0.07)");
-      cg.addColorStop(0.4, "rgba(202,170,152,0.03)");
-      cg.addColorStop(1, "rgba(202,170,152,0)");
-      ctx.fillStyle = cg;
-      ctx.beginPath();
-      ctx.arc(mx, my, 200, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
 
 // ===== MAGNETIC BUTTON =====
 document
@@ -1794,6 +1421,23 @@ document
   // Lightbox functionality
   let lightbox = document.querySelector(".ph-lightbox");
   
+  function setupLightbox() {
+    if (!lightbox) return;
+    
+    const closeBtn = lightbox.querySelector(".ph-lightbox-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+    
+    // Click outside to close
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+  }
+  
   // Create lightbox if not exists
   if (!lightbox) {
     lightbox = document.createElement("div");
@@ -1807,22 +1451,17 @@ document
       </div>
     `;
     document.body.appendChild(lightbox);
-    
-    // Close button
-    lightbox.querySelector(".ph-lightbox-close").addEventListener("click", closeLightbox);
-    
-    // Click outside to close
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-    
-    // ESC to close
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && lightbox.classList.contains("active")) {
-        closeLightbox();
-      }
-    });
   }
+  
+  // Setup event listeners
+  setupLightbox();
+  
+  // ESC to close (global)
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lightbox.classList.contains("active")) {
+      closeLightbox();
+    }
+  });
   
   function openLightbox(src, title, loc) {
     const img = lightbox.querySelector("img");
@@ -1853,4 +1492,41 @@ document
       });
     });
   }
+})();
+
+// ===== JP ABOUT SECTION - COUNTER ANIMATION =====
+(function() {
+  const statNums = document.querySelectorAll('.jp-stats-num[data-target]');
+  
+  function animateCounter(el, target) {
+    const duration = 2000;
+    const start = performance.now();
+    
+    function update(currentTime) {
+      const elapsed = currentTime - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(easeOut * target);
+      el.textContent = current + '+';
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        animateCounter(el, target);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  
+  statNums.forEach(num => observer.observe(num));
 })();
