@@ -7382,13 +7382,13 @@ a.ct-val:hover {
   position: relative;
 }
 .manifesto-main p {
-  font-family: "Noto Serif JP", "Bricolage Grotesque", sans-serif;
-  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.8;
   color: rgba(255, 255, 255, 0.9);
-  margin: 0 0 24px;
-  letter-spacing: 0.05em;
+  margin: 0 0 20px;
+  letter-spacing: 0.02em;
   position: relative;
   text-align: center;
 }
@@ -7396,25 +7396,28 @@ a.ct-val:hover {
   margin-bottom: 0;
 }
 
-/* Japanese period/full stop - ink brush style */
-.ink-dot {
-  display: inline-block;
-  font-size: 0.5em;
-  color: #ff2020;
-  margin-left: 8px;
-  vertical-align: super;
-  opacity: 0;
-  animation: inkDrop 0.5s ease forwards;
-  animation-delay: calc(var(--delay, 0) + 0.6s);
+/* Japanese accent words inline */
+.ink-accent {
+  font-family: "Noto Serif JP", serif;
+  font-size: 0.9em;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+  margin-right: 2px;
 }
-.manifesto-main p:nth-child(1) .ink-dot { --delay: 0s; }
-.manifesto-main p:nth-child(2) .ink-dot { --delay: 0.15s; }
-.manifesto-main p:nth-child(3) .ink-dot { --delay: 0.3s; }
 
-@keyframes inkDrop {
-  0% { opacity: 0; transform: translateY(-5px); }
-  50% { transform: translateY(2px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* Separator between keywords */
+.ink-sep {
+  color: rgba(255, 32, 32, 0.4);
+  margin: 0 8px;
+  font-size: 0.7em;
+}
+
+/* Line break for cleaner layout */
+.manifesto-br {
+  display: none;
+}
+@media (max-width: 600px) {
+  .manifesto-br { display: block; }
 }
 
 .manifesto-highlight {
@@ -7422,7 +7425,6 @@ a.ct-val:hover {
   font-weight: 600;
   position: relative;
   display: inline;
-  padding: 0 4px;
 }
 
 .manifesto-attribution {
