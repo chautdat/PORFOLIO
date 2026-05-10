@@ -5585,8 +5585,8 @@ a.ct-val:hover {
   color: #cc0000 !important;
 }
 .ct-form {
-  background: rgba(14, 19, 30, 0.7) !important;
-  border: 1px solid rgba(255, 32, 32, 0.12) !important;
+  background: #000000 !important;
+  border: 1px solid rgba(255, 32, 32, 0.4) !important;
   border-radius: 20px !important;
   padding: 32px !important;
   display: flex !important;
@@ -7573,17 +7573,18 @@ a.ct-val:hover {
 }
 
 .q2-emphasis {
-  font-family: "Courier New", Courier, monospace;
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-family: "Orbitron", "Courier New", monospace;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
   font-weight: 700;
   color: #8b0000;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   text-shadow: 
-    0 0 10px rgba(139, 0, 0, 0.5),
-    0 0 20px rgba(139, 0, 0, 0.3),
-    0 0 40px rgba(139, 0, 0, 0.1);
-  animation: q2Glow 3s ease-in-out infinite;
+    0 0 10px rgba(139, 0, 0, 0.6),
+    0 0 20px rgba(139, 0, 0, 0.4),
+    0 0 40px rgba(139, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+  animation: q2Glow 2s ease-in-out infinite;
 }
 
 @keyframes q2Glow {
@@ -10402,14 +10403,11 @@ body.loading {
 
 /* Info Card */
 .ct-info-card {
-  background: rgba(10, 10, 15, 0.6);
-  border: 1px solid rgba(255, 32, 32, 0.15);
+  background: #000000;
+  border: 1px solid rgba(255, 32, 32, 0.4);
   border-radius: 24px;
   padding: 36px;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  /* Animation handled by JavaScript when section comes into view */
+  box-shadow: 0 0 40px rgba(255, 32, 32, 0.1), 0 8px 32px rgba(0, 0, 0, 0.8);
 }
 
 /* Profile */
@@ -10568,14 +10566,11 @@ a.ct-contact-item:hover i {
 
 /* Form */
 .ct-form {
-  background: rgba(10, 10, 15, 0.6);
-  border: 1px solid rgba(255, 32, 32, 0.15);
+  background: #000000;
+  border: 1px solid rgba(255, 32, 32, 0.4);
   border-radius: 24px;
   padding: 40px;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  /* Animation handled by JavaScript when section comes into view */
+  box-shadow: 0 0 40px rgba(255, 32, 32, 0.1), 0 8px 32px rgba(0, 0, 0, 0.8);
 }
 .ct-form-header {
   text-align: center;
