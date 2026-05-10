@@ -7376,47 +7376,45 @@ a.ct-val:hover {
 }
 
 .manifesto-main {
-  margin: 0 0 40px;
+  margin: 0 0 50px;
   border: none;
   padding: 0;
   position: relative;
 }
 .manifesto-main p {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: clamp(1.4rem, 3vw, 2.4rem);
-  font-weight: 400;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0 0 32px;
-  letter-spacing: 0.01em;
+  font-family: "Noto Serif JP", "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 24px;
+  letter-spacing: 0.05em;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  text-align: center;
 }
 .manifesto-main p:last-child {
   margin-bottom: 0;
-  padding-bottom: 0;
 }
 
-.mlt-bracket {
-  font-family: "Courier New", monospace;
-  font-size: 0.6em;
-  color: rgba(255, 32, 32, 0.3);
+/* Japanese period/full stop - ink brush style */
+.ink-dot {
+  display: inline-block;
+  font-size: 0.5em;
+  color: #ff2020;
+  margin-left: 8px;
+  vertical-align: super;
   opacity: 0;
-  transform: translateX(-10px);
-  animation: bracketReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: inkDrop 0.5s ease forwards;
+  animation-delay: calc(var(--delay, 0) + 0.6s);
 }
-.mlt-bracket:last-child {
-  transform: translateX(10px);
-}
-.manifesto-main p:nth-child(1) .mlt-bracket { animation-delay: 0.2s; }
-.manifesto-main p:nth-child(2) .mlt-bracket { animation-delay: 0.4s; }
-.manifesto-main p:nth-child(3) .mlt-bracket { animation-delay: 0.6s; }
+.manifesto-main p:nth-child(1) .ink-dot { --delay: 0s; }
+.manifesto-main p:nth-child(2) .ink-dot { --delay: 0.15s; }
+.manifesto-main p:nth-child(3) .ink-dot { --delay: 0.3s; }
 
-@keyframes bracketReveal {
-  to { opacity: 1; transform: translateX(0); }
+@keyframes inkDrop {
+  0% { opacity: 0; transform: translateY(-5px); }
+  50% { transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 .manifesto-highlight {
@@ -7424,23 +7422,7 @@ a.ct-val:hover {
   font-weight: 600;
   position: relative;
   display: inline;
-}
-/* Japanese-style dot accent under highlights */
-.manifesto-highlight::after {
-  content: "・";
-  position: absolute;
-  bottom: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.6em;
-  color: rgba(255, 32, 32, 0.7);
-  opacity: 0;
-  animation: dotAppear 0.4s ease forwards;
-  animation-delay: 0.8s;
-}
-
-@keyframes dotAppear {
-  to { opacity: 1; }
+  padding: 0 4px;
 }
 
 .manifesto-attribution {
