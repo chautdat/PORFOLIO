@@ -1541,3 +1541,588 @@ document
 
   statNums.forEach((num) => observer.observe(num));
 })();
+
+
+/* ════════════════════════════════════════════════════════════
+   ANIMATIONS.JS - SAKURA & OTHER ANIMATIONS
+   ════════════════════════════════════════════════════════════ */
+
+
+/* ════════════════════════════════════════════════════════════
+   ANIMATIONS.JS - SAKURA & OTHER ANIMATIONS
+   ════════════════════════════════════════════════════════════ */
+
+/**
+ * ============================================================
+ * MINA-STYLE ANIMATIONS
+ * ============================================================
+ * Structured animation library for scroll-triggered and
+ * interaction-based animations.
+ */
+
+(function () {
+  "use strict";
+
+  // ═══════════════════════════════════════════════════════════
+  // 1. UTILITIES
+  // ═══════════════════════════════════════════════════════════
+
+  const createObserver = (callback, threshold = 0.3) => {
+    return new IntersectionObserver(callback, { threshold });
+  };
+
+  const injectStyles = (css) => {
+    const style = document.createElement("style");
+    style.textContent = css;
+    document.head.appendChild(style);
+    return style;
+  };
+
+  // ═══════════════════════════════════════════════════════════
+  // 2. ANIMATION FUNCTIONS
+  // ═══════════════════════════════════════════════════════════
+
+  /**
+   * Letter Reveal - Mỗi chữ cái xuất hiện từ từ khi scroll
+   */
+  function letterRevealAnimation() {
+    injectStyles(`
+      @keyframes letterReveal {
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `);
+
+    document.querySelectorAll(".manifesto-pretext, .q2-pretext").forEach((el) => {
+      const originalText = el.textContent;
+
+      createObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+
+          el.innerHTML = "";
+          originalText.split("").forEach((char, index) => {
+            const span = document.createElement("span");
+            span.textContent = char;
+            span.style.cssText = `
+              display: inline-block;
+              opacity: 0;
+              transform: translateY(20px);
+              animation: letterReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.03}s forwards;
+            `;
+            el.appendChild(span);
+          });
+        },
+        0.5,
+      ).observe(el);
+    });
+  }
+
+  /**
+   * Scramble Text - Chữ random rồi reveal khi scroll
+   */
+  function scrambleText(element, finalText, duration = 2000) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    const totalFrames = Math.floor(duration / 30);
+    let frame = 0;
+
+    const interval = setInterval(() => {
+      let result = "";
+      for (let i = 0; i < finalText.length; i++) {
+        result +=
+          frame / totalFrames > i / finalText.length
+            ? finalText[i]
+            : chars[Math.floor(Math.random() * chars.length)];
+      }
+      element.textContent = result;
+
+      if (++frame >= totalFrames) {
+        clearInterval(interval);
+        element.textContent = finalText;
+      }
+    }, 30);
+  }
+
+  function scrambleAnimation() {
+    document.querySelectorAll("[data-scramble]").forEach((el) => {
+      const text = el.textContent;
+
+      createObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          scrambleText(el, text, 1500);
+        },
+        0.5,
+      ).observe(el);
+    });
+  }
+
+  /**
+   * Character Split - Từng ký tự xoay vào view
+   */
+  function splitTextToChars(element) {
+    const text = element.textContent;
+    const hasHTML = element.innerHTML !== text;
+
+    if (hasHTML) {
+      element.style.cssText = `
+        opacity: 0; transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      `;
+      createObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          entry.target.style.cssText = "opacity: 1; transform: translateY(0)";
+        },
+        0.3,
+      ).observe(element);
+      return;
+    }
+
+    element.innerHTML = "";
+    text.split("").forEach((char, index) => {
+      const span = document.createElement("span");
+      span.textContent = char === " " ? "\u00A0" : char;
+      span.classList.add("char");
+      span.style.cssText = `
+        display: inline-block; opacity: 0;
+        transform: translateY(30px) rotateX(-90deg);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.03}s;
+      `;
+      element.appendChild(span);
+    });
+
+    createObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll(".char").forEach((char) => {
+          char.style.cssText = "opacity: 1; transform: translateY(0) rotateX(0)";
+        });
+      },
+      0.3,
+    ).observe(element);
+  }
+
+  function charSplitAnimation() {
+    document.querySelectorAll('[data-scroll="char-split"]').forEach(splitTextToChars);
+  }
+
+  /**
+   * Word Split - Từng từ xuất hiện
+   */
+  function splitTextToWords(element) {
+    element.innerHTML = "";
+
+    element.textContent.split(/\s+/).filter(Boolean).forEach((word, index) => {
+      const span = document.createElement("span");
+      span.textContent = word;
+      span.classList.add("word");
+      span.style.cssText = `
+        display: inline-block; opacity: 0; transform: translateY(20px);
+        margin-right: 0.3em;
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s;
+      `;
+      element.appendChild(span);
+    });
+
+    createObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        entry.target.querySelectorAll(".word").forEach((word) => {
+          word.style.cssText = "opacity: 1; transform: translateY(0)";
+        });
+      },
+      0.2,
+    ).observe(element);
+  }
+
+  function wordSplitAnimation() {
+    document.querySelectorAll('[data-scroll="word-split"]').forEach(splitTextToWords);
+  }
+
+  /**
+   * Glitch Effect - Text glitch khi hover
+   */
+  function glitchAnimation() {
+    const glitchChars = "アイウエオカキクケコサシスセソタチツテト";
+
+    document.querySelectorAll("[data-glitch]").forEach((el) => {
+      const originalText = el.textContent;
+
+      el.addEventListener("mouseenter", () => {
+        let iteration = 0;
+
+        const interval = setInterval(() => {
+          el.textContent = originalText
+            .split("")
+            .map((char, index) =>
+              index < iteration
+                ? originalText[index]
+                : glitchChars[Math.floor(Math.random() * glitchChars.length)],
+            )
+            .join("");
+
+          if (iteration >= originalText.length) {
+            clearInterval(interval);
+          }
+          iteration += 1 / 3;
+        }, 30);
+      });
+    });
+  }
+
+  /**
+   * Typewriter Effect - Gõ chữ từng ký tự
+   */
+  function typeWriter(element, text, speed = 50) {
+    let i = 0;
+    element.textContent = "";
+
+    (function type() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i++);
+        setTimeout(type, speed);
+      }
+    })();
+  }
+
+  function typewriterAnimation() {
+    document.querySelectorAll("[data-type]").forEach((el) => {
+      createObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          const speed = parseInt(el.dataset.typeSpeed) || 50;
+          typeWriter(el, el.textContent, speed);
+        },
+        0.5,
+      ).observe(el);
+    });
+  }
+
+  /**
+   * Number Counter - Số đếm lên với easing
+   */
+  function animateNumber(element, target, duration = 2000) {
+    const startTime = performance.now();
+
+    (function update(currentTime) {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = Math.floor(target * easeProgress);
+
+      element.textContent = current.toLocaleString();
+      if (progress < 1) requestAnimationFrame(update);
+      else element.textContent = target.toLocaleString();
+    })(performance.now());
+  }
+
+  function numberCounterAnimation() {
+    document.querySelectorAll(".bn-num[data-target]").forEach((el) => {
+      createObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          animateNumber(el, parseInt(el.dataset.target), 2000);
+        },
+        0.5,
+      ).observe(el);
+    });
+  }
+
+  /**
+   * Magnetic Cursor - Button bị kéo về cursor
+   */
+  function magneticCursorAnimation() {
+    document.querySelectorAll(".btn-primary, .hero-cta-btn, .nav-btn").forEach((btn) => {
+      btn.addEventListener("mousemove", (e) => {
+        const { left, top, width, height } = btn.getBoundingClientRect();
+        const x = e.clientX - left - width / 2;
+        const y = e.clientY - top - height / 2;
+        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+      });
+
+      btn.addEventListener("mouseleave", () => {
+        btn.style.transform = "translate(0, 0)";
+      });
+    });
+  }
+
+  /**
+   * Navbar JP↔EN Animation - Hover đổi ngôn ngữ
+   */
+  function navbarLangAnimation() {
+    document.querySelectorAll(".nav-link[data-jp][data-en], .nav-btn[data-jp][data-en]").forEach((link) => {
+      const jp = link.getAttribute("data-jp");
+      const en = link.getAttribute("data-en");
+
+      const animateTo = (targetText, sourceText) => {
+        let iteration = 0;
+        const interval = setInterval(() => {
+          link.textContent = targetText
+            .split("")
+            .map((char, index) =>
+              index < iteration ? targetText[index] : sourceText[Math.floor(Math.random() * sourceText.length)] || char,
+            )
+            .join("");
+
+          if (++iteration >= targetText.length) {
+            clearInterval(interval);
+            link.textContent = targetText;
+          }
+        }, 30);
+      };
+
+      link.addEventListener("mouseenter", () => animateTo(en, jp));
+      link.addEventListener("mouseleave", () => animateTo(jp, en));
+    });
+  }
+
+  /**
+   * Fade Up Animation - Fade in + slide up khi scroll
+   */
+  function fadeUpAnimation() {
+    document.querySelectorAll('[data-scroll="fade-up"]').forEach((el) => {
+      const delay = parseInt(el.getAttribute("data-delay")) || 0;
+
+      el.style.cssText = `
+        opacity: 0; transform: translateY(30px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms,
+                    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms;
+      `;
+
+      createObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          entry.target.style.cssText = "opacity: 1; transform: translateY(0)";
+        },
+        0.2,
+      ).observe(el);
+    });
+  }
+
+  /**
+   * Sakura Petals - Full page animation
+   */
+  function sakuraAnimation() {
+    // Create container if not exists
+    let sakuraContainer = document.getElementById("global-sakura");
+    if (!sakuraContainer) {
+      sakuraContainer = document.createElement("div");
+      sakuraContainer.id = "global-sakura";
+      sakuraContainer.className = "sakura-container";
+      document.body.appendChild(sakuraContainer);
+    }
+
+    const animations = ["drift", "sway", "spiral", "gentle", "wind"];
+
+    const createPetal = () => {
+      const petal = document.createElement("div");
+
+      // Random shape variant (1-5)
+      const variant = Math.ceil(Math.random() * 5);
+      const animVariant = variant > 3
+        ? animations[Math.floor(Math.random() * animations.length)]
+        : animations[Math.floor(Math.random() * 3)];
+
+      petal.className = `sakura-petal sakura-petal--${variant} sakura-petal--${animVariant}`;
+
+      // Random properties - larger petals, slower fall
+      const size = 20 + Math.random() * 35;
+      const duration = 18 + Math.random() * 15;
+      const delay = Math.random() * 5;
+      const left = Math.random() * 100;
+
+      petal.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${left}%;
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+      `;
+
+      sakuraContainer.appendChild(petal);
+
+      // Remove after animation + buffer
+      setTimeout(() => {
+        petal.style.opacity = "0";
+        setTimeout(() => petal.remove(), 500);
+      }, (duration + delay) * 1000);
+    };
+
+    // Initial burst
+    for (let i = 0; i < 30; i++) {
+      setTimeout(createPetal, i * 100);
+    }
+
+    // Continuous generation
+    setInterval(createPetal, 350);
+  }
+
+  /**
+   * Photography Section - Grid reveal + parallax
+   * (Sakura removed - now global)
+   */
+  function photographyAnimation() {
+    const section = document.querySelector(".photo-section");
+    if (!section) return;
+
+    const sectionObserver = createObserver(
+      ([entry]) => {
+        entry.target.classList.toggle("in-view", entry.isIntersecting);
+      },
+      0.15,
+    );
+    sectionObserver.observe(section);
+
+    // Parallax effect
+    const items = document.querySelectorAll(".ph-jp-item");
+    section.addEventListener("mousemove", (e) => {
+      const { left, top, width, height } = section.getBoundingClientRect();
+      const x = (e.clientX - left) / width - 0.5;
+      const y = (e.clientY - top) / height - 0.5;
+
+      items.forEach((item, index) => {
+        const intensity = 5 + index * 2;
+        item.style.transform = `translateX(${x * intensity}px) translateY(${y * intensity}px)`;
+      });
+    });
+
+    section.addEventListener("mouseleave", () => {
+      items.forEach((item) => (item.style.transform = ""));
+    });
+  }
+
+  /**
+   * Contact Section Animation
+   */
+  function contactAnimation() {
+    const section = document.querySelector(".contact.section");
+    if (!section) return;
+
+    const header = section.querySelector(".ct-header");
+    const infoCard = section.querySelector(".ct-info-card");
+    const form = section.querySelector(".ct-form");
+    const submitBtn = section.querySelector(".ct-form-submit");
+
+    // Setup initial states
+    const setupEl = (el, delay = 0) => {
+      if (!el) return;
+      el.style.cssText = `
+        opacity: 0; transform: translateY(50px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s,
+                    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s;
+      `;
+    };
+
+    setupEl(header);
+    setupEl(infoCard);
+    setupEl(form, 0.2);
+
+    // Contact items
+    section.querySelectorAll(".ct-contact-item, .ct-social-btn").forEach((item, index) => {
+      item.style.cssText = `
+        opacity: 0; transform: translateX(-20px);
+        transition: opacity 0.5s ease ${0.4 + index * 0.1}s,
+                    transform 0.5s ease ${0.4 + index * 0.1}s;
+      `;
+    });
+
+    // Input focus effects
+    section.querySelectorAll(".ct-form input, .ct-form textarea").forEach((input) => {
+      input.style.transition = "border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease";
+      input.addEventListener("focus", () => (input.style.transform = "translateY(-2px)"));
+      input.addEventListener("blur", () => (input.style.transform = "translateY(0)"));
+    });
+
+    // Submit button hover
+    if (submitBtn) {
+      submitBtn.style.transition = "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease";
+      submitBtn.addEventListener("mouseenter", () => {
+        submitBtn.style.cssText = "transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3);";
+      });
+      submitBtn.addEventListener("mouseleave", () => {
+        submitBtn.style.cssText = "transform: translateY(0); box-shadow: none;";
+      });
+    }
+
+    // Inject animations
+    injectStyles(`
+      @keyframes ringPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.15); opacity: 0.5; }
+      }
+      @keyframes statusBlink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+      .ct-avatar-ring { animation: ringPulse 3s ease-in-out infinite; }
+      .contact.section:hover .ct-avatar-ring { animation: ringPulse 1.5s ease-in-out infinite; }
+      .ct-status-dot { animation: statusBlink 2s ease-in-out infinite; }
+    `);
+
+    // Observe and animate
+    createObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        [header, infoCard, form].forEach((el) => {
+          if (el) el.style.cssText = "opacity: 1; transform: translateY(0)";
+        });
+
+        setTimeout(() => {
+          section.querySelectorAll(".ct-contact-item, .ct-social-btn").forEach((item) => {
+            item.style.cssText = "opacity: 1; transform: translateX(0)";
+          });
+        }, 300);
+      },
+      0.2,
+    ).observe(section);
+  }
+
+  /**
+   * Floating Labels for Forms
+   */
+  function floatingLabelsAnimation() {
+    document.querySelectorAll(".ct-form-group").forEach((group) => {
+      const input = group.querySelector("input, textarea");
+      if (!input) return;
+
+      if (input.value) group.classList.add("has-value");
+
+      input.addEventListener("input", () => {
+        group.classList.toggle("has-value", input.value);
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 3. INITIALIZER - Gọi tất cả animations khi DOM ready
+  // ═══════════════════════════════════════════════════════════
+
+  function init() {
+    sakuraAnimation(); // Full page sakura petals
+    letterRevealAnimation();
+    scrambleAnimation();
+    charSplitAnimation();
+    wordSplitAnimation();
+    glitchAnimation();
+    typewriterAnimation();
+    numberCounterAnimation();
+    magneticCursorAnimation();
+    navbarLangAnimation();
+    fadeUpAnimation();
+    photographyAnimation();
+    contactAnimation();
+    floatingLabelsAnimation();
+
+    console.log("🎬 Mina-style animations loaded!");
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 4. BOOTSTRAP
+  // ═══════════════════════════════════════════════════════════
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
