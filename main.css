@@ -7379,19 +7379,50 @@ a.ct-val:hover {
   margin: 0 0 40px;
   border: none;
   padding: 0;
+  position: relative;
 }
 .manifesto-main p {
   font-family: "Bricolage Grotesque", sans-serif;
   font-size: clamp(1.8rem, 4vw, 3.2rem);
   font-weight: 400;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 0;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 20px;
   letter-spacing: -0.01em;
+  position: relative;
+  padding-bottom: 20px;
 }
+.manifesto-main p:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+/* Decorative line between paragraphs */
+.manifesto-main p:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 32, 32, 0.4), transparent);
+}
+
 .manifesto-highlight {
   color: #ff2020;
   font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+.manifesto-highlight::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #ff2020, transparent);
+  opacity: 0.5;
 }
 
 .manifesto-attribution {
